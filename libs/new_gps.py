@@ -33,9 +33,15 @@ class GPS:                      #Create GPS class
                 self.ser.baudrate=9600      #IMPORTANT Since change ser baudrate to match GPS
                 self.ser.write(UPDATE_200_msec) #Set update rate
                 sleep(1)
+                print self.ser.read_all()
+                sleep(1)
                 self.ser.write(MEAS_200_msec)  #Set measurement rate
                 sleep(1)
+                print self.ser.read_all()
+                sleep(1)
                 self.ser.write(GPRMC_GPGGA)    #Ask for only GPRMC and GPGGA Sentences
+                sleep(1)
+                print self.ser.read_all()
                 sleep(1)
                 self.ser.flushInput()          #clear buffers
                 self.ser.flushOutput()
