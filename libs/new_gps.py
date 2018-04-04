@@ -1,6 +1,8 @@
 import serial #import pyserial library
-import Adafruit_BBIO.UART as UART #import UART Library
-UART.setup("UART1")  #Initialize UART1
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(8, GPIO.OUT)  #Initialize UART1
+GPIO.setup(10, GPIO.IN)  #Initialize UART1
 from time import sleep #import sleep library
 class GPS:                      #Create GPS class
         def __init__(self):     #This init will run when you create a GPS object.
@@ -24,16 +26,16 @@ class GPS:                      #Create GPS class
                 GPRMC_GPGGA="$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"#Send GPRMC AND GPGGA Sentences
                 SEND_ALL ="$PMTK314,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n" #Send All Sentences
                 SEND_NOTHING="$PMTK314,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n" #Send Nothing
-                ser.write(BAUD_57600)   #Set Baud Rate to 57600
+                self.ser.write(BAUD_57600)   #Set Baud Rate to 57600
                 sleep(1)                #Paulse
-                ser.baudrate=57600      #IMPORTANT Since change ser baudrate to match GPS
-                ser.write(UPDATE_200_msec) #Set update rate
+                self.ser.baudrate=57600      #IMPORTANT Since change ser baudrate to match GPS
+                self.ser.write(UPDATE_200_msec) #Set update rate
                 sleep(1)
-                ser.write(MEAS_200_msec)  #Set measurement rate
+                self.ser.write(MEAS_200_msec)  #Set measurement rate
                 sleep(1)
-                ser.write(GPRMC_GPGGA)    #Ask for only GPRMC and GPGGA Sentences
+                self.ser.write(GPRMC_GPGGA)    #Ask for only GPRMC and GPGGA Sentences
                 sleep(1)
-                ser.flushInput()          #clear buffers
-                ser.flushOutput()
+                self.ser.flushInput()          #clear buffers
+                self.ser.flushOutput()
                 print "GPS is Initialized" #Print message
 
