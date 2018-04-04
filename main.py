@@ -1,6 +1,6 @@
 import serial #import pyserial library
 from time import sleep #import sleep library
-ser=serial.Serial('/dev/ttyAMA0',57600) #Initialize Serial Port
+ser=serial.Serial('/dev/ttyAMA0',9600) #Initialize Serial Port
 from time import sleep #import sleep library
 class GPS:                      #Create GPS class
         def __init__(self):     #This init will run when you create a GPS object.
@@ -30,7 +30,7 @@ class GPS:                      #Create GPS class
                 sleep(1)
                 ser.write(MEAS_200_msec)  #Set measurement rate
                 sleep(1)
-                ser.write(GPRMC_GPGGA)    #Ask for only GPRMC and GPGGA Sentences
+                ser.write(SEND_ALL)    #Ask for only GPRMC and GPGGA Sentences
                 sleep(1)
                 ser.flushInput()          #clear buffers
                 ser.flushOutput()
