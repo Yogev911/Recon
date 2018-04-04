@@ -52,6 +52,6 @@ while(1):
                 pass
         NMEA1=ser.readline()      #Read NMEA1
         NMEA2=ser.readline()
-        print NMEA1
+        print pynmea2.parse(NMEA1)
         print pynmea2.parse(NMEA2)
         print '******************'
