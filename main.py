@@ -7,6 +7,7 @@ class my_gps:                      #Create GPS class
         def __init__(self):     #This init will run when you create a GPS object.
                 #This sets up variables for useful commands.
                 #This set is used to set the rate the GPS reports
+                COLD_START = "$PMTK103*30\r\n"
                 UPDATE_10_sec=  "$PMTK220,10000*2F\r\n" #Update Every 10 Seconds
                 UPDATE_5_sec=  "$PMTK220,5000*1B\r\n"   #Update Every 5 Seconds
                 UPDATE_1_sec=  "$PMTK220,1000*1F\r\n"   #Update Every One Second
@@ -27,6 +28,11 @@ class my_gps:                      #Create GPS class
                 ser.write(BAUD_57600)   #Set Baud Rate to 57600
                 sleep(1)                #Paulse
                 ser.baudrate=57600      #IMPORTANT Since change ser baudrate to match GPS
+                sleep(1)
+                print 'cold start'
+                ser.write(COLD_START)  # Set update rate
+                sleep(1)
+                print 'cold start end'
                 ser.write(UPDATE_200_msec) #Set update rate
                 sleep(1)
                 ser.write(MEAS_200_msec)  #Set measurement rate
