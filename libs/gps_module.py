@@ -2,7 +2,7 @@ import operator
 # import serial
 import os
 import time
-import pyserial as serial
+import serial
 
 class mt3339():
 	def __init__(self, device):
@@ -153,7 +153,7 @@ class mt3339():
 	def send_command(self, nmea_command):
 		ser = serial.Serial(port = self.device, baudrate = self.baudrate, timeout=3)
 		time.sleep(0.1)
-		ser.write(nmea_command)
+		ser.write(nmea_command.encode())
 		time.sleep(0.1)
 		ser.close()
 #Example commands:
