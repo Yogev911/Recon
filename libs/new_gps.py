@@ -27,9 +27,9 @@ class GPS:                      #Create GPS class
                 GPRMC_GPGGA="$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"#Send GPRMC AND GPGGA Sentences
                 SEND_ALL ="$PMTK314,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n" #Send All Sentences
                 SEND_NOTHING="$PMTK314,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n" #Send Nothing
-                self.ser.write(BAUD_57600)   #Set Baud Rate to 57600
+                self.ser.write(BAUD_9600)   #Set Baud Rate to 57600
                 sleep(1)                #Paulse
-                self.ser.baudrate=57600      #IMPORTANT Since change ser baudrate to match GPS
+                self.ser.baudrate=9600      #IMPORTANT Since change ser baudrate to match GPS
                 self.ser.write(UPDATE_200_msec) #Set update rate
                 sleep(1)
                 self.ser.write(MEAS_200_msec)  #Set measurement rate
