@@ -1,5 +1,6 @@
 import serial #import pyserial library
 import RPi.GPIO as GPIO
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(8, GPIO.OUT)  #Initialize UART1
 GPIO.setup(10, GPIO.IN)  #Initialize UART1
