@@ -27,10 +27,11 @@ myGPS=GPS()
 while(1):
         myGPS.ser.flushInput() #Clear Buffers
         myGPS.ser.flushInput()
-        print 'while'
+        print 'wait for input'
         while myGPS.ser.inWaiting()==0: #Wait for input
                 pass
         NMEA1=myGPS.ser.readline()      #Read NMEA1
+        print 'read NMEA1'
         while myGPS.ser.inWaiting()==0:
                 pass
         NMEA2=myGPS.ser.readline()
