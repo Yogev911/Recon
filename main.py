@@ -43,8 +43,7 @@ while(1):
         while ser.inWaiting()==0: #Wait for input
                 pass
         NMEA1=ser.readline()      #Read NMEA1
-        while ser.inWaiting()==0:
-                pass
         NMEA2=ser.readline()
         print NMEA1
         print NMEA2
+        print '******************'
