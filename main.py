@@ -20,13 +20,25 @@ import libs.gps_module as gpsm
 # gps.set_nmea_update_rate(1000)
 # gps.set_nav_speed_threshold(1.5)
 # gps.set_nmea_output(gll = 0, rmc = 1, vtg = 0, gga = 5, gsa = 5, gsv = 5)
-
+from time import sleep #import sleep library
 from libs.new_gps import GPS
 myGPS=GPS()
 
 while(1):
         myGPS.ser.flushInput() #Clear Buffers
         myGPS.ser.flushInput()
+        myGPS.ser.write("$PMTK251,57600*2C\r\n")  # Set measurement rate
+        sleep(1)
+        print myGPS.ser.read_all()
+        sleep(1)
+        myGPS.ser.write("$PMTK220,200*2C\r\n")  # Set measurement rate
+        sleep(1)
+        print myGPS.ser.read_all()
+        sleep(1)
+        myGPS.ser.write("$PMTK314,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n")  # Set measurement rate
+        sleep(1)
+        print myGPS.ser.read_all()
+        sleep(1)
         print 'wait for input'
         while myGPS.ser.inWaiting()==0: #Wait for input
                 pass
