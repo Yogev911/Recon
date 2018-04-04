@@ -1,7 +1,8 @@
-from libs import hcsr04 as ultrasonic
 # from libs.mtk3339 import mtk3339
-from libs.mtk3339 import mtk3339 as gpsmodule
 import time
+
+from libs import hcsr04 as ultrasonic, mtk3339 as gpsmodule
+
 #from libs.gyro_compass import mpu9150 as gc
 my_ultrasonic = ultrasonic.init()
 my_ultrasonic = ultrasonic.getDistance()
