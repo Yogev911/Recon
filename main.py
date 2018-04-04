@@ -1,15 +1,11 @@
-# from libs.mtk3339 import mtk3339
 import time
+import libs.gps_module as gpsm
+# my_ultrasonic = ultrasonic.init()
+# my_ultrasonic = ultrasonic.getDistance()
+# print my_ultrasonic
+# time.sleep(1)
 
-from libs import hcsr04 as ultrasonic, mtk3339 as gpsmodule
-
-#from libs.gyro_compass import mpu9150 as gc
-my_ultrasonic = ultrasonic.init()
-my_ultrasonic = ultrasonic.getDistance()
-print my_ultrasonic
-time.sleep(1)
-
-gps = gpsmodule.mt3339("/dev/ttyAMA0")
+gps = gpsm.mt3339("/dev/ttyAMA0")
 gps.cold_start()
 gps.warm_start()
 gps.hot_start()

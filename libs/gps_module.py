@@ -2,7 +2,7 @@ import operator
 # import serial
 import os
 import time
-import pyserial
+import pyserial as serial
 
 class mt3339():
 	def __init__(self, device):
