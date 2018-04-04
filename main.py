@@ -31,7 +31,7 @@ class my_gps:                      #Create GPS class
                 sleep(1)
                 ser.write(MEAS_200_msec)  #Set measurement rate
                 sleep(1)
-                ser.write(SEND_ALL)    #Ask for only GPRMC and GPGGA Sentences
+                ser.write(GPRMC_GPGGA)    #Ask for only GPRMC and GPGGA Sentences
                 sleep(1)
                 ser.flushInput()          #clear buffers
                 ser.flushOutput()
