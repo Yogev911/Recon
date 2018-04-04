@@ -1,6 +1,6 @@
 import serial #import pyserial library
 from time import sleep #import sleep library
-ser=serial.Serial('/dev/ttyAMA0',9600) #Initialize Serial Port
+ser=serial.Serial('/dev/ttysrial0',9600) #Initialize Serial Port
 from time import sleep #import sleep library
 class GPS:                      #Create GPS class
         def __init__(self):     #This init will run when you create a GPS object.
