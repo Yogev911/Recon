@@ -155,6 +155,7 @@ class mt3339():
 		time.sleep(0.1)
 		ser.write(nmea_command.encode())
 		time.sleep(0.1)
+		print ser.read_all()
 		ser.close()
 #Example commands:
 #gps = mt3339("/dev/ttyAMA0")
