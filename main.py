@@ -2,7 +2,8 @@ import serial #import pyserial library
 from time import sleep #import sleep library
 ser=serial.Serial('/dev/ttyAMA0',9600) #Initialize Serial Port
 from time import sleep #import sleep library
-class GPS:                      #Create GPS class
+import pynmea2
+class my_gps:                      #Create GPS class
         def __init__(self):     #This init will run when you create a GPS object.
                 #This sets up variables for useful commands.
                 #This set is used to set the rate the GPS reports
@@ -36,7 +37,7 @@ class GPS:                      #Create GPS class
                 ser.flushOutput()
                 print "GPS is Initialized" #Print message
 
-myGPS=GPS()
+myGPS=my_gps()
 while(1):
         # ser.flushInput() #Clear Buffers
         # ser.flushInput()
@@ -44,6 +45,6 @@ while(1):
                 pass
         NMEA1=ser.readline()      #Read NMEA1
         NMEA2=ser.readline()
-        print NMEA1
-        print NMEA2
+        print pynmea2.parse(NMEA1)
+        print pynmea2.parse(NMEA2)
         print '******************'
