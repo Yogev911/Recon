@@ -31,7 +31,7 @@ class my_gps:                      #Create GPS class
                 sleep(1)
                 ser.write(MEAS_200_msec)  #Set measurement rate
                 sleep(1)
-                ser.write(GPRMC_GPGGA)    #Ask for only GPRMC and GPGGA Sentences
+                ser.write(SEND_ALL)    #Ask for only GPRMC and GPGGA Sentences
                 sleep(1)
                 ser.flushInput()          #clear buffers
                 ser.flushOutput()
@@ -43,8 +43,8 @@ while(1):
         # ser.flushInput()
         while ser.inWaiting()==0: #Wait for input
                 pass
-        NMEA1=ser.readline()      #Read NMEA1
-        NMEA2=ser.readline()
-        print pynmea2.parse(NMEA1)
-        print pynmea2.parse(NMEA2)
+        NMEA1=ser.read_all()      #Read NMEA1
+        # NMEA2=ser.readline()
+        print NMEA1
+        # print pynmea2.parse(NMEA2)
         print '******************'
