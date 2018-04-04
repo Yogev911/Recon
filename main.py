@@ -43,8 +43,11 @@ while(1):
         # ser.flushInput()
         while ser.inWaiting()==0: #Wait for input
                 pass
-        NMEA1=ser.read_all()      #Read NMEA1
+        lines = ser.readlines()
+        for line in lines:
+                print line
         # NMEA2=ser.readline()
-        print NMEA1
+        # print NMEA1
+
         # print pynmea2.parse(NMEA2)
         print '******************'
