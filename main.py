@@ -38,8 +38,8 @@ class GPS:                      #Create GPS class
 
 myGPS=GPS()
 while(1):
-        ser.flushInput() #Clear Buffers
-        ser.flushInput()
+        # ser.flushInput() #Clear Buffers
+        # ser.flushInput()
         while ser.inWaiting()==0: #Wait for input
                 pass
         NMEA1=ser.readline()      #Read NMEA1
