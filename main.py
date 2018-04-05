@@ -1,4 +1,4 @@
-import libs.gyro_compass.mpu9150 as compass
+import libs.mpu9150 as compass
 imu = compass.MPU9150(3)
 print 'statring'
 print(imu.accel.xyz)
