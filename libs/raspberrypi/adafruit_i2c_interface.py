@@ -1,7 +1,7 @@
-import i2c_interface
+import libs.i2c_interface
 from Adafruit_GPIO import I2C
 
-class Device(i2c_interface):
+class Device():
 
     def __init__(self):
         self.i2c = I2C.get_i2c_device(0x68)
