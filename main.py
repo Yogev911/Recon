@@ -1,9 +1,12 @@
 import libs.mpu9150 as compass
-imu = compass.MPU9150(3)
+imu = compass.mpu9150(3)
 print 'statring'
-print(imu.accel.xyz)
-print(imu.gyro.xyz)
-print(imu.mag.xyz)
-print(imu.temperature)
-print(imu.accel.z)
+print imu.read_x_acc_raw()
+print imu.read_x_acc_raw()
+print 'done'
+
+imu = compass.mpu9150(5)
+print 'statring'
+print imu.read_x_acc_raw()
+print imu.read_x_acc_raw()
 print 'done'
