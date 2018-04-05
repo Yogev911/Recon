@@ -5,6 +5,7 @@ dev = i2c_bus.Device()
 imu = mpu9150(dev)
 print 'statring'
 while 1:
+    print '*\t*\t*\t*\t*\t*\t*\t*'
     print imu.read_y_acc()
     sleep(0.001)
     print imu.read_x_acc_raw()
