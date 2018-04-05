@@ -1,11 +1,6 @@
 import libs.mpu9150 as compass
-imu = compass.mpu9150(3)
-print 'statring'
-print imu.read_x_acc_raw()
-print imu.read_x_acc_raw()
-print 'done'
-
-imu = compass.mpu9150(5)
+import libs.adafruit_i2c_interface as i2c_bus
+imu = compass.mpu9150(i2c_bus)
 print 'statring'
 print imu.read_x_acc_raw()
 print imu.read_x_acc_raw()
