@@ -1,15 +1,14 @@
 import serial #import pyserial library
-import RPi.GPIO as GPIO
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(8, GPIO.OUT)  #Initialize UART1
-GPIO.setup(10, GPIO.IN)  #Initialize UART1
 from time import sleep #import sleep library
-class GPS:                      #Create GPS class
+ser=serial.Serial('/dev/ttyAMA0',9600) #Initialize Serial Port
+from time import sleep #import sleep library
+import pynmea2
+class my_gps:                      #Create GPS class
         def __init__(self):     #This init will run when you create a GPS object.
-                self.ser=serial.Serial('/dev/ttyAMA0',9600) #Initialize Serial Port
                 #This sets up variables for useful commands.
                 #This set is used to set the rate the GPS reports
+                COLD_START = "$PMTK103*30\r\n"
+                WARM_START = "$PMTK102*31\r\n"
                 UPDATE_10_sec=  "$PMTK220,10000*2F\r\n" #Update Every 10 Seconds
                 UPDATE_5_sec=  "$PMTK220,5000*1B\r\n"   #Update Every 5 Seconds
                 UPDATE_1_sec=  "$PMTK220,1000*1F\r\n"   #Update Every One Second
@@ -27,23 +26,34 @@ class GPS:                      #Create GPS class
                 GPRMC_GPGGA="$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"#Send GPRMC AND GPGGA Sentences
                 SEND_ALL ="$PMTK314,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n" #Send All Sentences
                 SEND_NOTHING="$PMTK314,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n" #Send Nothing
-                self.ser.write(BAUD_9600)   #Set Baud Rate to 57600
+                ser.write(BAUD_57600)   #Set Baud Rate to 57600
                 sleep(1)                #Paulse
-                print self.ser.read_all()
-                self.ser.baudrate=9600      #IMPORTANT Since change ser baudrate to match GPS
-                self.ser.write(UPDATE_200_msec) #Set update rate
+                ser.baudrate=57600      #IMPORTANT Since change ser baudrate to match GPS
                 sleep(1)
-                print self.ser.read_all()
+                print 'warm start'
+                ser.write(WARM_START )  # Set update rate
                 sleep(1)
-                self.ser.write(MEAS_200_msec)  #Set measurement rate
+                print 'warm start end'
+                ser.write(UPDATE_200_msec) #Set update rate
                 sleep(1)
-                print self.ser.read_all()
+                ser.write(MEAS_200_msec)  #Set measurement rate
                 sleep(1)
-                self.ser.write(GPRMC_GPGGA)    #Ask for only GPRMC and GPGGA Sentences
+                ser.write(GPRMC_GPGGA)    #Ask for only GPRMC and GPGGA Sentences
                 sleep(1)
-                print self.ser.read_all()
-                sleep(1)
-                self.ser.flushInput()          #clear buffers
-                self.ser.flushOutput()
+                ser.flushInput()          #clear buffers
+                ser.flushOutput()
                 print "GPS is Initialized" #Print message
 
+myGPS=my_gps()
+while(1):
+        # ser.flushInput() #Clear Buffers
+        # ser.flushInput()
+        while ser.inWaiting()==0: #Wait for input
+                pass
+        NMEA1=ser.readline()      #Read NMEA1
+        NMEA2=ser.readline()
+        print pynmea2.parse(NMEA1)
+        print NMEA1
+        print pynmea2.parse(NMEA2)
+        print NMEA2
+        print '******************'
