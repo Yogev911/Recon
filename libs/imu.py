@@ -37,7 +37,9 @@ THE SOFTWARE.
 # At runtime try to continue returning last good data value. We don't want aircraft
 # crashing. However if the I2C has crashed we're probably stuffed.
 
-from utime import sleep_ms
+# from utime import sleep_ms
+from time import sleep
+
 from machine import I2C
 from vector3d import Vector3d
 
@@ -79,7 +81,9 @@ class MPU6050(object):
         self.buf3 = bytearray(3)
         self.buf6 = bytearray(6)
 
-        sleep_ms(200)                           # Ensure PSU and device have settled
+        # sleep_ms(200)                           # Ensure PSU and device have settled
+        sleep(0.001)
+
         if isinstance(side_str, str):           # Non-pyb targets may use other than X or Y
             self._mpu_i2c = I2C(side_str)
         elif hasattr(side_str, 'readfrom'):     # Soft or hard I2C instance. See issue #3097
