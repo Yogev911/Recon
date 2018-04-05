@@ -25,13 +25,15 @@ THE SOFTWARE.
 
 from imu import MPU6050, bytes_toint, MPUException
 from vector3d import Vector3d
-from utime import sleep_ms
+# from utime import sleep_ms
+from time import sleep
 
 def default_mag_wait():
     '''
     delay of 1ms
     '''
-    sleep_ms(1)
+    # sleep_ms(1)
+    sleep(0.001)
 
 
 
