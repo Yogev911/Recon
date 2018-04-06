@@ -25,6 +25,7 @@ def get_magnet():
     print " mx = ", (mag['x'])
     print " my = ", (mag['y'])
     print " mz = ", (mag['z'])
+    print math.atan2(mag['x'], mag['y'])
 
 def get_temp():
     temp = mpu9250.readTemperature()
@@ -32,13 +33,6 @@ def get_temp():
 
 def get_azimut():
     mag = mpu9250.readMagnet()
-    print " mx = ", (mag['x'])
-    print " my = ", (mag['y'])
-    print " mz = ", (mag['z'])
-    print mag['x']
-    print type(mag['x'])
-    print mag['y']
-    print type((mag['y']))
     print math.atan2(mag['x'],mag['y'])
 
     # try:
