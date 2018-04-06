@@ -1,4 +1,3 @@
-import libs.i2c_interface
 from Adafruit_GPIO import I2C
 
 class Device():
