@@ -33,7 +33,7 @@ def get_temp():
 
 def get_azimut():
     mag = mpu9250.readMagnet()
-    print math.atan2(mag['x'],mag['y'])
+    print math.cos(math.atan2(mag['x'],mag['y']))
 
     # try:
     #     while True:
