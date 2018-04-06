@@ -24,7 +24,7 @@ class my_gps:  # Create GPS class
         sleep(1)
         ser.write(conf.MEAS_200_msec)  # Set measurement rate
         sleep(1)
-        ser.write(conf.GPRMC_GPGGA)  # Ask for only GPRMC and GPGGA Sentences
+        ser.write(conf.GPGGA_ONLY)  # Ask for only GPRMC and GPGGA Sentences
         sleep(1)
         ser.flushInput()  # clear buffers
         ser.flushOutput()
@@ -34,7 +34,7 @@ class my_gps:  # Create GPS class
         while ser.inWaiting() == 0:  # Wait for input
             pass
         self.NMEA1 = ser.readline()  # Read NMEA1
-        self.NMEA2 = ser.readline()
+        # self.NMEA2 = ser.readline()
         print self.NMEA1
         cord = pynmea2.parse(self.NMEA1)
         print cord.timestamp

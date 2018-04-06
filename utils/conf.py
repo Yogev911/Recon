@@ -15,6 +15,7 @@ BAUD_57600 = "$PMTK251,57600*2C\r\n"  # Set Baud Rate at 57600
 BAUD_9600 = "$PMTK251,9600*17\r\n"  # Set 9600 Baud Rate
 # Commands for which NMEA Sentences are sent
 GPRMC_ONLY = "$PMTK314,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"  # Send only the GPRMC Sentence
+GPGGA_ONLY = "$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"  # Send only the GPRMC Sentence
 GPRMC_GPGGA = "$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"  # Send GPRMC AND GPGGA Sentences
 SEND_ALL = "$PMTK314,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"  # Send All Sentences
 SEND_NOTHING = "$PMTK314,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"  # Send Nothing
