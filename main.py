@@ -13,6 +13,8 @@ def main():
     gyro.get_gyro()
     print 'magnet'
     gyro.get_magnet()
+    print 'temp'
+    print gyro.get_temp()
 
     print 'gps:'
     gps.get_location()

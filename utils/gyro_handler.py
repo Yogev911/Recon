@@ -25,6 +25,9 @@ def get_magnet():
     print " my = ", (mag['y'])
     print " mz = ", (mag['z'])
 
+def get_temp():
+    temp = mpu9250.readTemperature()
+    print "temp = ", temp
 
     # try:
     #     while True:
