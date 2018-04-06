@@ -13,12 +13,12 @@ def main():
     gyro.get_gyro()
     print 'magnet'
     gyro.get_magnet()
-    print 'temp'
-    print gyro.get_temp()
-
+    print 'temp:'
+    gyro.get_temp()
+    print 'azimut:'
+    gyro.get_azimut()
     print 'gps:'
     gps.get_location()
-
     print 'ultra sonic:'
     print us.getDistance()
 
@@ -31,4 +31,4 @@ if __name__ == '__main__':
     init()
     while 1:
         main()
-        sleep(1)
+        sleep(0.2)

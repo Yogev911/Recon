@@ -1,6 +1,7 @@
-import FaBo9Axis_MPU9250
 import time
 import sys
+import math
+import FaBo9Axis_MPU9250
 
 mpu9250 = FaBo9Axis_MPU9250.MPU9250()
 
@@ -28,6 +29,10 @@ def get_magnet():
 def get_temp():
     temp = mpu9250.readTemperature()
     print "temp = ", temp
+
+def get_azimut():
+    mag = mpu9250.readMagnet()
+    print math.atan2(mag['x'],mag['y'])
 
     # try:
     #     while True:
