@@ -24,7 +24,6 @@ def main():
 def init():
     us.init()
 
-
 if __name__ == '__main__':
     gps = my_gps.my_gps()
     init()

@@ -35,10 +35,25 @@ class my_gps:  # Create GPS class
             pass
         self.NMEA1 = ser.readline()  # Read NMEA1
         self.NMEA2 = ser.readline()
-        print pynmea2.parse(self.NMEA1)
         print self.NMEA1
-        print pynmea2.parse(self.NMEA2)
-        print self.NMEA2
+        cord = pynmea2.parse(self.NMEA1)
+        print cord.timestamp
+        print cord.lat_dir
+        print cord.lon
+        print cord.lon_dir
+        print cord.gps_qual
+        print cord.num_sats
+        print cord.horizontal_dil
+        print cord.altitude
+        print cord.altitude_units
+        print cord.geo_sep
+        print cord.geo_sep_units
+        print cord.age_gps_data
+        print cord.ref_station_id
+
+
+        # print pynmea2.parse(self.NMEA2)
+        # print self.NMEA2
 
 # myGPS = my_gps()
 # while (1):
