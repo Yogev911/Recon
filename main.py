@@ -18,7 +18,7 @@ def main():
     gps.get_location()
 
     print 'ultra sonic:'
-    us.getDistance()
+    print us.getDistance()
 
 
 def init():
