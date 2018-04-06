@@ -25,7 +25,7 @@ def get_magnet():
     print " mx = ", (mag['x'])
     print " my = ", (mag['y'])
     print " mz = ", (mag['z'])
-    print math.atan2(mag['x'], mag['y'])
+    print math.cos(math.atan2(mag['x'],mag['y']))
 
 def get_temp():
     temp = mpu9250.readTemperature()
