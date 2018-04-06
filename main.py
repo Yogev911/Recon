@@ -31,4 +31,4 @@ if __name__ == '__main__':
     init()
     while 1:
         main()
-        sleep(1)
+        sleep(0.2)
