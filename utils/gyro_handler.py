@@ -36,8 +36,18 @@ def get_azimut():
     print " mx = ", (mag['x'])
     print " my = ", (mag['y'])
     print " mz = ", (mag['z'])
-    print math.atan2(mag['y'], mag['x']) * 180 / math.pi
+    azimut = math.atan2(mag['y'], mag['x']) * 180 / math.pi
+    azimut+=360 if azimut < 0 else azimut
+    print azimut
 
+
+def _map_azimut(i):
+    x = i % 360
+    if x > 180:
+        x -= 360
+    elif x == 180 and i < 0:
+        x = -x
+    return x
     # try:
     #     while True:
     #         accel = mpu9250.readAccel()
