@@ -11,8 +11,8 @@ def main():
     gyro.get_gyro()
     print 'accel:'
     gyro.get_gyro()
-    print 'magnet'
-    gyro.get_magnet()
+    # print 'magnet'
+    # gyro.get_magnet()
     print 'temp:'
     gyro.get_temp()
     print 'azimut:'
@@ -31,4 +31,4 @@ if __name__ == '__main__':
     init()
     while 1:
         main()
-        sleep(0.2)
+        sleep(1)
