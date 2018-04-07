@@ -33,9 +33,9 @@ def get_temp():
 
 def get_azimut():
     mag = mpu9250.readMagnet()
-    print " mx = ", (mag['x'])
-    print " my = ", (mag['y'])
-    print " mz = ", (mag['z'])
+    # print " mx = ", (mag['x'])
+    # print " my = ", (mag['y'])
+    # print " mz = ", (mag['z'])
     azimut = math.atan2(mag['y'], mag['x']) * 180 / math.pi
     # azimut+=360 if azimut < 0 else azimut
     print azimut
