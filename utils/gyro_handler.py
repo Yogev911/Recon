@@ -36,8 +36,8 @@ def get_azimut():
     # print " mx = ", (mag['x'])
     # print " my = ", (mag['y'])
     # print " mz = ", (mag['z'])
-    mag_y = mag['y'] * 0.48828125
-    mag_x = mag['x'] * 0.48828125
+    mag_y = mag['y']
+    mag_x = mag['x']
     print mag_x
     print mag_y
     azimut = math.atan2(mag_y, mag_x) * (180 / math.pi)
