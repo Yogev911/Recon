@@ -42,8 +42,8 @@ def get_azimut():
     print mag_y
     azimut = (math.atan2(mag_y, mag_x) * 180) / math.pi
     # azimut+=360 if azimut < 0 else azimut
-    if azimut <= 0:
-        azimut+=360
+    # if azimut <= 0:
+    #     azimut+=360
     print azimut
     return azimut
 
