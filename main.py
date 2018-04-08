@@ -1,5 +1,6 @@
 from time import sleep
 import math
+import os
 
 from utils import conf
 from utils import gps_handler as my_gps
@@ -20,6 +21,7 @@ def main():
     gps.get_location()
     print 'ultra sonic:'
     print us.getDistance()
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def init():
