@@ -12,8 +12,7 @@ class my_gps:  # Create GPS class
     def __init__(self):  # This init will run when you create a GPS object.
         # This sets up variables for useful commands.
         # This set is used to set the rate the GPS reports
-        self.NMEA1 = None
-        self.NMEA2 = None
+        self.NMEA = None
         ser.write(conf.BAUD_57600)  # Set Baud Rate to 57600
         sleep(1)  # Paulse
         ser.baudrate = 57600  # IMPORTANT Since change ser baudrate to match GPS
@@ -30,27 +29,44 @@ class my_gps:  # Create GPS class
         ser.flushOutput()
         print "GPS is Initialized"  # Print message
 
+    @property
+    def lat(self):
+        while ser.inWaiting() == 0:  # Wait for input
+            pass
+        return pynmea2.parse(ser.readline()).lat
+
+    @property
+    def lat_dir(self):
+        while ser.inWaiting() == 0:  # Wait for input
+            pass
+        return pynmea2.parse(ser.readline()).lat_dir
+
+    @property
+    def lon(self):
+        while ser.inWaiting() == 0:  # Wait for input
+            pass
+        return pynmea2.parse(ser.readline()).lon
+
+    @property
+    def lon_dir(self):
+        while ser.inWaiting() == 0:  # Wait for input
+            pass
+        return pynmea2.parse(ser.readline()).lon_dir
+
     def get_location(self):
         while ser.inWaiting() == 0:  # Wait for input
             pass
-        self.NMEA1 = ser.readline()  # Read NMEA1
-        # self.NMEA2 = ser.readline()
-        print self.NMEA1
-        cord = pynmea2.parse(self.NMEA1)
-        print cord.timestamp
-        print cord.lat_dir
-        print cord.lon
-        print cord.lon_dir
-        print cord.gps_qual
-        print cord.num_sats
-        print cord.horizontal_dil
-        print cord.altitude
-        print cord.altitude_units
-        print cord.geo_sep
-        print cord.geo_sep_units
-        print cord.age_gps_data
-        print cord.ref_station_id
+        self.NMEA = ser.readline()  # Read NMEA1
+        print self.NMEA
+        cord = pynmea2.parse(self.NMEA)
+        attrs = vars(cord)
+        print ', '.join("%s: %s" % item for item in attrs.items())
 
+    def get_latitude(self):
+        return None
+
+    def get_longitude(self):
+        return None
 
         # print pynmea2.parse(self.NMEA2)
         # print self.NMEA2

@@ -45,6 +45,7 @@ def get_azimut():
     if azimut <= 0:
         azimut+=360
     print azimut
+    return azimut
 
 
 def _map_azimut(i):
@@ -76,3 +77,5 @@ def _map_azimut(i):
     #
     # except KeyboardInterrupt:
     #     sys.exit()
+
+
