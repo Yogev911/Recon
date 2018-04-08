@@ -9,6 +9,7 @@ from utils import ultrasonic_handler as us
 
 
 def main():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print 'gyro:'
     gyro.get_gyro()
     print 'accel:'
@@ -21,7 +22,6 @@ def main():
     gps.get_location()
     print 'ultra sonic:'
     print us.getDistance()
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def init():
