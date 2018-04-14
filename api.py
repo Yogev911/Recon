@@ -49,9 +49,9 @@ def mark_target():
         distance = us.getDistance()
         latitude = gps.lat
         longitude = gps.lon
-
-        dx = distance * math.sin(gyro.get_azimut())
-        dy = distance * math.cos(gyro.get_azimut())
+        azimut = gyro.get_azimut()
+        dx = distance * math.sin(azimut)
+        dy = distance * math.cos(azimut)
 
         delta_longitude = dx / (111320 * math.cos(latitude))
         delta_latitude = dy / 110540
@@ -75,8 +75,8 @@ def print_data():
 
 if __name__ == '__main__':
     try:
-        gps = my_gps.my_gps()
         print 'start init'
+        gps = my_gps.my_gps()
         init()
         threading.Thread(target=print_data, args=()).start()
         print 'starting api'
