@@ -80,8 +80,13 @@ if __name__ == '__main__':
         print 'start init'
         gps = my_gps.my_gps()
         init()
-        threading.Thread(target=print_data, args=()).start()
-        print 'starting api'
+        while True:
+            main()
+            print '*\t*\t*\t*\t*\t*\t*\t'
+            mark_target()
+            sleep(0.1)
+        # threading.Thread(target=print_data, args=()).start()
+        # print 'starting api'
         # app.run(host=conf.HOST, port=conf.PORT)
     except:
         print traceback.format_exc()
