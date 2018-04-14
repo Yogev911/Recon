@@ -63,6 +63,7 @@ if __name__ == '__main__':
     try:
         app.run(host=conf.HOST, port=conf.PORT)
         gps = my_gps.my_gps()
+        print 'start init'
         init()
         while 1:
             main()
