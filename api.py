@@ -45,21 +45,24 @@ def init():
 
 
 def mark_target():
-    distance = us.getDistance()
-    latitude = gps.lat
-    longitude = gps.lon
+    try:
+        distance = us.getDistance()
+        latitude = gps.lat
+        longitude = gps.lon
 
-    dx = distance * math.sin(gyro.get_azimut())
-    dy = distance * math.cos(gyro.get_azimut())
+        dx = distance * math.sin(gyro.get_azimut())
+        dy = distance * math.cos(gyro.get_azimut())
 
-    delta_longitude = dx / (111320 * math.cos(latitude))
-    delta_latitude = dy / 110540
+        delta_longitude = dx / (111320 * math.cos(latitude))
+        delta_latitude = dy / 110540
 
-    final_longitude = longitude + delta_longitude
-    final_latitude = latitude + delta_latitude
+        final_longitude = longitude + delta_longitude
+        final_latitude = latitude + delta_latitude
 
-    print 'final_longitude '+final_longitude
-    print 'final_latitude' + final_latitude
+        print 'final_longitude '+final_longitude
+        print 'final_latitude' + final_latitude
+    except:
+        pass
 
 
 def print_data():
