@@ -1,11 +1,26 @@
-from time import sleep
-import math
+import json
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import ImmutableMultiDict
+from flask_cors import CORS
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 import os
+from time import sleep
+import traceback
+import api_handler
+import math
 
 from utils import conf
 from utils import gps_handler as my_gps
 from utils import gyro_handler as gyro
 from utils import ultrasonic_handler as us
+
+app = Flask(__name__)
+CORS(app)
+
+
+@app.route('/', methods=['GET', 'POST'])
+def root():
+    return 'hello! this is index!@#$'
 
 
 def main():
@@ -30,26 +45,27 @@ def init():
 
 def mark_target():
     distance = us.getDistance()
-    latitude = gyro.get_latitude()
-    longitude = gyro.get_longitude()
+    latitude = gps.lat
+    longitude = gps.lon
 
     dx = distance * math.sin(gyro.get_azimut())
     dy = distance * math.cos(gyro.get_azimut())
 
-    delta_longitude = dx/(111320*math.cos(latitude))
+    delta_longitude = dx / (111320 * math.cos(latitude))
     delta_latitude = dy / 110540
 
-
-
     final_longitude = longitude + delta_longitude
-    final_latitude =  latitude + delta_latitude
-
+    final_latitude = latitude + delta_latitude
 
 
 
 if __name__ == '__main__':
-    gps = my_gps.my_gps()
-    init()
-    while 1:
-        main()
-        sleep(0.1)
+    try:
+        app.run(host=conf.HOST, port=conf.PORT)
+        gps = my_gps.my_gps()
+        init()
+        while 1:
+            main()
+            sleep(0.1)
+    except:
+        print traceback.format_exc()

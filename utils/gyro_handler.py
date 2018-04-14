@@ -25,26 +25,25 @@ def get_magnet():
     print " mx = ", (mag['x'])
     print " my = ", (mag['y'])
     print " mz = ", (mag['z'])
-    print math.atan2(mag['x'], mag['y'])*180/math.pi
+    print math.atan2(mag['x'], mag['y']) * 180 / math.pi
+
 
 def get_temp():
     temp = mpu9250.readTemperature()
     print "temp = ", temp
 
+
 def get_azimut():
     mag = mpu9250.readMagnet()
-    # print " mx = ", (mag['x'])
-    # print " my = ", (mag['y'])
-    # print " mz = ", (mag['z'])
     mag_y = mag['y']
     mag_x = mag['x']
     print mag_x
     print mag_y
     azimut = math.atan2(mag_y, mag_x) * (180 / math.pi)
     if azimut > 360:
-        azimut%=360
+        azimut %= 360
     if azimut < 0:
-        azimut+=360
+        azimut += 360
     print azimut
     return azimut
 
@@ -56,27 +55,6 @@ def _map_azimut(i):
     elif x == 180 and i < 0:
         x = -x
     return x
-    # try:
-    #     while True:
-    #         accel = mpu9250.readAccel()
-    #         print " ax = " , ( accel['x'] )
-    #         print " ay = " , ( accel['y'] )
-    #         print " az = " , ( accel['z'] )
-    #
-    #         gyro = mpu9250.readGyro()
-    #         print " gx = " , ( gyro['x'] )
-    #         print " gy = " , ( gyro['y'] )
-    #         print " gz = " , ( gyro['z'] )
-    #
-    #         mag = mpu9250.readMagnet()
-    #         print " mx = " , ( mag['x'] )
-    #         print " my = " , ( mag['y'] )
-    #         print " mz = " , ( mag['z'] )
-    #         print
-    #
-    #         time.sleep(0.5)
-    #
-    # except KeyboardInterrupt:
-    #     sys.exit()
+
 
 
