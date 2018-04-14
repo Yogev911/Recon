@@ -82,6 +82,6 @@ if __name__ == '__main__':
         init()
         threading.Thread(target=print_data, args=()).start()
         print 'starting api'
-        app.run(host=conf.HOST, port=conf.PORT)
+        # app.run(host=conf.HOST, port=conf.PORT)
     except:
         print traceback.format_exc()
