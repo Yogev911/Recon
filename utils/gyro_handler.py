@@ -37,8 +37,8 @@ def get_azimut():
     mag = mpu9250.readMagnet()
     mag_y = mag['y']
     mag_x = mag['x']
-    print mag_x
-    print mag_y
+    # print mag_x
+    # print mag_y
     azimut = math.atan2(mag_y, mag_x) * (180 / math.pi)
     if azimut > 360:
         azimut %= 360
