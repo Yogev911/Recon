@@ -66,7 +66,7 @@ def mark_target():
 
 
 def print_data():
-    while 1:
+    for i in range(0,10000):
         main()
         print '*\t*\t*\t*\t*\t*\t*\t'
         mark_target()
