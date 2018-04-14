@@ -82,8 +82,8 @@ if __name__ == '__main__':
         init()
         while True:
             main()
-            # print '*\t*\t*\t*\t*\t*\t*\t'
-            # mark_target()
+            print '*\t*\t*\t*\t*\t*\t*\t'
+            mark_target()
             sleep(0.1)
         # threading.Thread(target=print_data, args=()).start()
         # print 'starting api'
