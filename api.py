@@ -8,6 +8,7 @@ from time import sleep
 import traceback
 import api_handler
 import math
+import threading
 
 from utils import conf
 from utils import gps_handler as my_gps
@@ -58,15 +59,19 @@ def mark_target():
     final_latitude = latitude + delta_latitude
 
 
+def print_data():
+    while 1:
+        main()
+        sleep(1)
+
 
 if __name__ == '__main__':
     try:
-        app.run(host=conf.HOST, port=conf.PORT)
         gps = my_gps.my_gps()
         print 'start init'
         init()
-        while 1:
-            main()
-            sleep(0.1)
+        threading.Thread(target=print_data, args=()).start()
+        print 'starting api'
+        app.run(host=conf.HOST, port=conf.PORT)
     except:
         print traceback.format_exc()
