@@ -68,11 +68,11 @@ def mark_target():
 
 
 def print_data():
-    for i in range(0,10000):
+    while True:
         main()
         print '*\t*\t*\t*\t*\t*\t*\t'
         mark_target()
-        sleep(1)
+        sleep(0.1)
 
 
 if __name__ == '__main__':
