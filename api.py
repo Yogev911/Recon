@@ -49,7 +49,7 @@ def init():
 def mark_target():
     try:
         # distance = us.getDistance()
-        distance = 100000
+        distance = 1000
         latitude = gps.lat
         print 'lat'
         print latitude
