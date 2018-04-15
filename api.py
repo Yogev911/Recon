@@ -85,7 +85,7 @@ if __name__ == '__main__':
             main()
             print '*\t*\t*\t*\t*\t*\t*\t'
             mark_target()
-            sleep(0.1)
+            sleep(0.25)
         # threading.Thread(target=print_data, args=()).start()
         # print 'starting api'
         # app.run(host=conf.HOST, port=conf.PORT)
