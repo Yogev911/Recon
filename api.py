@@ -52,10 +52,10 @@ def mark_target():
         distance = 100000
         latitude = gps.lat
         print 'lat'
-        print type(latitude)
+        print latitude
         longitude = gps.lon
         print 'lon'
-        print type(longitude)
+        print longitude
         azimut = gyro.get_azimut()
         dx = distance * math.sin(azimut)
         dy = distance * math.cos(azimut)
@@ -65,11 +65,12 @@ def mark_target():
 
         final_longitude = fix(longitude + delta_longitude,6)
         final_latitude = fix(latitude + delta_latitude,6)
-
+        print '%\t%\t%\t%\t%\t%\t'
         print 'final_longitude '
         print final_longitude
         print 'final_latitude'
         print final_latitude
+        print '%\t%\t%\t%\t%\t%\t'
     except:
         print traceback.format_exc()
 

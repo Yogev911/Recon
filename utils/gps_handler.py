@@ -8,6 +8,7 @@ from fpformat import fix
 import conf
 
 ser = serial.Serial('/dev/ttyAMA0', 9600)  # Initialize Serial Port
+COMPASS = {'N': -1, 'E': 1, 'W': -1, 'S': -1}
 
 
 class my_gps:  # Create GPS class
@@ -40,8 +41,7 @@ class my_gps:  # Create GPS class
         deg = int(lat[:2])
         mins = float(lat[2:])
         sec = math.fabs((mins - (int(mins)) * 60))
-        return mult * float(fix((deg + mins / 60),6))
-
+        return mult * float(fix((deg + mins / 60), 6))
 
     @property
     def lat_dir(self):
@@ -84,7 +84,7 @@ class my_gps:  # Create GPS class
         deg = int(lat[:2])
         mins = float(lat[2:])
         sec = math.fabs((mins - (int(mins)) * 60))
-        dd = mult * float(fix((deg + mins / 60),6))
+        dd = mult * float(fix((deg + mins / 60), 6))
         print deg
         print mins
         print sec
@@ -94,19 +94,3 @@ class my_gps:  # Create GPS class
     def get_longitude(self):
         return None
 
-        # print pynmea2.parse(self.NMEA2)
-        # print self.NMEA2
-
-# myGPS = my_gps()
-# while (1):
-#     # ser.flushInput() #Clear Buffers
-#     # ser.flushInput()
-#     while ser.inWaiting() == 0:  # Wait for input
-#         pass
-#     NMEA1 = ser.readline()  # Read NMEA1
-#     NMEA2 = ser.readline()
-#     print pynmea2.parse(NMEA1)
-#     print NMEA1
-#     print pynmea2.parse(NMEA2)
-#     print NMEA2
-#     print '******************'
