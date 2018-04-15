@@ -45,7 +45,7 @@ def get_azimut():
     if azimut < 0:
         azimut += 360
     print azimut
-    print math.degrees(math.atan2(mag_y, mag_x))
+    # print math.degrees(math.atan2(mag_y, mag_x))
     return azimut
 
 

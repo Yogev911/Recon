@@ -37,7 +37,6 @@ class my_gps:  # Create GPS class
             pass
         lat = pynmea2.parse(ser.readline()).lat
         mult = -1
-        print type(lat)
         deg = int(lat[:2])
         mins = float(lat[2:])
         sec = math.fabs((mins - (int(mins)) * 60))
@@ -56,7 +55,6 @@ class my_gps:  # Create GPS class
             pass
         lon = pynmea2.parse(ser.readline()).lon
         mult = 1
-        print type(lon)
         deg = int(lon[:3])
         mins = float(lon[3:])
         sec = math.fabs((mins - (int(mins)) * 60))
