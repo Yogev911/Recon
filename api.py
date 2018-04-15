@@ -48,8 +48,8 @@ def mark_target():
     try:
         distance = us.getDistance()
         latitude = gps.lat
+        print 'lat'
         print latitude
-        print 'lat'+latitude
         longitude = gps.lon
         print 'lon' + longitude
         azimut = gyro.get_azimut()
