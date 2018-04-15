@@ -65,7 +65,7 @@ def mark_target():
         print 'final_longitude '+final_longitude
         print 'final_latitude' + final_latitude
     except:
-        pass
+        print traceback.format_exc()
 
 
 def print_data():
