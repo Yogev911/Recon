@@ -76,7 +76,7 @@ class my_gps:  # Create GPS class
         lat = pynmea2.parse(ser.readline()).lat
         mult = -1
         deg = int(str(lat)[:2])
-        mins = int(str(lat)[2:])
+        mins = lat - deg
         sec = math.fabs((mins - (mins | 0)) * 60)
         dd = mult * fix((deg + mins / 60),6) or 0.0
         print deg
