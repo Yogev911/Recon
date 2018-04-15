@@ -64,8 +64,10 @@ def mark_target():
         final_longitude = longitude + delta_longitude
         final_latitude = latitude + delta_latitude
 
-        print 'final_longitude '+final_longitude
-        print 'final_latitude' + final_latitude
+        print 'final_longitude '
+        print final_longitude
+        print 'final_latitude'
+        print final_latitude
     except:
         print traceback.format_exc()
 
