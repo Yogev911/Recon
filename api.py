@@ -9,6 +9,8 @@ import traceback
 import api_handler
 import math
 import threading
+from fpformat import fix
+
 
 from utils import conf
 from utils import gps_handler as my_gps
@@ -61,8 +63,8 @@ def mark_target():
         delta_longitude = dx / (111320 * math.cos(latitude))
         delta_latitude = dy / 110540
 
-        final_longitude = longitude + delta_longitude
-        final_latitude = latitude + delta_latitude
+        final_longitude = fix(longitude + delta_longitude,6)
+        final_latitude = fix(latitude + delta_latitude,6)
 
         print 'final_longitude '
         print final_longitude
