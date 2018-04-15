@@ -54,7 +54,13 @@ class my_gps:  # Create GPS class
     def lon(self):
         while ser.inWaiting() == 0:  # Wait for input
             pass
-        return pynmea2.parse(ser.readline()).lon
+        lon = pynmea2.parse(ser.readline()).lon
+        mult = 1
+        print type(lon)
+        deg = int(lon[:3])
+        mins = float(lon[3:])
+        sec = math.fabs((mins - (int(mins)) * 60))
+        return mult * float(fix((deg + mins / 60), 6))
 
     @property
     def lon_dir(self):
