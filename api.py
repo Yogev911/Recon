@@ -56,7 +56,8 @@ def mark_target():
         longitude = gps.lon
         print 'lon'
         print longitude
-        azimut = gyro.get_azimut()
+        # azimut = gyro.get_azimut()
+        azimut = 270
         dx = distance * math.sin(azimut)
         dy = distance * math.cos(azimut)
 
