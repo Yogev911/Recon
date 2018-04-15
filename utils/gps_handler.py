@@ -78,8 +78,8 @@ class my_gps:  # Create GPS class
         print type(lat)
         deg = lat[:2]
         print deg
-        deg = int(str(lat)[:2])
-        mins = lat - deg
+        # deg = int(str(lat)[:2])
+        mins = float(lat) - float(deg)
         sec = math.fabs((mins - (mins | 0)) * 60)
         dd = mult * fix((deg + mins / 60),6) or 0.0
         print deg
