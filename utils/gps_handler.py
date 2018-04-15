@@ -2,6 +2,8 @@ import serial  # import pyserial library
 import pynmea2
 from time import sleep  # import sleep library
 import threading
+import math
+from fpformat import fix
 
 import conf
 
@@ -33,7 +35,13 @@ class my_gps:  # Create GPS class
     def lat(self):
         while ser.inWaiting() == 0:  # Wait for input
             pass
-        return pynmea2.parse(ser.readline()).lat
+        lat = pynmea2.parse(ser.readline()).lat
+        mult = -1
+        deg = int(str(lat)[:2])
+        mins = int(str(lat)[2:])
+        sec = math.fabs((mins - (mins | 0)) * 60)
+        dd = mult * fix((deg + mins / 60),6) or 0.0
+        return deg,mins,sec,dd
 
     @property
     def lat_dir(self):
