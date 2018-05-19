@@ -5,7 +5,7 @@ from time import sleep  # import sleep library
 import pynmea2
 import serial  # import pyserial library
 
-import conf
+from utils import conf
 
 ser = serial.Serial('/dev/ttyAMA0', 9600)  # Initialize Serial Port
 COMPASS = {'N': -1, 'E': 1, 'W': -1, 'S': -1}
@@ -48,6 +48,12 @@ class my_gps:  # Create GPS class
         while ser.inWaiting() == 0:  # Wait for input
             pass
         return pynmea2.parse(ser.readline()).lat_dir
+
+    @property
+    def alt(self):
+        while ser.inWaiting() == 0:  # Wait for input
+            pass
+        return pynmea2.parse(ser.readline()).altitude
 
     @property
     def lon(self):

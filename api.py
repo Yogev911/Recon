@@ -1,4 +1,3 @@
-from flask_cors import CORS
 import math
 import os
 import socket
@@ -9,8 +8,8 @@ from time import sleep
 
 from flask import Flask
 from flask_cors import CORS
-import conf
-from utils import gps_handler as my_gps
+
+from utils import gps_handler as my_gps, conf
 from utils import gyro_handler as gyro
 from utils import ultrasonic_handler as us
 
