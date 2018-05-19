@@ -1,8 +1,7 @@
-from time import sleep
 import math
 import os
+from time import sleep
 
-from utils import conf
 from utils import gps_handler as my_gps
 from utils import gyro_handler as gyro
 from utils import ultrasonic_handler as us

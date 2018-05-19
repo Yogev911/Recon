@@ -24,3 +24,9 @@ SEND_NOTHING = "$PMTK314,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"  # Send N
 # api region
 HOST = 'localhost'
 PORT = 7080
+
+
+MARK = 'mark'
+
+
+SOLDIER_SCAN_INTERVAL = 3

@@ -1,18 +1,15 @@
-import json
-from werkzeug.utils import secure_filename
-from werkzeug.datastructures import ImmutableMultiDict
 from flask_cors import CORS
-from flask import Flask, request, jsonify, render_template, redirect, url_for
-import os
-from time import sleep
-import traceback
-import api_handler
 import math
-import threading
+import os
+import socket
+import traceback
 from fpformat import fix
+from multiprocessing import Process, Pipe
+from time import sleep
 
-
-from utils import conf
+from flask import Flask
+from flask_cors import CORS
+import conf
 from utils import gps_handler as my_gps
 from utils import gyro_handler as gyro
 from utils import ultrasonic_handler as us
@@ -24,6 +21,25 @@ CORS(app)
 @app.route('/', methods=['GET', 'POST'])
 def root():
     return 'hello! this is index!@#$'
+
+
+def run(api_connection):
+    child_socket, father_socket = Pipe()
+    Process(target=listen_to_socket, args=(child_socket,)).start()
+    app.run(host="0.0.0.0", port=8082)
+
+def listen_to_socket(father_connection):
+    serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    serversocket.bind(('0.0.0.0', 8089))
+    serversocket.listen(5)  # become a server socket, maximum 5 connections
+    while True:
+        connection, address = serversocket.accept()
+        while True:
+            msg = connection.recv(512)
+            if len(msg) > 0:
+                if msg == conf.MARK:
+                    print msg
+            break
 
 
 def main():
@@ -64,8 +80,8 @@ def mark_target():
         delta_longitude = dx / (111320 * math.cos(latitude))
         delta_latitude = dy / 110540
 
-        final_longitude = fix(longitude + delta_longitude,6)
-        final_latitude = fix(latitude + delta_latitude,6)
+        final_longitude = fix(longitude + delta_longitude, 6)
+        final_latitude = fix(latitude + delta_latitude, 6)
         print '%\t%\t%\t%\t%\t%\t'
         print 'final_longitude '
         print final_longitude
@@ -94,8 +110,8 @@ if __name__ == '__main__':
             print '*\t*\t*\t*\t*\t*\t*\t'
             mark_target()
             sleep(0.25)
-        # threading.Thread(target=print_data, args=()).start()
-        # print 'starting api'
-        # app.run(host=conf.HOST, port=conf.PORT)
+            # threading.Thread(target=print_data, args=()).start()
+            # print 'starting api'
+            # app.run(host=conf.HOST, port=conf.PORT)
     except:
         print traceback.format_exc()

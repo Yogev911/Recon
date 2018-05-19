@@ -1,9 +1,9 @@
-import serial  # import pyserial library
-import pynmea2
-from time import sleep  # import sleep library
-import threading
 import math
 from fpformat import fix
+from time import sleep  # import sleep library
+
+import pynmea2
+import serial  # import pyserial library
 
 import conf
 
