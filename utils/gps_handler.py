@@ -39,8 +39,10 @@ class my_gps:  # Create GPS class
         lat = pynmea2.parse(ser.readline()).lat
         mult = -1.0
         deg = lat[:2]
-        mins = float(lat[2:])
-        sec = math.fabs((mins - (int(mins)) * 60))
+        print 'deg ' + deg
+        mins = lat[2:]
+        print 'mins ' + mins
+        sec = math.fabs((float(mins) - (int(float(mins))) * 60))
         return mult * float(fix((float(deg) + mins / 60), 6))
 
     @property
