@@ -34,7 +34,7 @@ class my_gps:  # Create GPS class
 
     @property
     def lat(self):
-        mult = -1.0
+        mult = 1.0
 
         while ser.inWaiting() == 0:  # Wait for input
             pass
@@ -67,7 +67,7 @@ class my_gps:  # Create GPS class
         if lon == '':
             print 'waiting for signal'
             return None
-        mult = 1
+        mult = 1.0
         deg = int(lon[:3])
         mins = float(lon[3:])
         sec = math.fabs((mins - (int(mins)) * 60))
