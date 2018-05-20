@@ -1,6 +1,6 @@
 RECONUNITID = 1
 MARK = 'mark'
-TARGET_TYPES = ['warrning','danger','ally','unknown']
+TARGET_TYPES = ['warrning', 'danger', 'ally', 'unknown']
 SOLDIER_SCAN_INTERVAL = 3
 
 # DB region
@@ -31,7 +31,6 @@ GPRMC_GPGGA = "$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"  # Send GP
 SEND_ALL = "$PMTK314,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"  # Send All Sentences
 SEND_NOTHING = "$PMTK314,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"  # Send Nothing
 
-
 # api region
 HOST = 'localhost'
 PORT = 7080
@@ -40,71 +39,41 @@ data = [
     {
         "id": 1,
         "reconunitid": 1,
-        "altitude": "123123",
-        "longitude": "123",
-        "latitude": "123",
-        "azimuth": "123",
-        "size": 123,
-        "type": "123"
+        "altitude": "2222",
+        "longitude": "34.823228",
+        "latitude": "32.164760",
+        "type": "warrning"
+    },
+    {
+        "id": 2,
+        "reconunitid": 1,
+        "altitude": "32",
+        "longitude": "34.821672",
+        "latitude": "32.164242",
+        "type": "warrning"
     },
     {
         "id": 3,
         "reconunitid": 1,
-        "altitude": "423423",
-        "longitude": "23423",
-        "latitude": "234",
-        "azimuth": "234",
-        "size": 234,
-        "type": "234"
+        "altitude": "2",
+        "longitude": "34.838592",
+        "latitude": "32.163070",
+        "type": "warrning"
     },
     {
         "id": 4,
         "reconunitid": 1,
-        "altitude": "111",
-        "longitude": "222",
-        "latitude": "22",
-        "azimuth": "33",
-        "size": 234,
-        "type": "234"
+        "altitude": "45",
+        "longitude": "34.835316",
+        "latitude": "32.167386",
+        "type": "warrning"
     },
     {
         "id": 5,
         "reconunitid": 1,
-        "altitude": "22",
-        "longitude": "3323",
-        "latitude": "343",
-        "azimuth": "4",
-        "size": 34,
-        "type": "234234"
+        "altitude": "76",
+        "longitude": "34.842811",
+        "latitude": "32.167717",
+        "type": "warrning"
     },
-    {
-        "id": 6,
-        "reconunitid": 1,
-        "altitude": "2222",
-        "longitude": "3323",
-        "latitude": "322",
-        "azimuth": "4",
-        "size": 34,
-        "type": "234234"
-    },
-    {
-        "id": 7,
-        "reconunitid": 1,
-        "altitude": "2222",
-        "longitude": "3323",
-        "latitude": "322",
-        "azimuth": "4",
-        "size": 34,
-        "type": "234234"
-    },
-    {
-        "id": 8,
-        "reconunitid": 1,
-        "altitude": "2222",
-        "longitude": "3323",
-        "latitude": "322",
-        "azimuth": "4",
-        "size": 34,
-        "type": "234234"
-    }
 ]
