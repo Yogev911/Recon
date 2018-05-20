@@ -13,9 +13,10 @@ R = 6373.0
 
 class Target():
     def __init__(self):
+        print 'setting up all components'
         self.gps = my_gps.my_gps()
         self.should_run = True
-        self.distance = us.getDistance()
+        self.distance = None
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
         self.altitude = self.gps.alt
@@ -54,6 +55,7 @@ class Target():
 
     def init(self):
         us.init()
+        self.distance = us.getDistance()
         print 'calibrate GPS.. may take few minuets'
         while not (self.latitude and self.longitude and self.altitude):
             self.latitude = self.gps.lat
