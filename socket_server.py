@@ -88,6 +88,7 @@ class SoldierApi():
     def update_db(self, target):
         print 'update db... '
         print target
+        return
         post(url="{}:{}/{}".format(conf.DB_HOST, conf.DB_PORT, conf.DB_LANE), data=json.dumps(target),
              headers=conf.HEADER)
 
