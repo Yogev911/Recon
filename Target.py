@@ -15,11 +15,11 @@ class Target():
     def __init__(self):
         self.gps = my_gps.my_gps()
         self.should_run = True
-        self.distance = None
-        self.latitude = None
-        self.longitude = None
-        self.altitude = None
-        self.azimut = None
+        self.distance = us.getDistance()
+        self.latitude = self.gps.lat
+        self.longitude = self.gps.lon
+        self.altitude = self.gps.alt
+        self.azimut = gyro.get_azimut()
         self.final_longitude = None
         self.final_latitude = None
         self.init()
@@ -54,6 +54,14 @@ class Target():
 
     def init(self):
         us.init()
+        print 'calibrate GPS.. may take few minuets'
+        while not (self.latitude and self.longitude and self.altitude):
+            self.latitude = self.gps.lat
+            self.longitude = self.gps.lon
+            self.altitude = self.gps.alt
+            print self.latitude
+            print self.longitude
+            print self.altitude
 
     def mark_target(self):
         try:
