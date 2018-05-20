@@ -4,6 +4,7 @@ from multiprocessing import Process, Queue
 from Target import Target
 from requests import get, post
 import json
+from utils import conf
 
 
 class SoldierApi():
@@ -39,11 +40,14 @@ class SoldierApi():
                                 break
                             if buf.startswith('mark'):
                                 new_target = self.soldier.mark_target()
-                                target_type = buf.startswith('mark').split(' ')[1]
+                                target_type = buf.startswith(conf.MARK).split(' ')[1]
                                 if target_type in conf.TARGET_TYPES:
                                     new_target['type'] = target_type
+                                else:
+                                    continue
                                 new_target['reconunitid'] = conf.RECONUNITID
                                 self.update_db(new_target)
+                                print new_target
                             print 'reading from {}'.format(self.address[0])
                             print buf
 
@@ -73,16 +77,20 @@ class SoldierApi():
         targets_to_remove, targets_to_add = self.sync_with_db()
         for target in targets_to_add:
             relative_target = self.soldier.get_relative_target(target)
-            self.connection.send('add {}\n'.format(json.dumps(relative_target)))
+            print relative_target
+            # self.connection.send('add {}\n'.format(json.dumps(relative_target)))
         for target in targets_to_remove:
             target_id = json.dumps(target)['id']
-            self.connection.send('remove {}\n'.format(target_id))
+            # self.connection.send('remove {}\n'.format(target_id))
 
     def update_db(self, target):
+        print 'update db... '
+        print target
         post(url="{}:{}/{}".format(conf.DB_HOST, conf.DB_PORT, conf.DB_LANE), data=json.dumps(target),
              headers=conf.HEADER)
 
     def get_targets(self):
+        return conf.data
         res = get(url="{}:{}/{}".format(conf.DB_HOST, conf.DB_PORT, conf.DB_LANE))
         return json.loads(res.content)
 
@@ -90,7 +98,7 @@ class SoldierApi():
         tagets_to_remove = []
         targets_to_add = []
         for target in self.get_targets():
-            pass
+            targets_to_add.append(target)
         return tagets_to_remove, targets_to_add
 
 

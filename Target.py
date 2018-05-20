@@ -83,15 +83,14 @@ class Target():
         distKm = 0
         altitude = 0
 
-        a = {'lat': self.latitude, 'lon': self.longitude, 'alt': self.altitude}
-        ap = self._location_to_point(a)
-        b = {'lat': target['latitude'], 'lon': target['longitude'], 'alt': target['altitude']}
+        b = {'lat': self.latitude, 'lon': self.longitude, 'alt': self.altitude}
         bp = self._location_to_point(b)
+        a = {'lat': target['latitude'], 'lon': target['longitude'], 'alt': target['altitude']}
+        ap = self._location_to_point(a)
 
         distKm = fix(0.001 * self._target_distance(ap, bp), 3)
-
         br = self._rotate_globe(b, a, bp['radius'], ap['radius'])
-        if (br['z'] * br['z'] + br['y'] * br['y'] > 1.0 * (10 ** -6)):
+        if (br['z'] * br['z'] + br['y'] * br['y'] > 1.0e-06):
             theta = math.atan2(br['z'], br['y']) * 180.0 / math.pi
             azimuth = 90.0 - theta
             if (azimuth < 0.0):
@@ -101,14 +100,15 @@ class Target():
 
         bma = self._normalize_vector_diff(bp, ap)
         if bma:
-            altitude = 90.0 - (180.0 / math.pi) * math.acos(bma['x'] * ap['nx'] + bma['y'] * ap['my'] + bma['z']*ap['nz'])
+            altitude = 90.0 - (180.0 / math.pi) * math.acos(
+                bma['x'] * ap['nx'] + bma['y'] * ap['ny'] + bma['z'] * ap['nz'])
 
-        return {'azimut': fix(azimuth, 4), 'distance': distKm, 'altitude': fix(altitude,4)}
+        return {'azimut': fix(azimuth, 4), 'distance': float(distKm) * 1000, 'altitude': fix(altitude, 4)}
 
     def _location_to_point(self, new_target):
 
-        lat = new_target['latitude'] * math.pi / 180.0
-        lon = new_target['longitude'] * math.pi / 180.0
+        lat = new_target['lat'] * math.pi / 180.0
+        lon = new_target['lon'] * math.pi / 180.0
         t1 = 6378137.0 * 6378137.0 * math.cos(lat)
         t2 = 6356752.3 * 6356752.3 * math.sin(lat)
         t3 = 6378137.0 * math.cos(lat)
@@ -128,9 +128,9 @@ class Target():
         nx = cosGlat * cosLon
         ny = cosGlat * sinLon
         nz = sinGlat
-        x += new_target['altitude'] * nx
-        y += new_target['altitude'] * ny
-        z += new_target['altitude'] * nz
+        x += new_target['alt'] * nx
+        y += new_target['alt'] * ny
+        z += new_target['alt'] * nz
         return {'x': x, 'y': y, 'z': z, 'radius': radius, 'nx': nx, 'ny': ny, 'nz': nz};
 
     def _target_distance(self, self_point, new_point):
@@ -140,9 +140,9 @@ class Target():
         return math.sqrt(dx * dx + dy * dy + dz * dz)
 
     def _rotate_globe(self, b, a, bradius, aradius):
-        br = {'lat': b['latitude'], 'lon': (b['longitude'] - a['longitude']), 'elv': b['altitude']}
+        br = {'lat': b['lat'], 'lon': (b['lon'] - a['lon']), 'alt': b['alt']}
         brp = self._location_to_point(br)
-        alat = -a['latitude'] * math.pi / 180.0
+        alat = -a['lat'] * math.pi / 180.0
         alat = math.atan((1.0 - 0.00669437999014) * math.tan(alat))
         acos = math.cos(alat)
         asin = math.sin(alat)

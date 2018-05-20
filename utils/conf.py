@@ -1,3 +1,14 @@
+RECONUNITID = 1
+MARK = 'mark'
+TARGET_TYPES = ['warrning','danger','ally','unknown']
+SOLDIER_SCAN_INTERVAL = 3
+
+# DB region
+DB_HOST = '0.0.0.0'
+DB_PORT = 3000
+DB_LANE = 'hello'
+HEADER = {"reconunitid": 1}
+
 # GPS region
 COLD_START = "$PMTK103*30\r\n"
 WARM_START = "$PMTK102*31\r\n"
@@ -25,8 +36,75 @@ SEND_NOTHING = "$PMTK314,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"  # Send N
 HOST = 'localhost'
 PORT = 7080
 
-
-MARK = 'mark'
-
-
-SOLDIER_SCAN_INTERVAL = 3
+data = [
+    {
+        "id": 1,
+        "reconunitid": 1,
+        "altitude": "123123",
+        "longitude": "123",
+        "latitude": "123",
+        "azimuth": "123",
+        "size": 123,
+        "type": "123"
+    },
+    {
+        "id": 3,
+        "reconunitid": 1,
+        "altitude": "423423",
+        "longitude": "23423",
+        "latitude": "234",
+        "azimuth": "234",
+        "size": 234,
+        "type": "234"
+    },
+    {
+        "id": 4,
+        "reconunitid": 1,
+        "altitude": "111",
+        "longitude": "222",
+        "latitude": "22",
+        "azimuth": "33",
+        "size": 234,
+        "type": "234"
+    },
+    {
+        "id": 5,
+        "reconunitid": 1,
+        "altitude": "22",
+        "longitude": "3323",
+        "latitude": "343",
+        "azimuth": "4",
+        "size": 34,
+        "type": "234234"
+    },
+    {
+        "id": 6,
+        "reconunitid": 1,
+        "altitude": "2222",
+        "longitude": "3323",
+        "latitude": "322",
+        "azimuth": "4",
+        "size": 34,
+        "type": "234234"
+    },
+    {
+        "id": 7,
+        "reconunitid": 1,
+        "altitude": "2222",
+        "longitude": "3323",
+        "latitude": "322",
+        "azimuth": "4",
+        "size": 34,
+        "type": "234234"
+    },
+    {
+        "id": 8,
+        "reconunitid": 1,
+        "altitude": "2222",
+        "longitude": "3323",
+        "latitude": "322",
+        "azimuth": "4",
+        "size": 34,
+        "type": "234234"
+    }
+]
