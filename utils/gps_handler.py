@@ -34,14 +34,23 @@ class my_gps:  # Create GPS class
 
     @property
     def lat(self):
+        mult = -1.0
+
         while ser.inWaiting() == 0:  # Wait for input
             pass
         lat = pynmea2.parse(ser.readline()).lat
-        mult = -1.0
+        print 'lat '
+        print lat
+
+
         deg = lat[:2]
-        print 'deg ' + deg
+        print 'deg '
+        print deg
+
         mins = lat[2:]
-        print 'mins ' + mins
+        print 'mins '
+        print mins
+
         sec = math.fabs((float(mins) - (int(float(mins))) * 60))
         return mult * float(fix((float(deg) + mins / 60), 6))
 
