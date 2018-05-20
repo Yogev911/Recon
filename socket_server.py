@@ -31,6 +31,7 @@ class SoldierApi():
                 while True:
                     try:
                         print 'innet loop'
+                        self.soldier.get_data()
                         self.sync_targets()
                         buf = self.connection.recv(64)
                         if len(buf) > 0:

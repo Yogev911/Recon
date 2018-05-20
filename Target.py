@@ -24,6 +24,9 @@ class Target():
         self.final_latitude = None
         self.init()
 
+    def get_data(self):
+        print Target.__dict__
+
     def run(self):
         while self.should_run:
             try:
