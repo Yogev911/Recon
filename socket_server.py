@@ -18,8 +18,6 @@ class SoldierApi():
         self.soldier = Target()
         self.run()
 
-    def __del__(self):
-        self.connection.close()
 
     def run(self):
         print 'Running...'
