@@ -41,7 +41,7 @@ class my_gps:  # Create GPS class
         lat = pynmea2.parse(ser.readline()).lat
         print 'lat '
         print lat
-
+        print type(lat)
 
         deg = lat[:2]
         print 'deg '
