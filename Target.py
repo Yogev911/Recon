@@ -64,7 +64,7 @@ class Target():
             print self.latitude
             print self.longitude
             print self.altitude
-            sleep(2)
+            sleep(1)
 
     def mark_target(self):
         try:
