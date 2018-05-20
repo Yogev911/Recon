@@ -49,7 +49,7 @@ class SoldierApi():
                                     continue
                                 new_target['reconunitid'] = conf.RECONUNITID
                                 self.update_db(new_target)
-                                print 'new target marked! ' + new_target
+                                print 'new target marked! ' + json.dumps(new_target)
                             print 'reading from {}'.format(self.address[0])
                             print buf
 
