@@ -37,11 +37,11 @@ class my_gps:  # Create GPS class
         while ser.inWaiting() == 0:  # Wait for input
             pass
         lat = pynmea2.parse(ser.readline()).lat
-        mult = -1
-        deg = int(lat[:2])
+        mult = -1.0
+        deg = lat[:2]
         mins = float(lat[2:])
         sec = math.fabs((mins - (int(mins)) * 60))
-        return mult * float(fix((deg + mins / 60), 6))
+        return mult * float(fix((float(deg) + mins / 60), 6))
 
     @property
     def lat_dir(self):
