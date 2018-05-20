@@ -45,7 +45,7 @@ class my_gps:  # Create GPS class
         deg = lat[:2]
         mins = lat[2:]
         sec = math.fabs((float(mins) - (int(float(mins))) * 60))
-        return mult * float(fix((float(deg) + mins / 60), 6))
+        return mult * float(fix((float(deg) + float(mins) / 60), 6))
 
     @property
     def lat_dir(self):
