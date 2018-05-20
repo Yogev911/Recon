@@ -39,14 +39,17 @@ class SoldierApi():
                                 break
                             if buf.startswith('mark'):
                                 new_target = self.soldier.mark_target()
-                                target_type = buf.startswith(conf.MARK).split(' ')[1]
-                                if target_type in conf.TARGET_TYPES:
-                                    new_target['type'] = target_type
+                                if buf.startswith(conf.MARK):
+                                    target_type =buf.split(' ')[1]
+                                    if target_type in conf.TARGET_TYPES:
+                                        new_target['type'] = target_type
+                                    else:
+                                        continue
                                 else:
                                     continue
                                 new_target['reconunitid'] = conf.RECONUNITID
                                 self.update_db(new_target)
-                                print new_target
+                                print 'new target marked! ' + new_target
                             print 'reading from {}'.format(self.address[0])
                             print buf
 
