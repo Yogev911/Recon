@@ -98,8 +98,10 @@ class Target():
         altitude = 0
 
         b = {'lat': self.latitude, 'lon': self.longitude, 'alt': self.altitude}
+        print 'self coords:' +  str(b)
         bp = self._location_to_point(b)
         a = {'lat': target['latitude'], 'lon': target['longitude'], 'alt': target['altitude']}
+        print 'target coords:' + str(a)
         ap = self._location_to_point(a)
 
         distKm = fix(0.001 * self._target_distance(ap, bp), 3)
