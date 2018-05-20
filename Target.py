@@ -100,7 +100,7 @@ class Target():
         b = {'lat': self.latitude, 'lon': self.longitude, 'alt': self.altitude}
         print 'self coords:' +  str(b)
         bp = self._location_to_point(b)
-        a = {'lat': target['latitude'], 'lon': target['longitude'], 'alt': target['altitude']}
+        a = {'lat': float(target['latitude']), 'lon': float(target['longitude']), 'alt': float(target['altitude'])}
         print 'target coords:' + str(a)
         ap = self._location_to_point(a)
 
