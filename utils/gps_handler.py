@@ -39,18 +39,11 @@ class my_gps:  # Create GPS class
         while ser.inWaiting() == 0:  # Wait for input
             pass
         lat = pynmea2.parse(ser.readline()).lat
-        print 'lat '
-        print lat
-        print type(lat)
-
+        if lat == '':
+            print 'waiting for signal'
+            return None
         deg = lat[:2]
-        print 'deg '
-        print deg
-
         mins = lat[2:]
-        print 'mins '
-        print mins
-
         sec = math.fabs((float(mins) - (int(float(mins))) * 60))
         return mult * float(fix((float(deg) + mins / 60), 6))
 
@@ -71,6 +64,9 @@ class my_gps:  # Create GPS class
         while ser.inWaiting() == 0:  # Wait for input
             pass
         lon = pynmea2.parse(ser.readline()).lon
+        if lon == '':
+            print 'waiting for signal'
+            return None
         mult = 1
         deg = int(lon[:3])
         mins = float(lon[3:])
