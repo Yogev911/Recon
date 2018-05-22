@@ -5,45 +5,45 @@ from Target import Target
 from requests import get, post
 import json
 from utils import conf
+import sys
+from time import sleep
 
 
 class SoldierApi():
     def __init__(self):
-        self.serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.serversocket.bind(('0.0.0.0', 8081))
-        self.serversocket.listen(5)  # become a server socket, maximum 5 connections
-        self.should_run = True
-        self.command = ''
-        self.targets = []
-        self.soldier = Target()
-        self.run()
-
+        try:
+            self.serversocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            self.serversocket.bind(('0.0.0.0', 8081))
+            self.should_run = True
+            self.command = ''
+            self.targets = []
+            self.soldier = Target()
+            self.run()
+        except socket.error, msg:
+            print 'Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
+            sys.exit()
 
     def run(self):
         print 'Running...'
         try:
             while self.should_run:
-                print 'wating for new connection'
-                self.connection, self.address = self.serversocket.accept()
-                print 'found client {}'.format(self.address[0])
-                while True:
+                sleep(5)
+                self.soldier.get_data()
+                self.sync_targets()
+                buf, address = self.serversocket.recvfrom(1024)
+                if len(buf) > 0:
+                    print 'found client {} on port'.format(address[0],address[1])
                     try:
                         print 'innet loop'
-                        self.soldier.get_data()
-                        self.sync_targets()
-                        buf = self.connection.recv(64)
-                        if len(buf) > 0:
-                            if buf == 'stop'.lower():
-                                print 'killing connection'
-                                self.connection.close()
-                                break
-                            if buf.startswith('mark'):
-                                new_target = self.soldier.mark_target()
-                                new_target['reconunitid'] = conf.RECONUNITID
-                                self.update_db(new_target)
-                                print 'new target marked! ' + json.dumps(new_target)
-                            print 'reading from {}'.format(self.address[0])
-                            print buf
+                        if buf == 'stop'.lower():
+                            print 'killing connection'
+                            self.should_run = False
+                        if buf.startswith('mark'):
+                            new_target = self.soldier.mark_target()
+                            new_target['reconunitid'] = conf.RECONUNITID
+                            self.update_db(new_target)
+                            print 'new target marked! ' + json.dumps(new_target)
+                        print buf + '#####################################'
 
                     except Exception:
                         print traceback.format_exc()
@@ -53,19 +53,16 @@ class SoldierApi():
             self.serversocket.close()
             print "closed"
             print traceback.format_exc()
-            self.connection.close()
 
         except Exception:
             self.serversocket.close()
             print "closed"
             print traceback.format_exc()
-            self.connection.close()
 
         finally:
             self.serversocket.close()
             print "closed"
             print traceback.format_exc()
-            self.connection.close()
 
     def sync_targets(self):
         targets_to_remove, targets_to_add = self.sync_with_db()
