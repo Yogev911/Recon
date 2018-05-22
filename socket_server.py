@@ -18,6 +18,7 @@ class SoldierApi():
             self.command = ''
             self.targets = []
             self.soldier = Target()
+            self.address = None
             self.run()
         except socket.error, msg:
             print 'Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
@@ -68,10 +69,10 @@ class SoldierApi():
         targets_to_remove, targets_to_add = self.sync_with_db()
         for target in targets_to_add:
             relative_target = self.soldier.get_relative_target(target)
-            self.serversocket.sendto('add {}\n'.format(json.dumps(relative_target)),self.address)
+            self.send(json.dumps(relative_target))
         for target in targets_to_remove:
             target_id = json.dumps(target)['id']
-            self.serversocket.sendto('add {}\n'.format(target_id),self.address)
+            self.send(target_id)
 
     def update_db(self, target):
         print 'update db... '
@@ -91,6 +92,10 @@ class SoldierApi():
         for target in self.get_targets():
             targets_to_add.append(target)
         return tagets_to_remove, targets_to_add
+
+    def send(self,msg):
+        if self.address:
+            self.serversocket.sendto('add {}\n'.format(msg), self.address)
 
 
 if __name__ == '__main__':
