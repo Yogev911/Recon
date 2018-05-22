@@ -30,9 +30,9 @@ class SoldierApi():
                 sleep(5)
                 self.soldier.get_data()
                 self.sync_targets()
-                buf, address = self.serversocket.recvfrom(1024)
+                buf, self.address = self.serversocket.recvfrom(1024)
                 if len(buf) > 0:
-                    print 'found client {} on port'.format(address[0],address[1])
+                    print 'found client {} on port'.format(self.address[0],self.address[1])
                     try:
                         print 'innet loop'
                         if buf == 'stop'.lower():
@@ -68,11 +68,10 @@ class SoldierApi():
         targets_to_remove, targets_to_add = self.sync_with_db()
         for target in targets_to_add:
             relative_target = self.soldier.get_relative_target(target)
-            # print relative_target
-            # self.connection.send('add {}\n'.format(json.dumps(relative_target)))
+            self.serversocket.sendto('add {}\n'.format(json.dumps(relative_target)),self.address)
         for target in targets_to_remove:
             target_id = json.dumps(target)['id']
-            # self.connection.send('remove {}\n'.format(target_id))
+            self.serversocket.sendto('add {}\n'.format(target_id),self.address)
 
     def update_db(self, target):
         print 'update db... '

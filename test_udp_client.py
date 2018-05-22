@@ -13,10 +13,10 @@ except socket.error:
     print 'Failed to create socket'
     sys.exit()
 
-host = '192.168.1.23'
-port = 8081
+host = '192.168.1.24'
+port = 12346
 
-msg = 'Enter message to send : '
+msg = 'Yogev zayan '
 
 try:
     # Set the whole string
