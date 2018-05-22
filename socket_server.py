@@ -14,11 +14,12 @@ class SoldierApi():
         try:
             self.serversocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             self.serversocket.bind(('0.0.0.0', 8081))
+            self.serversocket.setblocking(False)
             self.should_run = True
             self.command = ''
             self.targets = []
             self.soldier = Target()
-            self.address = None
+            self.address = None #('192.168.1.19',8888)
             self.run()
         except socket.error, msg:
             print 'Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
@@ -31,7 +32,10 @@ class SoldierApi():
                 sleep(5)
                 self.soldier.get_data()
                 self.sync_targets()
-                buf, self.address = self.serversocket.recvfrom(1024)
+                try:
+                    buf, self.address = self.serversocket.recvfrom(1024)
+                except:
+                    pass
                 if len(buf) > 0:
                     print 'found client {} on port'.format(self.address[0],self.address[1])
                     try:
