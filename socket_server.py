@@ -19,7 +19,7 @@ class SoldierApi():
             self.command = ''
             self.targets = []
             self.soldier = Target()
-            self.address = None #('192.168.1.19',8888)
+            self.address = None  # ('192.168.1.19',8888)
             self.run()
         except socket.error, msg:
             print 'Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
@@ -29,32 +29,36 @@ class SoldierApi():
         print 'Running...'
         try:
             while self.should_run:
-                sleep(5)
                 self.soldier.get_data()
                 self.sync_targets()
-                buf = ''
                 try:
                     buf, self.address = self.serversocket.recvfrom(1024)
+                    if len(buf) > 0:
+                        print 'found client {} on port'.format(self.address[0], self.address[1])
+                        try:
+                            print 'innet loop'
+                            if buf == 'stop'.lower():
+                                print 'killing connection'
+                                self.should_run = False
+                            if buf.startswith(conf.MARK):
+                                hololence_values = buf.split()
+                                if len(hololence_values) == 3:
+                                    alpha = hololence_values[1]
+                                    azimut = hololence_values[2]
+                                new_target = self.soldier.mark_target(alpha,azimut)
+                                new_target['reconunitid'] = conf.RECONUNITID
+                                self.update_db(new_target)
+                                print 'new target marked! ' + json.dumps(new_target)
+                            print buf + '#####################################'
+
+                        except Exception:
+                            print traceback.format_exc()
+                            print "keep reading"
+                            continue
                 except:
                     pass
-                if len(buf) > 0:
-                    print 'found client {} on port'.format(self.address[0],self.address[1])
-                    try:
-                        print 'innet loop'
-                        if buf == 'stop'.lower():
-                            print 'killing connection'
-                            self.should_run = False
-                        if buf.startswith('mark'):
-                            new_target = self.soldier.mark_target()
-                            new_target['reconunitid'] = conf.RECONUNITID
-                            self.update_db(new_target)
-                            print 'new target marked! ' + json.dumps(new_target)
-                        print buf + '#####################################'
+                sleep(5)
 
-                    except Exception:
-                        print traceback.format_exc()
-                        print "keep reading"
-                        break
         except KeyboardInterrupt:
             self.serversocket.close()
             print "closed"
@@ -98,7 +102,7 @@ class SoldierApi():
             targets_to_add.append(target)
         return tagets_to_remove, targets_to_add
 
-    def send(self,msg):
+    def send(self, msg):
         if self.address:
             self.serversocket.sendto('add {}\n'.format(msg), self.address)
 

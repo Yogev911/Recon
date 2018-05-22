@@ -69,13 +69,15 @@ class Target():
             print self.altitude
             sleep(1)
 
-    def mark_target(self):
+    def mark_target(self, alpha, azimut):
         try:
-            self.distance = us.getDistance()
+            hypotenuse = us.getDistance()
+            self.distance = hypotenuse * math.cos(alpha)
+            leg = hypotenuse * math.sin(alpha)
             self.latitude = self.gps.lat
             self.longitude = self.gps.lon
             self.altitude = self.gps.alt
-            self.azimut = gyro.get_azimut()
+            self.azimut = azimut #gyro.get_azimut()
 
             dx = self.distance * math.sin(self.azimut)
             dy = self.distance * math.cos(self.azimut)
@@ -86,8 +88,9 @@ class Target():
             self.final_longitude = fix(self.longitude + delta_longitude, 6)
             self.final_latitude = fix(self.latitude + delta_latitude, 6)
             print  "lat: {} lon: {}".format(self.final_latitude, self.final_longitude)
+            target_altitude = self.altitude + leg
             target = {
-                "altitude": self.altitude,
+                "altitude": target_altitude,
                 "longitude": self.final_longitude,
                 "latitude": self.final_latitude
             }
