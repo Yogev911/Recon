@@ -26,7 +26,10 @@ class Target():
         self.init()
 
     def get_data(self):
-        print Target.__dict__
+        print self.latitude
+        print self.longitude
+        print self.altitude
+
 
     def run(self):
         while self.should_run:

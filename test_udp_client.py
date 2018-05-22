@@ -13,23 +13,22 @@ except socket.error:
     print 'Failed to create socket'
     sys.exit()
 
-host = 'localhost'
-port = 8888
+host = '192.168.1.23'
+port = 8081
 
-while (1):
-    msg = raw_input('Enter message to send : ')
+msg = 'Enter message to send : '
 
-    try:
-        # Set the whole string
-        s.sendto(msg, (host, port))
+try:
+    # Set the whole string
+    s.sendto(msg, (host, port))
+    print 'sent'
+    # receive data from client (data, addr)
+    # d = s.recvfrom(1024)
+    # reply = d[0]
+    # addr = d[1]
 
-        # receive data from client (data, addr)
-        d = s.recvfrom(1024)
-        reply = d[0]
-        addr = d[1]
+    # print 'Server reply : ' + reply
 
-        print 'Server reply : ' + reply
-
-    except socket.error, msg:
-        print 'Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
-        sys.exit()
+except socket.error, msg:
+    print 'Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
+    sys.exit()
