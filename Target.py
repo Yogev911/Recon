@@ -25,7 +25,13 @@ class Target():
         self.final_latitude = None
         self.init()
 
+    def update_gps(self):
+        self.latitude = self.gps.lat
+        self.longitude = self.gps.lon
+        self.altitude = self.gps.alt
+
     def get_data(self):
+        self.update_gps()
         print self.latitude
         print self.longitude
         print self.altitude
