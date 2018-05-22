@@ -32,6 +32,7 @@ class SoldierApi():
                 sleep(5)
                 self.soldier.get_data()
                 self.sync_targets()
+                buf = ''
                 try:
                     buf, self.address = self.serversocket.recvfrom(1024)
                 except:
