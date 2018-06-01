@@ -20,7 +20,7 @@ class my_gps:  # Create GPS class
         sleep(1)  # Paulse
         ser.baudrate = 57600  # IMPORTANT Since change ser baudrate to match GPS
         sleep(1)
-        ser.write(conf.WARM_START)  # Set update rate
+        ser.write(conf.COLD_START)  # Set update rate
         sleep(1)
         ser.write(conf.UPDATE_200_msec)  # Set update rate
         sleep(1)
