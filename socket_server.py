@@ -93,7 +93,10 @@ class SoldierApi():
 
     def get_targets(self):
         res = get(url="https://reconsevice.herokuapp.com/target")
-        return json.loads(res.content)['data']
+        print res.content
+        data = json.loads(res.content)
+        print data
+        return data['data']
         # res = get(url="{}:{}/{}".format(conf.DB_HOST, conf.DB_PORT, conf.DB_LANE))
         # return json.loads(res.content)
 
