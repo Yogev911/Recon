@@ -20,7 +20,7 @@ class Target():
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
         self.altitude = self.gps.alt
-        self.azimut = gyro.get_azimut()
+        self.azimut = None
         self.final_longitude = None
         self.final_latitude = None
         self.init()
@@ -63,6 +63,7 @@ class Target():
                 self.should_run = False
 
     def init(self):
+        print 'init laser'
         us.init()
         self.distance = us.getDistance()
         print 'calibrate GPS.. may take few minuets'
