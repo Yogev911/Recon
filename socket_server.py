@@ -114,12 +114,12 @@ class SoldierApi():
         return targets_to_add, targets_ids_to_remove
 
     def add_target(self, msg):
-        msg = json.dumps(msg).replace("{", " ").replace("}", " ").replace("\"", " ").replace(":", " ").replace(","," ").replace("\t", " ")
-        " ".join(msg.split())
         print 'adding '
         print msg
         if self.address:
-            self.serversocket.sendto('add: {}\n'.format(msg), self.address)
+            self.serversocket.sendto(
+                'add: id {} azimuth {} distance {} elv {} \n'.format(msg['id'], msg['azimut'], msg['distance'],
+                                                                     msg['altitude']), self.address)
 
     def remove_target_id(self, msg):
         print 'remove target id {}'.format(msg)
