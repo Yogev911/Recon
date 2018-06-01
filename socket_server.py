@@ -88,6 +88,8 @@ class SoldierApi():
             sleep(5)
         for target_id in targets_ids_to_remove:
             self.remove_target_id(target_id)
+            sleep(5)
+
 
     def update_db(self, target):
         print 'update db... '
