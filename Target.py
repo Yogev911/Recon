@@ -36,7 +36,6 @@ class Target():
         print self.longitude
         print self.altitude
 
-
     def run(self):
         while self.should_run:
             try:
@@ -84,7 +83,7 @@ class Target():
             self.latitude = self.gps.lat
             self.longitude = self.gps.lon
             self.altitude = self.gps.alt
-            self.azimut = azimut #gyro.get_azimut()
+            self.azimut = azimut  # gyro.get_azimut()
 
             dx = self.distance * math.sin(self.azimut)
             dy = self.distance * math.cos(self.azimut)
@@ -132,7 +131,8 @@ class Target():
             altitude = 90.0 - (180.0 / math.pi) * math.acos(
                 bma['x'] * ap['nx'] + bma['y'] * ap['ny'] + bma['z'] * ap['nz'])
 
-        return {'azimut': fix(azimuth, 4), 'distance': float(distKm) * 1000, 'altitude': fix(altitude, 4)}
+        return {'id': target['id'], 'azimut': fix(azimuth, 4), 'distance': float(distKm) * 1000,
+                'altitude': fix(altitude, 4)}
 
     def _location_to_point(self, new_target):
 

@@ -114,6 +114,8 @@ class SoldierApi():
         return targets_to_add, targets_ids_to_remove
 
     def add_target(self, msg):
+        msg = json.dumps(msg).replace("{", " ").replace("}", " ").replace("\"", " ").replace(":", " ").replace(","," ").replace("\t", " ")
+        " ".join(msg.split())
         print 'adding '
         print msg
         if self.address:
