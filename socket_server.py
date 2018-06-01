@@ -100,7 +100,7 @@ class SoldierApi():
             print 'update db... '
             print target
             # return
-            r = post('http://httpbin.org/post', json=target)
+            r = post('https://reconsevice.herokuapp.com/target', json=target)
             if r.status_code != 200:
                 print 'error update db'
         except:

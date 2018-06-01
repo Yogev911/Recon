@@ -95,10 +95,10 @@ class Target():
         distKm = 0
         altitude = 0
 
-        b = {'lat': self.latitude, 'lon': self.longitude, 'alt': self.altitude}
+        a = {'lat': self.latitude, 'lon': self.longitude, 'alt': self.altitude}
+        b = {'lat': float(target['latitude']), 'lon': float(target['longitude']), 'alt': float(target['altitude'])}
         # print 'self coords:' +  str(b)
         bp = self._location_to_point(b)
-        a = {'lat': float(target['latitude']), 'lon': float(target['longitude']), 'alt': float(target['altitude'])}
         # print 'target coords:' + str(a)
         ap = self._location_to_point(a)
 
@@ -116,8 +116,8 @@ class Target():
         if bma:
             altitude = 90.0 - (180.0 / math.pi) * math.acos(
                 bma['x'] * ap['nx'] + bma['y'] * ap['ny'] + bma['z'] * ap['nz'])
-            if altitude != 0:
-                altitude = -altitude
+            # if altitude != 0:
+            #     altitude = -altitude
         return {'id': target['id'], 'azimut': fix(azimuth, 4), 'distance': float(distKm) * 1000,
                 'altitude': fix(altitude, 4)}
 
