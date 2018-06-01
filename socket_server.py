@@ -19,7 +19,7 @@ class SoldierApi():
             self.command = ''
             self.targets = {}
             self.soldier = Target()
-            self.address = ('213.57.75.18' ,12346)
+            self.address = ('213.57.75.18', 12346)
             self.run()
         except socket.error, msg:
             print 'Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
@@ -48,7 +48,7 @@ class SoldierApi():
                                 if len(hololence_values) == 3:
                                     alpha = hololence_values[1]
                                     azimut = hololence_values[2]
-                                    new_target = self.soldier.mark_target(alpha,azimut)
+                                    new_target = self.soldier.mark_target(alpha, azimut)
                                     new_target['reconunitid'] = conf.RECONUNITID
                                     self.update_db(new_target)
                                     print 'new target marked! ' + json.dumps(new_target)
@@ -82,10 +82,10 @@ class SoldierApi():
         for target in targets_to_add:
             print 'adding new target'
             print target
+            self.targets[target['id']] = target
             relative_target = self.soldier.get_relative_target(target)
             self.add_target(json.dumps(relative_target))
         for target_id in targets_ids_to_remove:
-            print 'remove target id {}'.format(target_id)
             self.remove_target_id(target_id)
 
     def update_db(self, target):
@@ -104,21 +104,24 @@ class SoldierApi():
         # res = get(url="{}:{}/{}".format(conf.DB_HOST, conf.DB_PORT, conf.DB_LANE))
         # return json.loads(res.content)
 
-
     def get_target_diff(self):
         targets = self.get_targets()
         if not targets:
-            return [],[]
-        targets_ids = map(lambda l: l['id'],targets)
+            return [], []
+        targets_ids = map(lambda l: l['id'], targets)
         targets_ids_to_remove = set(self.targets.keys()) - set(targets_ids)
-        targets_to_add = filter(lambda l: l['id'] not in self.targets.keys(),targets)
-        return targets_to_add,targets_ids_to_remove
+        targets_to_add = filter(lambda l: l['id'] not in self.targets.keys(), targets)
+        return targets_to_add, targets_ids_to_remove
 
-    def add_target(self, msg):
+    def add_target(self, msg, t_id):
+        print 'adding '
+        print msg
         if self.address:
             self.serversocket.sendto('add: {}\n'.format(msg), self.address)
 
     def remove_target_id(self, msg):
+        print 'remove target id {}'.format(msg)
+        self.targets.pop(msg)
         if self.address:
             self.serversocket.sendto('remove: {}\n'.format(msg), self.address)
 
