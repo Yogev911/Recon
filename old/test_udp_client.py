@@ -16,11 +16,11 @@ except socket.error:
 host = '192.168.1.24'
 port = 12346
 
-msg = 'Yogev zayan '
+msg = 'remove: id 1'
 
 try:
     # Set the whole string
-    s.sendto(msg, (host, port))
+    s.sendto(msg, ('213.57.75.18', 12346))
     print 'sent'
     # receive data from client (data, addr)
     # d = s.recvfrom(1024)

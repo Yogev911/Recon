@@ -2,7 +2,7 @@ import socket
 import traceback
 from multiprocessing import Process, Queue
 from Target import Target
-from requests import get, post
+from requests import get, post , delete
 import json
 from utils import conf
 import sys
@@ -52,6 +52,11 @@ class SoldierApi():
                                     new_target['reconunitid'] = conf.RECONUNITID
                                     self.update_db(new_target)
                                     print 'new target marked! ' + json.dumps(new_target)
+                                else:
+                                    if len(hololence_values) == 3:
+                                        t_id = hololence_values[2]
+                                        self.delete_db_target(t_id)
+
                             print buf + '#####################################'
 
                         except Exception:
@@ -92,11 +97,16 @@ class SoldierApi():
 
 
     def update_db(self, target):
-        print 'update db... '
-        print target
-        # return
-        # post(url="{}:{}/{}".format(conf.DB_HOST, conf.DB_PORT, conf.DB_LANE), data=json.dumps(target),
-        #      headers=conf.HEADER)
+        try:
+            print 'update db... '
+            print target
+            # return
+            r = post('http://httpbin.org/post', json=target)
+            if r.status_code != 200:
+                print 'error update db'
+        except:
+            print 'error in update db {}'.format(traceback.format_exc())
+
 
     def get_targets(self):
         res = get(url="https://reconsevice.herokuapp.com/target")
@@ -129,6 +139,20 @@ class SoldierApi():
         self.targets.pop(msg)
         if self.address:
             self.serversocket.sendto('remove: id {}\n'.format(msg), self.address)
+
+    def delete_db_target(self, t_id):
+        try:
+            payload = {'id': t_id}
+            r = delete('http://httpbin.org/post', data=json.dumps(payload))
+            print 'remove target {} '.format(t_id)
+            print t_id
+            # return
+            # r = delete('http://httpbin.org/post', json=target)
+            if r.status_code != 200:
+                print 'error update db'
+        except:
+            print 'error in update db {}'.format(traceback.format_exc())
+
 
 
 if __name__ == '__main__':
