@@ -30,38 +30,12 @@ class Target():
         self.longitude = self.gps.lon
         self.altitude = self.gps.alt
         self.azimut = gyro.get_azimut()
-        print self.azimut
 
     def get_data(self):
         self.update_gps()
         print self.latitude
         print self.longitude
         print self.altitude
-
-    def run(self):
-        while self.should_run:
-            try:
-                sleep(conf.SOLDIER_SCAN_INTERVAL)
-                self.distance = us.getDistance()
-                self.latitude = self.gps.lat
-                self.longitude = self.gps.lon
-                self.altitude = self.gps.alt
-                self.azimut = gyro.get_azimut()
-
-                dx = self.distance * math.sin(self.azimut)
-                dy = self.distance * math.cos(self.azimut)
-
-                delta_longitude = dx / (111320 * math.cos(self.latitude))
-                delta_latitude = dy / 110540
-
-                self.final_longitude = fix(self.longitude + delta_longitude, 6)
-                self.final_latitude = fix(self.latitude + delta_latitude, 6)
-                print  "lat: {} lon: {}".format(self.final_latitude, self.final_longitude)
-            except Exception:
-                print traceback.format_exc()
-
-            except KeyboardInterrupt:
-                self.should_run = False
 
     def init(self):
         print 'init laser'
