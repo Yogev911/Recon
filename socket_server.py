@@ -125,7 +125,7 @@ class SoldierApi():
         print 'remove target id {}'.format(msg)
         self.targets.pop(msg)
         if self.address:
-            self.serversocket.sendto('remove: {}\n'.format(msg), self.address)
+            self.serversocket.sendto('remove: id {}\n'.format(msg), self.address)
 
 
 if __name__ == '__main__':
