@@ -29,7 +29,7 @@ class SoldierApi():
         print 'Running...'
         try:
             while self.should_run:
-                sleep(1)
+                sleep(0.5)
                 self.soldier.update_gps()
                 self.sync_targets()
                 try:

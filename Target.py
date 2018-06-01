@@ -20,7 +20,7 @@ class Target():
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
         self.altitude = self.gps.alt
-        self.azimut = None
+        self.azimut = gyro.get_azimut()
         self.final_longitude = None
         self.final_latitude = None
         self.init()
@@ -29,6 +29,8 @@ class Target():
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
         self.altitude = self.gps.alt
+        self.azimut = gyro.get_azimut()
+        print self.azimut
 
     def get_data(self):
         self.update_gps()
