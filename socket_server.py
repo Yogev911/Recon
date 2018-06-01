@@ -93,16 +93,18 @@ class SoldierApi():
 
     def get_targets(self):
         res = get(url="https://reconsevice.herokuapp.com/target")
-        print res.content
-        data = json.loads(res.content)
-        print data
-        return data['data']
+        if res.status_code == 200:
+            data = json.loads(res.content)
+            return data['data']
+        return None
         # res = get(url="{}:{}/{}".format(conf.DB_HOST, conf.DB_PORT, conf.DB_LANE))
         # return json.loads(res.content)
 
 
     def get_target_diff(self):
         targets = self.get_targets()
+        if not targets:
+            return [],[]
         targets_ids = map(lambda l: l['id'],targets)
         targets_ids_to_remove = set(self.targets.keys()) - set(targets_ids)
         targets_to_add = filter(lambda l: l['id'] not in self.targets.keys(),targets)
