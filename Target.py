@@ -83,6 +83,12 @@ class Target():
             return target
         except Exception:
             print traceback.format_exc()
+            return {
+                "altitude": self.altitude,
+                "longitude": self.longitude,
+                "latitude": self.latitude,
+                "reconunitid" : conf.RECONUNITID
+            }
 
     def get_relative_target(self, target):
         azimuth = 0
@@ -110,7 +116,8 @@ class Target():
         if bma:
             altitude = 90.0 - (180.0 / math.pi) * math.acos(
                 bma['x'] * ap['nx'] + bma['y'] * ap['ny'] + bma['z'] * ap['nz'])
-
+            if altitude != 0:
+                altitude = -altitude
         return {'id': target['id'], 'azimut': fix(azimuth, 4), 'distance': float(distKm) * 1000,
                 'altitude': fix(altitude, 4)}
 
