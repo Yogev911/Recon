@@ -75,7 +75,8 @@ class Target():
             target = {
                 "altitude": target_altitude,
                 "longitude": self.final_longitude,
-                "latitude": self.final_latitude
+                "latitude": self.final_latitude,
+                "reconunitid" : conf.RECONUNITID
             }
             return target
         except Exception:

@@ -49,7 +49,6 @@ class SoldierApi():
                                     alpha = hololence_values[2]
                                     azimut = hololence_values[4]
                                     new_target = self.soldier.mark_target(alpha, azimut)
-                                    new_target['reconunitid'] = conf.RECONUNITID
                                     self.update_db(new_target)
                                     print 'new target marked! ' + json.dumps(new_target)
                                 else:
