@@ -29,7 +29,8 @@ class SoldierApi():
         print 'Running...'
         try:
             while self.should_run:
-                self.soldier.get_data()
+                sleep(1)
+                self.soldier.update_gps()
                 self.sync_targets()
                 try:
                     buf, self.address = self.serversocket.recvfrom(1024)
@@ -79,9 +80,12 @@ class SoldierApi():
     def sync_targets(self):
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
         for target in targets_to_add:
+            print 'adding new target'
+            print target
             relative_target = self.soldier.get_relative_target(target)
             self.add_target(json.dumps(relative_target))
         for target_id in targets_ids_to_remove:
+            print 'remove target id {}'.format(target_id)
             self.remove_target_id(target_id)
 
     def update_db(self, target):
