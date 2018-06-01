@@ -84,7 +84,7 @@ class SoldierApi():
             print target
             self.targets[target['id']] = target
             relative_target = self.soldier.get_relative_target(target)
-            self.add_target(json.dumps(relative_target))
+            self.add_target(relative_target)
         for target_id in targets_ids_to_remove:
             self.remove_target_id(target_id)
 
