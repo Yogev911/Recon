@@ -113,7 +113,7 @@ class SoldierApi():
         targets_to_add = filter(lambda l: l['id'] not in self.targets.keys(), targets)
         return targets_to_add, targets_ids_to_remove
 
-    def add_target(self, msg, t_id):
+    def add_target(self, msg):
         print 'adding '
         print msg
         if self.address:
