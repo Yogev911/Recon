@@ -40,7 +40,6 @@ class my_gps:  # Create GPS class
             pass
         lat = pynmea2.parse(ser.readline()).lat
         if lat == '':
-            print 'waiting for signal'
             return None
         deg = lat[:2]
         mins = lat[2:]
@@ -65,7 +64,6 @@ class my_gps:  # Create GPS class
             pass
         lon = pynmea2.parse(ser.readline()).lon
         if lon == '':
-            print 'waiting for signal'
             return None
         mult = 1.0
         deg = int(lon[:3])

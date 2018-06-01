@@ -42,13 +42,15 @@ class Target():
         self.distance = us.getDistance()
         print 'calibrate GPS.. may take few minuets'
         while not (self.latitude and self.longitude and self.altitude):
+            print 'waiting for signal'
             self.latitude = self.gps.lat
             self.longitude = self.gps.lon
             self.altitude = self.gps.alt
-            print self.latitude
-            print self.longitude
-            print self.altitude
-            sleep(1)
+            sleep(0.5)
+
+        print self.latitude
+        print self.longitude
+        print self.altitude
 
     def mark_target(self, alpha, azimut):
         try:
