@@ -76,9 +76,9 @@ class Target():
             print self.altitude
             sleep(1)
 
-    def mark_target(self, alpha, azimut,distance):
+    def mark_target(self, alpha, azimut):
         try:
-            hypotenuse = distance #us.getDistance()   REMOVE!!!!!!!!!!!
+            hypotenuse = us.getDistance()
             self.distance = hypotenuse * math.cos(alpha)
             leg = hypotenuse * math.sin(alpha)
             self.latitude = self.gps.lat

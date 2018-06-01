@@ -44,11 +44,10 @@ class SoldierApi():
                                 self.should_run = False
                             if buf.startswith(conf.MARK):
                                 hololence_values = buf.split()
-                                if len(hololence_values) == 4:
+                                if len(hololence_values) == 3:
                                     alpha = hololence_values[1]
                                     azimut = hololence_values[2]
-                                    distance = hololence_values[3]
-                                    new_target = self.soldier.mark_target(alpha,azimut,distance)
+                                    new_target = self.soldier.mark_target(alpha,azimut)
                                     new_target['reconunitid'] = conf.RECONUNITID
                                     self.update_db(new_target)
                                     print 'new target marked! ' + json.dumps(new_target)
