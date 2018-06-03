@@ -56,7 +56,7 @@ class Target():
         try:
             alpha = float(alpha)
             azimut = float(azimut)
-            hypotenuse = us.getDistance()
+            hypotenuse = 20 #us.getDistance()
             self.distance = hypotenuse * math.cos(alpha)
             leg = hypotenuse * math.sin(alpha)
             self.latitude = self.gps.lat
