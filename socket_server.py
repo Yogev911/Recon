@@ -19,7 +19,7 @@ class SoldierApi():
             self.command = ''
             self.targets = {}
             self.soldier = Target()
-            self.address = ('213.57.75.18', 12346)
+            self.address = ('192.168.43.150', 12346)
             self.run()
         except socket.error, msg:
             print 'Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
@@ -93,6 +93,19 @@ class SoldierApi():
         for target_id in targets_ids_to_remove:
             self.remove_target_id(target_id)
             sleep(5)
+
+
+    def sync_msg(self):
+        res = get(url="https://reconsevice.herokuapp.com/msg")
+        if res.status_code == 200:
+            data = json.loads(res.content)
+            for msg in data['data']:
+                if self.address:
+                    warning_msg = msg['msg']
+                    msg_id = msg['id']
+                    self.serversocket.sendto('warrning: {}\n'.format(warning_msg), self.address)
+                    sleep(1)
+                    r = delete('https://reconsevice.herokuapp.com/msg')
 
 
     def update_db(self, target):
