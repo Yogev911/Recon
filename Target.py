@@ -17,9 +17,9 @@ class Target():
         self.gps = my_gps.my_gps()
         self.should_run = True
         self.distance = None
-        self.latitude = self.gps.lat
-        self.longitude = self.gps.lon
-        self.altitude = self.gps.alt
+        self.latitude = None #self.gps.lat
+        self.longitude = None #self.gps.lon
+        self.altitude = None #self.gps.alt
         self.azimut = None
         self.final_longitude = None
         self.final_latitude = None
@@ -39,7 +39,7 @@ class Target():
     def init(self):
         print 'init laser'
         us.init()
-        self.distance = us.getDistance()
+        self.distance = 20 #us.getDistance()
         print 'calibrate GPS.. may take few minuets'
         while not (self.latitude and self.longitude and self.altitude):
             print 'waiting for signal'
