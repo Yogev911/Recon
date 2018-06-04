@@ -4,12 +4,16 @@ from multiprocessing import Process, Queue
 
 import os
 
+import itertools
+
 from Target import Target
 from requests import get, post, delete
 import json
 from utils import conf
 import sys
 from time import sleep
+
+spinner = itertools.cycle(['-', '/', '|', '\\'])
 
 
 class SoldierApi():
@@ -82,12 +86,15 @@ class SoldierApi():
             print traceback.format_exc()
 
     def _wait_for_hololence(self):
+        print 'looking for hololence...'
         while True:
-            print 'looking for hololence...'
             response = os.system("ping -n 1 " + self.address[0])
-            if response:
+            if response == 0:
                 break
-            sleep(3)
+            sys.stdout.write(spinner.next())  # write the next character
+            sys.stdout.flush()  # flush stdout buffer (actual character display)
+            sys.stdout.write('\b')  # erase the last written char
+            sleep(1)
 
     def sync_targets(self):
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
