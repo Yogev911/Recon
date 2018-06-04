@@ -25,7 +25,6 @@ class Target():
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
         self.altitude = self.gps.alt
-        print self.gps.state
 
     def _init(self):
         # TODO: get new laser!
