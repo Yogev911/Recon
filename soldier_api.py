@@ -88,7 +88,7 @@ class SoldierApi():
     def _wait_for_hololence(self):
         print 'looking for hololence...'
         while True:
-            response = os.system("ping -c 1 " + self.address[0])
+            response = os.system("ping -c 1 {} ".format(self.address[0]))
             if response == 0:
                 break
             sys.stdout.write(spinner.next())  # write the next character
