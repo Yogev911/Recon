@@ -1,5 +1,5 @@
-# import math
 import traceback
+import itertools, sys
 from fpformat import fix
 from time import sleep
 from math import sin, cos, sqrt, atan2, radians, pi, acos, tan, atan
@@ -7,6 +7,7 @@ from math import sin, cos, sqrt, atan2, radians, pi, acos, tan, atan
 from utils import gps_handler as my_gps, conf
 # from utils import ultrasonic_handler as us
 
+spinner = itertools.cycle(['-', '/', '|', '\\'])
 
 # R = 6373.0
 
@@ -35,9 +36,12 @@ class Target():
             print 'Warrning laser is not working!'
 
         print 'calibrating GPS.. may take few minuets'
+        print 'waiting for signal'
         while not (self.latitude and self.longitude and self.altitude):
-            print 'waiting for signal'
             self.update_gps()
+            sys.stdout.write(spinner.next())  # write the next character
+            sys.stdout.flush()  # flush stdout buffer (actual character display)
+            sys.stdout.write('\b')  # erase the last written char
             sleep(0.1)
         print 'All components are ready! lat: {}, lon: {}, alt: {}'.format(self.latitude, self.longitude, self.altitude)
 
