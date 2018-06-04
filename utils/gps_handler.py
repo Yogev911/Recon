@@ -7,7 +7,6 @@ import serial  # import pyserial library
 
 from utils import conf
 
-ser = serial.Serial('/dev/ttyAMA0', 9600)  # Initialize Serial Port
 COMPASS = {'N': -1, 'E': 1, 'W': -1, 'S': -1}
 
 
@@ -15,30 +14,34 @@ class my_gps:  # Create GPS class
     def __init__(self):  # This init will run when you create a GPS object.
         # This sets up variables for useful commands.
         # This set is used to set the rate the GPS reports
-        self.NMEA = None
-        ser.write(conf.BAUD_57600)  # Set Baud Rate to 57600
+        self.ser = serial.Serial('/dev/ttyAMA0', 9600)  # Initialize Serial Port
+        self.ser.write(conf.BAUD_57600)  # Set Baud Rate to 57600
         sleep(1)  # Paulse
-        ser.baudrate = 57600  # IMPORTANT Since change ser baudrate to match GPS
+        self.ser.baudrate = 57600  # IMPORTANT Since change ser baudrate to match GPS
         sleep(1)
-        ser.write(conf.WARM_START)  # Set update rate
+        self.ser.write(conf.WARM_START)  # Set update rate
         sleep(1)
-        ser.write(conf.UPDATE_200_msec)  # Set update rate
+        self.ser.write(conf.UPDATE_200_msec)  # Set update rate
         sleep(1)
-        ser.write(conf.MEAS_200_msec)  # Set measurement rate
+        self.ser.write(conf.MEAS_200_msec)  # Set measurement rate
         sleep(1)
-        ser.write(conf.GPGGA_ONLY)  # Ask for only GPRMC and GPGGA Sentences
+        self.ser.write(conf.GPGGA_ONLY)  # Ask for only GPRMC and GPGGA Sentences
         sleep(1)
-        ser.flushInput()  # clear buffers
-        ser.flushOutput()
+        self.ser.flushInput()  # clear buffers
+        self.ser.flushOutput()
         print "GPS is Initialized"  # Print message
+
+    @property
+    def state(self):
+        return self.ser.readline()
 
     @property
     def lat(self):
         mult = 1.0
 
-        while ser.inWaiting() == 0:  # Wait for input
+        while self.ser.inWaiting() == 0:  # Wait for input
             pass
-        lat = pynmea2.parse(ser.readline()).lat
+        lat = pynmea2.parse(self.ser.readline()).lat
         if lat == '':
             return None
         deg = lat[:2]
@@ -48,21 +51,21 @@ class my_gps:  # Create GPS class
 
     @property
     def lat_dir(self):
-        while ser.inWaiting() == 0:  # Wait for input
+        while self.ser.inWaiting() == 0:  # Wait for input
             pass
-        return pynmea2.parse(ser.readline()).lat_dir
+        return pynmea2.parse(self.ser.readline()).lat_dir
 
     @property
     def alt(self):
-        while ser.inWaiting() == 0:  # Wait for input
+        while self.ser.inWaiting() == 0:  # Wait for input
             pass
-        return pynmea2.parse(ser.readline()).altitude
+        return pynmea2.parse(self.ser.readline()).altitude
 
     @property
     def lon(self):
-        while ser.inWaiting() == 0:  # Wait for input
+        while self.ser.inWaiting() == 0:  # Wait for input
             pass
-        lon = pynmea2.parse(ser.readline()).lon
+        lon = pynmea2.parse(self.ser.readline()).lon
         if lon == '':
             return None
         mult = 1.0
@@ -73,23 +76,23 @@ class my_gps:  # Create GPS class
 
     @property
     def lon_dir(self):
-        while ser.inWaiting() == 0:  # Wait for input
+        while self.ser.inWaiting() == 0:  # Wait for input
             pass
-        return pynmea2.parse(ser.readline()).lon_dir
+        return pynmea2.parse(self.ser.readline()).lon_dir
 
     def get_location(self):
-        while ser.inWaiting() == 0:  # Wait for input
+        while self.ser.inWaiting() == 0:  # Wait for input
             pass
-        self.NMEA = ser.readline()  # Read NMEA1
+        self.NMEA = self.ser.readline()  # Read NMEA1
         print self.NMEA
         cord = pynmea2.parse(self.NMEA)
         attrs = vars(cord)
         print ', '.join("%s: %s" % item for item in attrs.items())
 
     def get_latitude(self):
-        while ser.inWaiting() == 0:  # Wait for input
+        while self.ser.inWaiting() == 0:  # Wait for input
             pass
-        lat = pynmea2.parse(ser.readline()).lat
+        lat = pynmea2.parse(self.ser.readline()).lat
         mult = -1
         print type(lat)
         deg = int(lat[:2])
