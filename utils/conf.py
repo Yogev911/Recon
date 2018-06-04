@@ -9,7 +9,7 @@ DB_HOST = '0.0.0.0'
 DB_PORT = 3000
 DB_LANE = 'hello'
 HEADER = {"reconunitid": 2}
-DBֹֹֹ_ROOT_URL = "https://reconsevice.herokuapp.com/"
+DBֹֹֹ_ROOT_URL = "https://reconsevice.herokuapp.com/target"
 MSG_LANE = 'msg'
 TARGET_LANE = 'target'
 

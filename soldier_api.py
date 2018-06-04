@@ -92,7 +92,7 @@ class SoldierApi():
             sleep(3)
 
     def sync_msg(self):
-        res = get(url=conf.DBֹֹֹ_ROOT_URL + conf.MSG_LANE)
+        res = get(url=conf.DBֹֹֹ_ROOT_URL)
         if res.status_code == 200:
             data = json.loads(res.content)
             for msg in data['data']:
@@ -101,21 +101,21 @@ class SoldierApi():
                     msg_id = msg['id']
                     self.serversocket.sendto('warrning: {}\n'.format(warning_msg), self.address)
                     sleep(1)
-                    r = delete(conf.DBֹֹֹ_ROOT_URL + conf.MSG_LANE)
+                    r = delete(conf.DBֹֹֹ_ROOT_URL)
 
     def update_db(self, target):
         try:
             print 'update db... '
             print target
             # return
-            r = post(url=conf.DBֹֹֹ_ROOT_URL + conf.TARGET_LANE, json=target)
+            r = post(url=conf.DBֹֹֹ_ROOT_URL, json=target)
             if r.status_code != 200:
                 print 'error update db'
         except:
             print 'error in update db {}'.format(traceback.format_exc())
 
     def get_targets(self):
-        res = get(url=conf.DBֹֹֹ_ROOT_URL + conf.TARGET_LANE)
+        res = get(url=conf.DBֹֹֹ_ROOT_URL)
         if res.status_code == 200:
             data = json.loads(res.content)
             return data['data']
