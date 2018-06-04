@@ -1,4 +1,5 @@
 RECONUNITID = 2
+HOLOLENC_ADDR = ('192.168.43.150', 12346)
 MARK = 'mark'
 TARGET_TYPES = ['warrning', 'danger', 'ally', 'unknown']
 SOLDIER_SCAN_INTERVAL = 3
@@ -7,7 +8,11 @@ SOLDIER_SCAN_INTERVAL = 3
 DB_HOST = '0.0.0.0'
 DB_PORT = 3000
 DB_LANE = 'hello'
-HEADER = {"reconunitid": 1}
+HEADER = {"reconunitid": 2}
+DBֹֹֹ_ROOT_URL = "https://reconsevice.herokuapp.com/"
+MSG_LANE = 'msg'
+TARGET_LANE = 'target'
+
 
 # GPS region
 COLD_START = "$PMTK103*30\r\n"
@@ -77,3 +82,5 @@ data = [
         "type": "warrning"
     },
 ]
+
+

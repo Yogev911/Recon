@@ -1,8 +1,9 @@
+# coding=utf-8
 import socket
 import traceback
 from multiprocessing import Process, Queue
 from Target import Target
-from requests import get, post , delete
+from requests import get, post, delete
 import json
 from utils import conf
 import sys
@@ -13,13 +14,13 @@ class SoldierApi():
     def __init__(self):
         try:
             self.serversocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            self.soldier = Target()
             self.serversocket.bind(('0.0.0.0', 8081))
             self.serversocket.setblocking(False)
             self.should_run = True
             self.command = ''
             self.targets = {}
-            self.soldier = Target()
-            self.address = ('192.168.43.150', 12346)
+            self.address = conf.HOLOLENC_ADDR
             self.run()
         except socket.error, msg:
             print 'Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
@@ -30,41 +31,37 @@ class SoldierApi():
         try:
             while self.should_run:
                 sleep(0.5)
-                self.soldier.update_gps()
                 self.sync_targets()
                 try:
                     buf, self.address = self.serversocket.recvfrom(1024)
-                    print 'self address : '
-                    print self.address
                     if len(buf) > 0:
-                        print 'found client {} on port'.format(self.address[0], self.address[1])
                         try:
-                            print 'innet loop'
+                            print buf + '#####################################'
                             if buf == 'stop'.lower():
                                 print 'killing connection'
                                 self.should_run = False
-                            if buf.startswith(conf.MARK):
-                                hololence_values = buf.split()
-                                if len(hololence_values) == 5:
-                                    alpha = hololence_values[2]
-                                    azimut = hololence_values[4]
-                                    new_target = self.soldier.mark_target(alpha, azimut)
-                                    self.update_db(new_target)
-                                    print 'new target marked! ' + json.dumps(new_target)
-                                else:
-                                    if len(hololence_values) == 3:
-                                        t_id = hololence_values[2]
-                                        self.delete_db_target(t_id)
-
-                            print buf + '#####################################'
-
+                                break
+                            hololence_values = buf.split()
+                            if hololence_values[0] == conf.MARK and len(hololence_values) == 5:
+                                # mark new target
+                                alpha = hololence_values[2]
+                                azimut = hololence_values[4]
+                                new_target = self.soldier.mark_target(alpha, azimut)
+                                self.update_db(new_target)
+                                print 'new target marked! ' + json.dumps(new_target)
+                            elif len(hololence_values) == 3:
+                                # delete target from hololence
+                                target_id = hololence_values[2]
+                                self.delete_db_target(target_id)
                         except Exception:
                             print traceback.format_exc()
                             print "keep reading"
                             continue
                 except:
-                    pass
-                sleep(5)
+                    print traceback.format_exc()
+                    print "keep reading"
+                    sleep(5)
+                    continue
 
         except KeyboardInterrupt:
             self.serversocket.close()
@@ -89,14 +86,13 @@ class SoldierApi():
             self.targets[target['id']] = target
             relative_target = self.soldier.get_relative_target(target)
             self.add_target(relative_target)
-            sleep(5)
+            sleep(3)
         for target_id in targets_ids_to_remove:
             self.remove_target_id(target_id)
-            sleep(5)
-
+            sleep(3)
 
     def sync_msg(self):
-        res = get(url="https://reconsevice.herokuapp.com/msg")
+        res = get(url=conf.DBֹֹֹ_ROOT_URL + conf.MSG_LANE)
         if res.status_code == 200:
             data = json.loads(res.content)
             for msg in data['data']:
@@ -105,29 +101,25 @@ class SoldierApi():
                     msg_id = msg['id']
                     self.serversocket.sendto('warrning: {}\n'.format(warning_msg), self.address)
                     sleep(1)
-                    r = delete('https://reconsevice.herokuapp.com/msg')
-
+                    r = delete(conf.DBֹֹֹ_ROOT_URL + conf.MSG_LANE)
 
     def update_db(self, target):
         try:
             print 'update db... '
             print target
             # return
-            r = post('https://reconsevice.herokuapp.com/target', json=target)
+            r = post(url=conf.DBֹֹֹ_ROOT_URL + conf.TARGET_LANE, json=target)
             if r.status_code != 200:
                 print 'error update db'
         except:
             print 'error in update db {}'.format(traceback.format_exc())
 
-
     def get_targets(self):
-        res = get(url="https://reconsevice.herokuapp.com/target")
+        res = get(url=conf.DBֹֹֹ_ROOT_URL + conf.TARGET_LANE)
         if res.status_code == 200:
             data = json.loads(res.content)
             return data['data']
         return None
-        # res = get(url="{}:{}/{}".format(conf.DB_HOST, conf.DB_PORT, conf.DB_LANE))
-        # return json.loads(res.content)
 
     def get_target_diff(self):
         targets = self.get_targets()
@@ -139,12 +131,12 @@ class SoldierApi():
         return targets_to_add, targets_ids_to_remove
 
     def add_target(self, msg):
-        print 'adding '
+        data = 'add: id {} azimuth {} distance {} elv {} \n'.format(msg['id'], msg['azimut'], msg['distance'],
+                                                                    msg['altitude'])
+        print 'sending target to hololence: '
         print msg
         if self.address:
-            self.serversocket.sendto(
-                'add: id {} azimuth {} distance {} elv {} \n'.format(msg['id'], msg['azimut'], msg['distance'],
-                                                                     msg['altitude']), self.address)
+            self.serversocket.sendto(msg, self.address)
 
     def remove_target_id(self, msg):
         print 'remove target id {}'.format(msg)
@@ -164,8 +156,3 @@ class SoldierApi():
                 print 'error update db'
         except:
             print 'error in update db {}'.format(traceback.format_exc())
-
-
-
-if __name__ == '__main__':
-    s = SoldierApi()
