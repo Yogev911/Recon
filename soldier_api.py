@@ -1,4 +1,3 @@
-# coding=utf-8
 import socket
 import traceback
 from multiprocessing import Process, Queue
