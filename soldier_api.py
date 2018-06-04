@@ -1,6 +1,9 @@
 import socket
 import traceback
 from multiprocessing import Process, Queue
+
+import os
+
 from Target import Target
 from requests import get, post, delete
 import json
@@ -26,6 +29,8 @@ class SoldierApi():
             sys.exit()
 
     def run(self):
+        self._wait_for_hololence()
+
         print 'Running...'
         try:
             while self.should_run:
@@ -57,7 +62,6 @@ class SoldierApi():
                             print "keep reading"
                             continue
                 except:
-                    print traceback.format_exc()
                     print "keep reading"
                     sleep(5)
                     continue
@@ -76,6 +80,14 @@ class SoldierApi():
             self.serversocket.close()
             print "closed"
             print traceback.format_exc()
+
+    def _wait_for_hololence(self):
+        while True:
+            response = os.system("ping -c 1 " + self.address[0])
+            if response:
+                break
+            print 'looking for hololence...'
+            sleep(3)
 
     def sync_targets(self):
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
