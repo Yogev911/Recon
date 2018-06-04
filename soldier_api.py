@@ -83,10 +83,10 @@ class SoldierApi():
 
     def _wait_for_hololence(self):
         while True:
-            response = os.system("ping -c 1 " + self.address[0])
+            print 'looking for hololence...'
+            response = os.system("ping -n 1 " + self.address[0])
             if response:
                 break
-            print 'looking for hololence...'
             sleep(3)
 
     def sync_targets(self):
