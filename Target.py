@@ -38,7 +38,7 @@ class Target():
         while not (self.latitude and self.longitude and self.altitude):
             print 'waiting for signal'
             self.update_gps()
-            sleep(1)
+            sleep(0.1)
         print 'All components are ready! lat: {}, lon: {}, alt: {}'.format(self.latitude, self.longitude, self.altitude)
 
     def mark_target(self, alpha, azimut):
