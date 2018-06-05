@@ -86,15 +86,20 @@ class SoldierApi():
             print traceback.format_exc()
 
     def _wait_for_hololence(self):
-        print 'looking for hololence...'
+        print 'looking for hololence on ip {} in port {}...'.format(self.address[0],self.address[1])
         while True:
-            response = os.system("ping -c 1 {} ".format(self.address[0]))
-            if response == 0:
+            # HOST_UP = True if os.system("ping -c 1 " + self.address[0]) is 0 else False
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            HOST_UP = True if sock.connect_ex(self.address) is 0 else False
+            if HOST_UP:
                 break
-            sys.stdout.write(spinner.next())  # write the next character
-            sys.stdout.flush()  # flush stdout buffer (actual character display)
-            sys.stdout.write('\b')  # erase the last written char
+            self._spinner()
             sleep(1)
+
+    def _spinner(self):
+        sys.stdout.write(spinner.next())  # write the next character
+        sys.stdout.flush()  # flush stdout buffer (actual character display)
+        sys.stdout.write('\b')  # erase the last written char
 
     def sync_targets(self):
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
