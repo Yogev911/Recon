@@ -32,6 +32,10 @@ class my_gps:  # Create GPS class
         print "GPS is Initialized"  # Print message
 
     @property
+    def read(self):
+        return self.ser.readline()
+
+    @property
     def state(self):
         return self.ser.readline()
 

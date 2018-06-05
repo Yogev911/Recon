@@ -23,6 +23,7 @@ class Target():
         self._init()
 
     def update_gps(self):
+        self.gps.read
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
         self.altitude = self.gps.alt
