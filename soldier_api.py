@@ -131,9 +131,10 @@ class SoldierApi():
             print 'update db... '
             print target
             # return
-            r = post("https://reconsevice.herokuapp.com/target", json=target)
-            if r.status_code != 200:
+            res = post("https://reconsevice.herokuapp.com/target", json=target)
+            if res.status_code != 200:
                 print 'error update db'
+                print res.json()
         except:
             print 'error in update db {}'.format(traceback.format_exc())
 
