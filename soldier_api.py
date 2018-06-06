@@ -1,9 +1,5 @@
 import socket
 import traceback
-from multiprocessing import Process, Queue
-
-import os
-
 import itertools
 
 from Target import Target
@@ -14,6 +10,28 @@ import sys
 from time import sleep
 
 spinner = itertools.cycle(['-', '/', '|', '\\'])
+
+class db():
+    def __init__(self):
+        self.root = "https://reconsevice.herokuapp.com/"
+        self.target = "target/"
+        self.reconunit = 'reconunit/'
+        self.msg = 'message/'
+
+    def send_target(self,target):
+        return post(self.root+self.target, json=target)
+
+    def get_target(self,target_id):
+        return get(self.root+self.target+target_id)
+
+    def get_targets(self):
+        return get(self.root+self.target)
+
+    def delete_target(self,target_id):
+        return delete(self.root+self.target+target_id)
+
+    def gets_msg(self):
+        return get(self.root+self.msg+conf.RECONUNITID)
 
 
 class SoldierApi():
@@ -27,6 +45,7 @@ class SoldierApi():
             self.command = ''
             self.targets = {}
             self.address = conf.HOLOLENC_ADDR
+            self.db = db()
             self.run()
         except socket.error, msg:
             print 'Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
@@ -115,7 +134,7 @@ class SoldierApi():
             sleep(3)
 
     def sync_msg(self):
-        res = get("https://reconsevice.herokuapp.com/target")
+        res = self.db.gets_msg()
         if res.status_code == 200:
             data = json.loads(res.content)
             for msg in data['data']:
@@ -124,14 +143,13 @@ class SoldierApi():
                     msg_id = msg['id']
                     self.serversocket.sendto('warrning: {}\n'.format(warning_msg), self.address)
                     sleep(1)
-                    r = delete("https://reconsevice.herokuapp.com/target")
+                    # r = delete("https://reconsevice.herokuapp.com/target")
 
     def update_db(self, target):
         try:
             print 'update db... '
-            print target
-            # return
-            res = post("https://reconsevice.herokuapp.com/target", json=target)
+            # print target
+            res = self.db.send_target(target)
             if res.status_code != 200:
                 print 'error update db'
                 print res.json()
@@ -139,7 +157,7 @@ class SoldierApi():
             print 'error in update db {}'.format(traceback.format_exc())
 
     def get_targets(self):
-        res = get("https://reconsevice.herokuapp.com/target")
+        res = self.db.get_targets()
         if res.status_code == 200:
             data = json.loads(res.content)
             return data['data']
@@ -171,12 +189,9 @@ class SoldierApi():
     def delete_db_target(self, t_id):
         try:
             payload = {'id': t_id}
-            r = delete('http://httpbin.org/post', data=json.dumps(payload))
+            res = self.db.delete_target(t_id)
             print 'remove target {} '.format(t_id)
-            print t_id
-            # return
-            # r = delete('http://httpbin.org/post', json=target)
-            if r.status_code != 200:
+            if res.status_code != 200:
                 print 'error update db'
         except:
             print 'error in update db {}'.format(traceback.format_exc())

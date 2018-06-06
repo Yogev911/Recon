@@ -1,4 +1,4 @@
-RECONUNITID = 2
+RECONUNITID = 1
 HOLOLENC_ADDR = ('192.168.1.14', 12346)
 MARK = 'mark'
 TARGET_TYPES = ['warrning', 'danger', 'ally', 'unknown']
