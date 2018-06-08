@@ -20,19 +20,42 @@ class db():
         self.msg = 'message/'
 
     def send_target(self,target):
-        return post(self.root+self.target, json=target)
+        res = post(self.root+self.target, json=target)
+        if res.status_code != 200:
+            print 'error update db'
+            print res.json()
 
     def get_target(self,target_id):
         return get(self.root+self.target+target_id)
 
     def get_targets(self):
-        return get(self.root+self.target)
+        res =  get(self.root+self.target)
+        if res.status_code == 200:
+            responds = json.loads(res.content)
+            if responds['success']:
+                return responds['data']
+            else:
+                print 'host unavailable'
+                sleep(10)
+                return None
+        else:
+            print 'host unavailable'
+            sleep(10)
+            return None
 
     def delete_target(self,target_id):
         return delete(self.root+self.target+target_id)
 
     def gets_msg(self):
-        return get(self.root+self.msg+conf.RECONUNITID)
+        res = get(self.root+self.msg+conf.RECONUNITID)
+        if res.status_code == 200:
+            responds = json.loads(res.content)
+            if responds['success']:
+                return responds['data']
+            else:
+                print 'host unavailable'
+                sleep(10)
+                return None
 
 
 class SoldierApi():
@@ -145,34 +168,30 @@ class SoldierApi():
             sleep(3)
 
     def sync_msg(self):
-        res = self.db.gets_msg()
-        if res.status_code == 200:
-            data = json.loads(res.content)
-            for msg in data['data']:
-                if self.address:
-                    warning_msg = msg['msg']
-                    msg_id = msg['id']
-                    self.serversocket.sendto('warrning: {}\n'.format(warning_msg), self.address)
-                    sleep(1)
-                    # r = delete("https://reconsevice.herokuapp.com/target")
+        try:
+            data = self.db.gets_msg()
+            if data:
+                for msg in data:
+                    if self.address:
+                        warning_msg = msg['msg']
+                        msg_id = msg['id']
+                        self.serversocket.sendto('warrning: {}\n'.format(warning_msg), self.address)
+                        sleep(1)
+                        # r = delete("https://reconsevice.herokuapp.com/target")
+        except:
+            print traceback.format_exc()
 
     def update_db(self, target):
         try:
             print 'update db... '
             # print target
-            res = self.db.send_target(target)
-            if res.status_code != 200:
-                print 'error update db'
-                print res.json()
+            self.db.send_target(target)
+
         except:
             print 'error in update db {}'.format(traceback.format_exc())
 
     def get_targets(self):
-        res = self.db.get_targets()
-        if res.status_code == 200:
-            data = json.loads(res.content)
-            return data['data']
-        return None
+        return self.db.get_targets()
 
     def get_target_diff(self):
         targets = self.get_targets()
