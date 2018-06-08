@@ -42,18 +42,21 @@ class Target():
 
         print 'calibrating GPS.. may take few minuets'
         print 'waiting for signal'
+        self.sync_gps()
+        print 'All components are ready! lat: {}, lon: {}, alt: {}'.format(self.latitude, self.longitude, self.altitude)
+
+    def sync_gps(self,intervals = 0.1):
         while not (self.latitude and self.longitude and self.altitude):
             self.update_gps()
             sys.stdout.write(spinner.next())  # write the next character
             sys.stdout.flush()  # flush stdout buffer (actual character display)
             sys.stdout.write('\b')  # erase the last written char
-            sleep(0.1)
-        print 'All components are ready! lat: {}, lon: {}, alt: {}'.format(self.latitude, self.longitude, self.altitude)
+            sleep(intervals)
 
     def mark_target(self, alpha, azimut):
         # Setting new target cord based on self coord, azimuth, distanse and elevation angle to target
         try:
-            self.update_gps()
+            self.sync_gps(intervals=0.01)
             alpha = float(alpha)
             azimut = float(azimut)
 
