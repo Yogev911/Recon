@@ -1,4 +1,5 @@
 import socket
+import subprocess
 import traceback
 import itertools
 
@@ -107,13 +108,23 @@ class SoldierApi():
     def _wait_for_hololence(self):
         print 'looking for hololence on ip {} in port {}...'.format(self.address[0],self.address[1])
         while True:
-            # HOST_UP = True if os.system("ping -c 1 " + self.address[0]) is 0 else False
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            HOST_UP = True if sock.connect_ex(self.address) is 0 else False
-            if HOST_UP:
+
+            if self._ping():
                 break
             self._spinner()
             sleep(1)
+        print 'Ready to go!'
+
+    def _ping(self):
+        try:
+            response = subprocess.check_output(
+                ['ping', '-c', '3', self.address[0]],
+                stderr=subprocess.STDOUT,  # get all output
+                universal_newlines=True  # return string not bytes
+            )
+            return True
+        except subprocess.CalledProcessError:
+            return False
 
     def _spinner(self):
         sys.stdout.write(spinner.next())  # write the next character
