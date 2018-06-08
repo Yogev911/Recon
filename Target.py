@@ -28,6 +28,12 @@ class Target():
         self.longitude = self.gps.lon
         self.altitude = self.gps.alt
 
+    def print_gps_data(self):
+        self.update_gps()
+        print self.latitude
+        print self.longitude
+        print self.altitude
+
     def _init(self):
         # TODO: get new laser!
         print 'init laser.. skip it.'
