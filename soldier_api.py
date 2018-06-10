@@ -176,7 +176,7 @@ class SoldierApi():
         return targets_to_add, targets_ids_to_remove
 
     def add_target(self, msg):
-        data = 'add: id {} azimuth {} distance {} elv {} \n'.format(msg['id'], msg['azimut'], msg['distance'],
+        msg = 'add: id {} azimuth {} distance {} elv {} \n'.format(msg['id'], msg['azimut'], msg['distance'],
                                                                     msg['altitude'])
         print 'sending target to hololence: '
         print msg
