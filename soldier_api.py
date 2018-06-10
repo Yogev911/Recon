@@ -64,6 +64,7 @@ class SoldierApi():
                             print "keep reading"
                             continue
                 except:
+                    print traceback.format_exc()
                     print "keep reading"
                     sleep(5)
                     continue
