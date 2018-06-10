@@ -67,7 +67,8 @@ class SoldierApi():
                             continue
                 except IOError as e:  # and here it is handeled
                     if e.errno == errno.EWOULDBLOCK:
-                        pass
+                        sleep(0.5)
+                        continue
                 except:
                     print traceback.format_exc()
                     print "keep reading"

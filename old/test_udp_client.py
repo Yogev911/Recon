@@ -20,7 +20,7 @@ msg = 'remove: id 1'
 
 try:
     # Set the whole string
-    s.sendto(msg, ('192.168.43.164', 8083))
+    s.sendto(msg, ('192.168.43.164', 8081))
     print 'sent'
     # receive data from client (data, addr)
     # d = s.recvfrom(1024)
