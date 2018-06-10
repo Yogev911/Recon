@@ -16,7 +16,7 @@ except socket.error:
 host = '192.168.1.24'
 port = 12346
 
-msg = 'remove: id 1'
+msg = 'stop'
 
 try:
     # Set the whole string

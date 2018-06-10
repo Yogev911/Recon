@@ -33,13 +33,13 @@ class SoldierApi():
             sys.exit()
 
     def run(self):
-        # self._wait_for_hololence()
+        self._wait_for_hololence()
 
         print 'Running...'
         try:
             while self.should_run:
                 sleep(0.5)
-                # self.sync_targets()
+                self.sync_targets()
                 try:
                     buf, self.address = self.serversocket.recvfrom(1024)
                     if len(buf) > 0:
@@ -48,7 +48,7 @@ class SoldierApi():
                             if buf == 'stop'.lower():
                                 print 'killing connection'
                                 self.should_run = False
-                                break
+                                sys.exit(0)
                             hololence_values = buf.split()
                             if hololence_values[0] == conf.MARK and len(hololence_values) == 5:
                                 # mark new target
