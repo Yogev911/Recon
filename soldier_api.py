@@ -5,6 +5,8 @@ import itertools
 from time import sleep
 import sys
 import json
+import errno
+
 
 from Target import Target
 from utils import conf
@@ -63,6 +65,9 @@ class SoldierApi():
                             print traceback.format_exc()
                             print "keep reading"
                             continue
+                except IOError as e:  # and here it is handeled
+                    if e.errno == errno.EWOULDBLOCK:
+                        pass
                 except:
                     print traceback.format_exc()
                     print "keep reading"
