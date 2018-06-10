@@ -18,7 +18,7 @@ class SoldierApi():
         try:
             self.serversocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             self.soldier = Target()
-            self.serversocket.bind(('0.0.0.0', 8081))
+            self.serversocket.bind(('0.0.0.0', 8082))
             self.serversocket.setblocking(False)
             self.should_run = True
             self.command = ''
