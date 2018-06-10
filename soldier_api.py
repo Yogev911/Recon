@@ -31,7 +31,7 @@ class SoldierApi():
             sys.exit()
 
     def run(self):
-        self._wait_for_hololence()
+        # self._wait_for_hololence()
 
         print 'Running...'
         try:
@@ -85,12 +85,12 @@ class SoldierApi():
 
     def _wait_for_hololence(self):
         print 'looking for hololence on ip {} in port {}...'.format(self.address[0], self.address[1])
-        # while True:
-        #     # self.soldier.print_gps_data()
-        #     if self._ping():
-        #         break
-        #     self._spinner()
-        #     sleep(1)
+        while True:
+            # self.soldier.print_gps_data()
+            if self._ping():
+                break
+            self._spinner()
+            sleep(1)
         print 'wating for hololence to send start msg...'
         while True:
             try:
