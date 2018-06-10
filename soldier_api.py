@@ -112,6 +112,10 @@ class SoldierApi():
                         continue
                 self._spinner()
                 sleep(0.5)
+            except IOError as e:  # and here it is handeled
+                if e.errno == errno.EWOULDBLOCK:
+                    sleep(0.5)
+                    continue
             except:
                 print traceback.format_exc()
                 sleep(2)
