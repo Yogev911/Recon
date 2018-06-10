@@ -1,5 +1,5 @@
 RECONUNITID = 1
-HOLOLENC_ADDR = ('192.168.43.150', 12346)
+HOLOLENC_ADDR = ('192.168.43.228', 12346)
 MARK = 'mark'
 TARGET_TYPES = ['warrning', 'danger', 'ally', 'unknown']
 SOLDIER_SCAN_INTERVAL = 3
