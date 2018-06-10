@@ -96,6 +96,7 @@ class SoldierApi():
             try:
                 buf, self.address = self.serversocket.recvfrom(1024)
                 if len(buf) > 0:
+                    print buf
                     try:
                         if buf == 'hello'.lower():
                             break
