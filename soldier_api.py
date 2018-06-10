@@ -2,60 +2,15 @@ import socket
 import subprocess
 import traceback
 import itertools
+from time import sleep
+import sys
+import json
 
 from Target import Target
-from requests import get, post, delete
-import json
 from utils import conf
-import sys
-from time import sleep
+from db_utils import db
 
 spinner = itertools.cycle(['-', '/', '|', '\\'])
-
-class db():
-    def __init__(self):
-        self.root = "https://reconsevice.herokuapp.com/"
-        self.target = "target/"
-        self.reconunit = 'reconunit/'
-        self.msg = 'message/'
-
-    def send_target(self,target):
-        res = post(self.root+self.target, json=target)
-        if res.status_code != 200:
-            print 'error update db'
-            print res.json()
-
-    def get_target(self,target_id):
-        return get(self.root+self.target+target_id)
-
-    def get_targets(self):
-        res =  get(self.root+self.target)
-        if res.status_code == 200:
-            responds = json.loads(res.content)
-            if responds['success']:
-                return responds['data']
-            else:
-                print 'host unavailable'
-                sleep(10)
-                return None
-        else:
-            print 'host unavailable'
-            sleep(10)
-            return None
-
-    def delete_target(self,target_id):
-        return delete(self.root+self.target+target_id)
-
-    def gets_msg(self):
-        res = get(self.root+self.msg+conf.RECONUNITID)
-        if res.status_code == 200:
-            responds = json.loads(res.content)
-            if responds['success']:
-                return responds['data']
-            else:
-                print 'host unavailable'
-                sleep(10)
-                return None
 
 
 class SoldierApi():
@@ -129,13 +84,30 @@ class SoldierApi():
             print traceback.format_exc()
 
     def _wait_for_hololence(self):
-        print 'looking for hololence on ip {} in port {}...'.format(self.address[0],self.address[1])
+        print 'looking for hololence on ip {} in port {}...'.format(self.address[0], self.address[1])
         while True:
             self.soldier.print_gps_data()
             if self._ping():
                 break
             self._spinner()
             sleep(1)
+        print 'wating for hololence to send start msg...'
+        while True:
+            try:
+                buf, self.address = self.serversocket.recvfrom(1024)
+                if len(buf) > 0:
+                    try:
+                        if buf == 'hello'.lower():
+                            break
+                    except Exception:
+                        print traceback.format_exc()
+                        continue
+                self._spinner()
+                sleep(0.5)
+            except:
+                print traceback.format_exc()
+                sleep(2)
+                continue
         print 'Ready to go!'
 
     def _ping(self):
