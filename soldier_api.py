@@ -37,7 +37,7 @@ class SoldierApi():
         try:
             while self.should_run:
                 sleep(0.5)
-                self.sync_targets()
+                # self.sync_targets()
                 try:
                     buf, self.address = self.serversocket.recvfrom(1024)
                     if len(buf) > 0:
