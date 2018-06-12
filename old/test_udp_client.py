@@ -7,7 +7,7 @@ except socket.error:
     print 'Failed to create socket'
     sys.exit()
 
-port = 12346
+port = 8081
 
 host = '192.168.1.23'
 msg = 'mark elv -0.32 azimuth 3.18'
