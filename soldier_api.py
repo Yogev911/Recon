@@ -33,7 +33,7 @@ class SoldierApi():
             sys.exit()
 
     def run(self):
-        self._wait_for_hololence()
+        # self._wait_for_hololence()
 
         print 'Running...'
         try:
@@ -45,7 +45,7 @@ class SoldierApi():
                     buf, self.address = self.serversocket.recvfrom(1024)
                     if len(buf) > 0:
                         try:
-                            print buf + '#####################################'
+                            print 'recived message: {} ###'.format(buf)
                             if buf == 'stop'.lower():
                                 print 'killing connection'
                                 self.should_run = False
@@ -198,7 +198,7 @@ class SoldierApi():
             self.serversocket.sendto(msg, self.address)
 
     def remove_target_id(self, msg):
-        print 'remove target id {}'.format(msg)
+        print 'pop target id {}'.format(msg)
         self.targets.pop(msg)
         if self.address:
             self.serversocket.sendto('remove: id {}\n'.format(msg), self.address)
@@ -207,7 +207,7 @@ class SoldierApi():
         try:
             payload = {'id': t_id}
             res = self.db.delete_target(t_id)
-            print 'remove target {} '.format(t_id)
+            print 'user asked to remove target {} '.format(t_id)
             if res.status_code != 200:
                 print 'error update db'
         except:

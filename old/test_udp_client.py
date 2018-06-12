@@ -10,8 +10,7 @@ except socket.error:
 port = 12346
 
 host = '192.168.1.25'
-msg = 'remove id: 112'
-
+msg = 'remove: id 126'
 try:
     s.sendto(msg, (host,port))
 except socket.error, msg:
