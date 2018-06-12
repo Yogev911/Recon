@@ -66,12 +66,16 @@ class Target():
             delta_alt = hypotenuse * sin(alpha)
             tetha = float(azimut)
             delta = distance / R
-
-            final_latitude = asin(sin(self.latitude) * cos(delta) + cos(self.latitude) * sin(delta) * cos(tetha))
-            final_longitude = self.longitude + atan2(sin(tetha) * sin(delta) * cos(self.latitude),
-                                                     cos(delta) - sin(self.latitude) * sin(final_latitude))
             final_altitude = self.altitude + delta_alt
+            #
+            # final_latitude = asin((sin(self.latitude) * cos(delta)) + (cos(self.latitude) * sin(delta) * cos(tetha)))
+            # final_longitude = self.longitude + atan2(sin(tetha) * sin(delta) * cos(self.latitude),
+            #                                          cos(delta) - sin(self.latitude) * sin(final_latitude))
 
+            final_latitude = asin(sin(self.latitude) * cos(delta) +
+                           cos(self.latitude) * sin(delta) * cos(tetha))
+            final_longitude = self.longitude + atan2(sin(tetha) * sin(delta) * cos(self.latitude),
+                                 cos(delta) - sin(self.latitude) * sin(final_latitude))
             # azimut = float(azimut)
             #
             # # find the delta altitude of the target
