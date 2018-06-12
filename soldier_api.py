@@ -140,11 +140,9 @@ class SoldierApi():
         sys.stdout.write('\b')  # erase the last written char
 
     def sync_targets(self):
-        print 'sync targets..'
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
-        print 'targets_to_add' + str(targets_to_add)
-        print 'targets_ids_to_remove' + str(targets_ids_to_remove)
-        print 'self.targets' + json.dumps(self.targets)
+        print 'targets_ids_to_remove ' + str(targets_ids_to_remove) + ' type : {}'.format(type(targets_ids_to_remove))
+        print 'self.targets' + str(self.targets.keys())
         for target in targets_to_add:
             print 'adding new target'
             print target
@@ -185,7 +183,6 @@ class SoldierApi():
         return self.db.get_targets()
 
     def get_target_diff(self):
-        print 'in target diff'
         targets = self.get_targets()
         if not targets:
             return [], []
