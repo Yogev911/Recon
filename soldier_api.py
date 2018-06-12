@@ -38,9 +38,9 @@ class SoldierApi():
         print 'Running...'
         try:
             while self.should_run:
-                sleep(0.5)
-                self.sync_targets()
+                sleep(1)
                 self.sync_msg()
+                self.sync_targets()
                 try:
                     buf, self.address = self.serversocket.recvfrom(1024)
                     if len(buf) > 0:
@@ -158,7 +158,7 @@ class SoldierApi():
             if data:
                 for msg in data:
                     if self.address:
-                        warning_msg = msg['msg']
+                        warning_msg = msg['message']
                         msg_id = msg['id']
                         self.serversocket.sendto('warrning: {}\n'.format(warning_msg), self.address)
                         sleep(1)
