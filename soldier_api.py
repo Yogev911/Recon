@@ -40,6 +40,7 @@ class SoldierApi():
             while self.should_run:
                 sleep(0.5)
                 self.sync_targets()
+                self.sync_msg()
                 try:
                     buf, self.address = self.serversocket.recvfrom(1024)
                     if len(buf) > 0:
@@ -146,10 +147,10 @@ class SoldierApi():
             self.targets[target['id']] = target
             relative_target = self.soldier.get_relative_target(target)
             self.add_target(relative_target)
-            sleep(3)
+            sleep(2)
         for target_id in targets_ids_to_remove:
             self.remove_target_id(target_id)
-            sleep(3)
+            sleep(2)
 
     def sync_msg(self):
         try:
