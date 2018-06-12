@@ -2,12 +2,14 @@ import traceback
 import itertools, sys
 from fpformat import fix
 from time import sleep
-from math import sin, cos, sqrt, atan2, radians, pi, acos, tan, atan
+from math import sin, cos, sqrt, atan2, radians, pi, acos, tan, atan, asin
 
 from utils import gps_handler as my_gps, conf
+
 # from utils import ultrasonic_handler as us
 
 spinner = itertools.cycle(['-', '/', '|', '\\'])
+
 
 # R = 6373.0
 
@@ -45,7 +47,7 @@ class Target():
         self.sync_gps()
         print 'All components are ready! lat: {}, lon: {}, alt: {}'.format(self.latitude, self.longitude, self.altitude)
 
-    def sync_gps(self,intervals = 0.1):
+    def sync_gps(self, intervals=0.1):
         while not (self.latitude and self.longitude and self.altitude):
             self.update_gps()
             sys.stdout.write(spinner.next())  # write the next character
@@ -56,24 +58,32 @@ class Target():
     def mark_target(self, alpha, azimut):
         # Setting new target cord based on self coord, azimuth, distanse and elevation angle to target
         try:
+            R = 6371e3
             self.sync_gps(intervals=0.01)
             alpha = float(alpha)
-            azimut = float(azimut)
-
-            # find the delta altitude of the target
             hypotenuse = 20.0  # Distance from the laser.
             distance = hypotenuse * cos(alpha)
             delta_alt = hypotenuse * sin(alpha)
+            tetha = float(azimut)
+            delta = distance / R
 
-            # get target coords
-            dx = distance * sin(azimut)
-            dy = distance * cos(azimut)
-            delta_longitude = dx / (111320 * cos(self.latitude))
-            delta_latitude = dy / 110540
-
-            final_longitude = fix(self.longitude + delta_longitude, 6)
-            final_latitude = fix(self.latitude + delta_latitude, 6)
+            final_latitude = asin(sin(self.latitude) * cos(delta) + cos(self.latitude) * sin(delta) * cos(tetha))
+            final_longitude = self.longitude + atan2(sin(tetha) * sin(delta) * cos(self.latitude),
+                                                     cos(delta) - sin(self.latitude) * sin(final_latitude))
             final_altitude = self.altitude + delta_alt
+
+            # azimut = float(azimut)
+            #
+            # # find the delta altitude of the target
+            #
+            # # get target coords
+            # dx = distance * sin(azimut)
+            # dy = distance * cos(azimut)
+            # delta_longitude = dx / (111320 * cos(self.latitude))
+            # delta_latitude = dy / 110540
+            #
+            # final_longitude = fix(self.longitude + delta_longitude, 6)
+            # final_latitude = fix(self.latitude + delta_latitude, 6)
 
             return self.create_target_json(final_altitude, final_latitude, final_longitude)
         except Exception:
