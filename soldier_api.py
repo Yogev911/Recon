@@ -157,6 +157,8 @@ class SoldierApi():
         try:
             print 'sync messages..'
             data = self.db.gets_msg()
+            print 'message data: '
+            print data
             if data:
                 for msg in data:
                     if self.address:
