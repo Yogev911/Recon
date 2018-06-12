@@ -77,8 +77,8 @@ class Target():
             final_longitude = self.longitude + atan2(sin(tetha) * sin(delta) * cos(self.latitude),
                                  cos(delta) - sin(self.latitude) * sin(final_latitude))
 
-            final_latitude = fix(degrees(final_latitude),6)
-            final_longitude = fix(degrees(final_longitude),6)
+            final_latitude = degrees(final_latitude)
+            final_longitude = degrees(final_longitude)
             # azimut = float(azimut)
             #
             # # find the delta altitude of the target
