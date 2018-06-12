@@ -2,7 +2,7 @@ import traceback
 import itertools, sys
 from fpformat import fix
 from time import sleep
-from math import sin, cos, sqrt, atan2, radians, pi, acos, tan, atan, asin
+from math import sin, cos, sqrt, atan2, radians, pi, acos, tan, atan, asin, degrees
 
 from utils import gps_handler as my_gps, conf
 
@@ -68,11 +68,17 @@ class Target():
             delta = distance / R
             final_altitude = self.altitude + delta_alt
 
+            print ''
+            self.longitude = radians(self.longitude)
+            self.latitude = radians(self.latitude)
 
             final_latitude = asin(sin(self.latitude) * cos(delta) +
                            cos(self.latitude) * sin(delta) * cos(tetha))
             final_longitude = self.longitude + atan2(sin(tetha) * sin(delta) * cos(self.latitude),
                                  cos(delta) - sin(self.latitude) * sin(final_latitude))
+
+            final_latitude = degrees(final_latitude)
+            final_longitude = degrees(final_longitude)
             # azimut = float(azimut)
             #
             # # find the delta altitude of the target
