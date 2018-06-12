@@ -190,7 +190,9 @@ class SoldierApi():
     def add_target(self, msg):
         msg = 'add: id {} azimuth {} distance {} elv {} \n'.format(msg['id'], msg['azimut'], msg['distance'],
                                                                     msg['altitude'])
-        print 'sending target to hololence: '
+        print 'self gps stats : '
+        print self.soldier.print_gps_data()
+        print 'new target : '
         print msg
         if self.address:
             self.serversocket.sendto(msg, self.address)
