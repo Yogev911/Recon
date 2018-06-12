@@ -33,7 +33,7 @@ class SoldierApi():
             sys.exit()
 
     def run(self):
-        self._wait_for_hololence()
+        # self._wait_for_hololence()
 
         print 'Running...'
         try:
@@ -160,7 +160,7 @@ class SoldierApi():
                     if self.address:
                         warning_msg = msg['message']
                         msg_id = msg['id']
-                        self.serversocket.sendto('warrning: {}\n'.format(warning_msg), self.address)
+                        self.serversocket.sendto('warning: {}\n'.format(warning_msg), self.address)
                         sleep(1)
                         # r = delete("https://reconsevice.herokuapp.com/target")
         except:
