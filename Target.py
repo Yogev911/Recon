@@ -61,7 +61,7 @@ class Target():
             azimut = float(azimut)
 
             # find the delta altitude of the target
-            hypotenuse = 20  # Distance from the laser.
+            hypotenuse = 20.0  # Distance from the laser.
             distance = hypotenuse * cos(alpha)
             delta_alt = hypotenuse * sin(alpha)
 

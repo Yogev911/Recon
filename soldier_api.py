@@ -160,7 +160,7 @@ class SoldierApi():
                     if self.address:
                         warning_msg = msg['message']
                         msg_id = msg['id']
-                        self.serversocket.sendto('warning: {}\n'.format(warning_msg), self.address)
+                        self.serversocket.sendto('warning: {}'.format(warning_msg), self.address)
                         sleep(1)
                         # r = delete("https://reconsevice.herokuapp.com/target")
         except:
@@ -188,7 +188,7 @@ class SoldierApi():
         return targets_to_add, targets_ids_to_remove
 
     def add_target(self, msg):
-        msg = 'add: id {} azimuth {} distance {} elv {} \n'.format(msg['id'], msg['azimut'], msg['distance'],
+        msg = 'add: id {} azimuth {} distance {} elv {}'.format(msg['id'], msg['azimut'], msg['distance'],
                                                                     msg['altitude'])
         print 'self gps stats : '
         print self.soldier.print_gps_data()
@@ -201,7 +201,7 @@ class SoldierApi():
         print 'pop target id {}'.format(msg)
         self.targets.pop(msg)
         if self.address:
-            self.serversocket.sendto('remove: id {}\n'.format(msg), self.address)
+            self.serversocket.sendto('remove: id {}'.format(msg), self.address)
 
     def delete_db_target(self, t_id):
         try:
