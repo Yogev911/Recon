@@ -61,7 +61,7 @@ class Target():
             R = 6371e3
             self.sync_gps(intervals=0.01)
             alpha = float(alpha)
-            hypotenuse = 20.0  # Distance from the laser.
+            hypotenuse = 100.0  # Distance from the laser.
             distance = hypotenuse * cos(alpha)
             delta_alt = hypotenuse * sin(alpha)
             tetha = radians(float(azimut))
