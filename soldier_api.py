@@ -142,8 +142,8 @@ class SoldierApi():
     def sync_targets(self):
         print 'sync targets..'
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
-        print 'targets_to_add' + targets_to_add
-        print 'targets_ids_to_remove' + targets_ids_to_remove
+        print 'targets_to_add' + str(targets_to_add)
+        print 'targets_ids_to_remove' + str(targets_ids_to_remove)
         print 'self.targets' + json.dumps(self.targets)
         for target in targets_to_add:
             print 'adding new target'
