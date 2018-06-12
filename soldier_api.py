@@ -144,7 +144,7 @@ class SoldierApi():
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
         print 'targets_to_add' + targets_to_add
         print 'targets_ids_to_remove' + targets_ids_to_remove
-        print 'self.targets' + self.targets
+        print 'self.targets' + json.dumps(self.targets)
         for target in targets_to_add:
             print 'adding new target'
             print target
