@@ -28,23 +28,23 @@ class db():
                 return responds['data']
             else:
                 print 'host unavailable'
-                sleep(10)
+                sleep(2)
                 return None
         else:
             print 'host unavailable'
-            sleep(10)
+            sleep(2)
             return None
 
     def delete_target(self, target_id):
         return delete(self.root + self.target + target_id)
 
     def gets_msg(self):
-        res = get(self.root + self.msg + conf.RECONUNITID)
+        res = get(self.root + self.msg + str(conf.RECONUNITID))
         if res.status_code == 200:
             responds = json.loads(res.content)
             if responds['success']:
                 return responds['data']
             else:
                 print 'host unavailable'
-                sleep(10)
+                sleep(2)
                 return None
