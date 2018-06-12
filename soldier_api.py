@@ -142,6 +142,9 @@ class SoldierApi():
     def sync_targets(self):
         print 'sync targets..'
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
+        print 'targets_to_add' + targets_to_add
+        print 'targets_ids_to_remove' + targets_ids_to_remove
+        print 'self.targets' + self.targets
         for target in targets_to_add:
             print 'adding new target'
             print target
@@ -157,7 +160,6 @@ class SoldierApi():
         try:
             print 'sync messages..'
             data = self.db.gets_msg()
-            print 'message data: '
             print data
             if data:
                 for msg in data:
@@ -183,6 +185,7 @@ class SoldierApi():
         return self.db.get_targets()
 
     def get_target_diff(self):
+        print 'in target diff'
         targets = self.get_targets()
         if not targets:
             return [], []
