@@ -9,8 +9,8 @@ except socket.error:
 
 port = 12346
 
-host = '192.168.1.25'
-msg = 'remove: id 126'
+host = '192.168.1.23'
+msg = 'mark elv -0.32 azimuth 3.18'
 try:
     s.sendto(msg, (host,port))
 except socket.error, msg:

@@ -33,7 +33,7 @@ class SoldierApi():
             sys.exit()
 
     def run(self):
-        self._wait_for_hololence()
+        # self._wait_for_hololence()
 
         print 'Running...'
         try:
