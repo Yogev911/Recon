@@ -33,7 +33,7 @@ class SoldierApi():
             sys.exit()
 
     def run(self):
-        # self._wait_for_hololence()
+        self._wait_for_hololence()
 
         print 'Running...'
         try:
@@ -141,8 +141,6 @@ class SoldierApi():
 
     def sync_targets(self):
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
-        print 'targets_ids_to_remove ' + str(targets_ids_to_remove) + ' type : {}'.format(type(targets_ids_to_remove))
-        print 'self.targets' + str(self.targets.keys())
         for target in targets_to_add:
             print 'adding new target'
             print target
@@ -156,9 +154,7 @@ class SoldierApi():
 
     def sync_msg(self):
         try:
-            print 'sync messages..'
             data = self.db.gets_msg()
-            print data
             if data:
                 for msg in data:
                     if self.address:
