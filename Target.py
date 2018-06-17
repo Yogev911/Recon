@@ -106,8 +106,8 @@ class Target():
                            'alt': float(target['altitude'])}
 
 
-            ap = self._location_to_point(target_data)
-            bp = self._location_to_point(self_data)
+            bp = self._location_to_point(target_data)
+            ap = self._location_to_point(self_data)
 
             distKm = fix(0.001 * self._target_distance(ap, bp), 3)
             br = self._rotate_globe(target_data, self_data, bp['radius'])
