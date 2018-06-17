@@ -5,7 +5,7 @@ from time import sleep
 from math import sin, cos, sqrt, atan2, radians, pi, acos, tan, atan, asin, degrees
 
 from utils import gps_handler as my_gps, conf
-from utils.lidar import GLLv3
+# from utils.lidar import GLLv3
 # from utils import ultrasonic_handler as us
 
 spinner = itertools.cycle(['-', '/', '|', '\\'])
