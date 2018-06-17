@@ -101,9 +101,10 @@ class Target():
         try:
             # get target distance, azimuth and elevation relative to self
             self.sync_gps()
-            self_data = {'lat': self.latitude, 'lon': self.longitude, 'alt': self.altitude}
-            target_data = {'lat': float(target['latitude']), 'lon': float(target['longitude']),
+            target_data = {'lat': self.latitude, 'lon': self.longitude, 'alt': self.altitude}
+            self_data = {'lat': float(target['latitude']), 'lon': float(target['longitude']),
                            'alt': float(target['altitude'])}
+
 
             ap = self._location_to_point(target_data)
             bp = self._location_to_point(self_data)
