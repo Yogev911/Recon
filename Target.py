@@ -21,9 +21,9 @@ class Target():
         self._init()
 
     def get_fake_gps_data(self):
-        self.latitude = 32.0897516667
-        self.longitude = 34.8025283333
-        self.altitude = 29.6
+        self.latitude = 32.0895816667
+        self.longitude = 34.802405
+        self.altitude = 34.6
 
     def update_gps(self):
         # self.get_fake_gps_data()
@@ -66,8 +66,8 @@ class Target():
             self.sync_gps(intervals=0.01)
             alpha = float(alpha)
             hypotenuse = 20.0  # Distance from the laser.
-            distance = hypotenuse * cos(alpha)
-            delta_alt = hypotenuse * sin(alpha)
+            distance = hypotenuse * cos(radians(alpha))
+            delta_alt = hypotenuse * sin(radians(alpha))
             tetha = radians(float(azimut))
             delta = distance / R
 
