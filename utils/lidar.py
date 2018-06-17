@@ -28,7 +28,7 @@ import os
 import io
 import logging
 import csv
-from RPIO import PWM
+# from RPIO import PWM
 import RPi.GPIO as GPIO
 import subprocess
 import ctypes

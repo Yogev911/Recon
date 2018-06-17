@@ -57,5 +57,40 @@ def getDistance():
     distance = distance / 2
     return distance
 
+
+def read():
+    GPIO.setup(sonar, GPIO.OUT)
+    # Send 10us pulse to trigger
+    GPIO.output(sonar, True)
+    time.sleep(0.00001)
+    GPIO.output(sonar, False)
+    start = time.time()
+    count = time.time()
+    GPIO.setup(sonar, GPIO.IN)
+    while GPIO.input(sonar) == 0 and time.time() - count < 0.1:
+        start = time.time()
+    count = time.time()
+    stop = count
+    while GPIO.input(sonar) == 1 and time.time() - count < 0.1:
+        stop = time.time()
+    # Calculate pulse length
+    elapsed = stop - start
+    # Distance pulse travelled in that time is time
+    # multiplied by the speed of sound (cm/s)
+    distance = elapsed * 34000
+    # That was the distance there and back so halve the value
+    distance = distance / 2
+    return distance
+
+
+    dist1 = self.i2c.readU8(self.__GLL_FULL_DELAY_HIGH)
+    dist2 = self.i2c.readU8(self.__GLL_FULL_DELAY_LOW)
+    distance = (dist1 << 8) + dist2
+
+    if distance == 1:
+        raise ValueError("GLL out of range")
+
+    return distance / 100
+
 # End of UltraSonic Functions
 #======================================================================
