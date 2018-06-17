@@ -27,6 +27,10 @@ class Target():
         self.altitude = 34.6
 
     def update_gps(self):
+        while True:
+            x = self.laser.read()
+            print x
+            sleep(1)
         # self.get_fake_gps_data()
         # return
         self.gps.read
