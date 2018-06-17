@@ -1007,7 +1007,9 @@ class GLLv3:
         # of calculating the velocity next time round.
         #-------------------------------------------------------------------------------------------
         dist1 = self.i2c.readU8(self.__GLL_FULL_DELAY_HIGH)
+        print dist1
         dist2 = self.i2c.readU8(self.__GLL_FULL_DELAY_LOW)
+        print dist2
         distance = (dist1 << 8) + dist2
 
         if distance == 1:
