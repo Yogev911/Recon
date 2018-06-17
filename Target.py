@@ -14,7 +14,7 @@ spinner = itertools.cycle(['-', '/', '|', '\\'])
 class Target():
     def __init__(self):
         print 'setting up all components'
-        # self.gps = my_gps.my_gps()
+        self.gps = my_gps.my_gps()
         self.latitude = None
         self.longitude = None
         self.altitude = None
@@ -26,8 +26,8 @@ class Target():
         self.altitude = 29.6
 
     def update_gps(self):
-        self.get_fake_gps_data()
-        return
+        # self.get_fake_gps_data()
+        # return
         self.gps.read
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
