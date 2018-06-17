@@ -5,7 +5,7 @@ from time import sleep
 from math import sin, cos, sqrt, atan2, radians, pi, acos, tan, atan, asin, degrees
 
 from utils import gps_handler as my_gps, conf
-
+from utils.lidar import GLLv3
 # from utils import ultrasonic_handler as us
 
 spinner = itertools.cycle(['-', '/', '|', '\\'])
@@ -14,7 +14,8 @@ spinner = itertools.cycle(['-', '/', '|', '\\'])
 class Target():
     def __init__(self):
         print 'setting up all components'
-        # self.gps = my_gps.my_gps()
+        self.gps = my_gps.my_gps()
+        # self.laser = GLLv3()
         self.latitude = None
         self.longitude = None
         self.altitude = None
@@ -26,8 +27,8 @@ class Target():
         self.altitude = 34.6
 
     def update_gps(self):
-        self.get_fake_gps_data()
-        return
+        # self.get_fake_gps_data()
+        # return
         self.gps.read
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
@@ -66,6 +67,7 @@ class Target():
             self.sync_gps(intervals=0.01)
             alpha = float(alpha)
             hypotenuse = 20.0  # Distance from the laser.
+            # hypotenuse = self.laser.read()
             distance = hypotenuse * cos(radians(alpha))
             delta_alt = hypotenuse * sin(radians(alpha))
             tetha = radians(float(azimut))
