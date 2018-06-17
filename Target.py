@@ -14,7 +14,7 @@ spinner = itertools.cycle(['-', '/', '|', '\\'])
 class Target():
     def __init__(self):
         print 'setting up all components'
-        self.gps = my_gps.my_gps()
+        # self.gps = my_gps.my_gps()
         self.latitude = None
         self.longitude = None
         self.altitude = None
@@ -26,8 +26,8 @@ class Target():
         self.altitude = 34.6
 
     def update_gps(self):
-        # self.get_fake_gps_data()
-        # return
+        self.get_fake_gps_data()
+        return
         self.gps.read
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
@@ -109,7 +109,7 @@ class Target():
             ap = self._location_to_point(target_data)
             bp = self._location_to_point(self_data)
 
-            distKm = fix(0.001 * self._target_distance(ap, bp), 3)
+            distKm = fix(0.001 * self._target_distance(ap, bp), 10)
             br = self._rotate_globe(target_data, self_data, bp['radius'])
             if br['z'] * br['z'] + br['y'] * br['y'] > 1.0e-06:
                 theta = atan2(br['z'], br['y']) * 180.0 / pi
