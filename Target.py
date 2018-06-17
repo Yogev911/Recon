@@ -14,20 +14,20 @@ spinner = itertools.cycle(['-', '/', '|', '\\'])
 class Target():
     def __init__(self):
         print 'setting up all components'
-        self.gps = my_gps.my_gps()
+        # self.gps = my_gps.my_gps()
         self.latitude = None
         self.longitude = None
         self.altitude = None
         self._init()
 
     def get_fake_gps_data(self):
-        self.latitude = 32.162922
-        self.longitude = 34.835357
-        self.altitude = 67.4
+        self.latitude = 32.0897516667
+        self.longitude = 34.8025283333
+        self.altitude = 29.6
 
     def update_gps(self):
-        # self.get_fake_gps_data()
-        # return
+        self.get_fake_gps_data()
+        return
         self.gps.read
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
@@ -101,8 +101,8 @@ class Target():
         try:
             # get target distance, azimuth and elevation relative to self
             self.sync_gps()
-            target_data = {'lat': self.latitude, 'lon': self.longitude, 'alt': self.altitude}
-            self_data = {'lat': float(target['latitude']), 'lon': float(target['longitude']),
+            self_data = {'lat': self.latitude, 'lon': self.longitude, 'alt': self.altitude}
+            target_data = {'lat': float(target['latitude']), 'lon': float(target['longitude']),
                            'alt': float(target['altitude'])}
 
 
@@ -124,7 +124,7 @@ class Target():
             bma = self._normalize_vector_diff(ap, bp)
             if bma:
                 altitude = 90.0 - (180.0 / pi) * acos(
-                    bma['x'] * ap['nx'] + bma['y'] * ap['ny'] + bma['z'] * ap['nz'])
+                    bma['x'] * bp['nx'] + bma['y'] * bp['ny'] + bma['z'] * bp['nz'])
             else:
                 altitude = 0.0
             return self.relative_target_json(altitude, azimuth, distKm, target)
