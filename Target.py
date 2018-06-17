@@ -11,20 +11,23 @@ from utils import gps_handler as my_gps, conf
 spinner = itertools.cycle(['-', '/', '|', '\\'])
 
 
-# R = 6373.0
-
-
 class Target():
     def __init__(self):
         print 'setting up all components'
-        self.gps = my_gps.my_gps()
-        self.should_run = True
+        # self.gps = my_gps.my_gps()
         self.latitude = None
         self.longitude = None
         self.altitude = None
         self._init()
 
+    def get_fake_gps_data(self):
+        self.latitude = 32.162922
+        self.longitude = 34.835357
+        self.altitude = 67.4
+
     def update_gps(self):
+        self.get_fake_gps_data()
+        return
         self.gps.read
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
@@ -66,32 +69,19 @@ class Target():
             delta_alt = hypotenuse * sin(alpha)
             tetha = radians(float(azimut))
             delta = distance / R
-            final_altitude = self.altitude + delta_alt
 
             print ''
             self.longitude = radians(self.longitude)
             self.latitude = radians(self.latitude)
 
             final_latitude = asin(sin(self.latitude) * cos(delta) +
-                           cos(self.latitude) * sin(delta) * cos(tetha))
+                                  cos(self.latitude) * sin(delta) * cos(tetha))
             final_longitude = self.longitude + atan2(sin(tetha) * sin(delta) * cos(self.latitude),
-                                 cos(delta) - sin(self.latitude) * sin(final_latitude))
+                                                     cos(delta) - sin(self.latitude) * sin(final_latitude))
 
+            final_altitude = self.altitude + delta_alt
             final_latitude = degrees(final_latitude)
             final_longitude = degrees(final_longitude)
-            # azimut = float(azimut)
-            #
-            # # find the delta altitude of the target
-            #
-            # # get target coords
-            # dx = distance * sin(azimut)
-            # dy = distance * cos(azimut)
-            # delta_longitude = dx / (111320 * cos(self.latitude))
-            # delta_latitude = dy / 110540
-            #
-            # final_longitude = fix(self.longitude + delta_longitude, 6)
-            # final_latitude = fix(self.latitude + delta_latitude, 6)
-
             return self.create_target_json(final_altitude, final_latitude, final_longitude)
         except Exception:
             print traceback.format_exc()
@@ -109,14 +99,16 @@ class Target():
     def get_relative_target(self, target):
         try:
             # get target distance, azimuth and elevation relative to self
-            target_params = {'lat': self.latitude, 'lon': self.longitude, 'alt': self.altitude}
-            self_params = {'lat': float(target['latitude']), 'lon': float(target['longitude']),
+            self.sync_gps()
+            self_data = {'lat': self.latitude, 'lon': self.longitude, 'alt': self.altitude}
+            target_data = {'lat': float(target['latitude']), 'lon': float(target['longitude']),
                            'alt': float(target['altitude'])}
-            bp = self._location_to_point(self_params)
-            ap = self._location_to_point(target_params)
+
+            ap = self._location_to_point(target_data)
+            bp = self._location_to_point(self_data)
 
             distKm = fix(0.001 * self._target_distance(ap, bp), 3)
-            br = self._rotate_globe(self_params, target_params, bp['radius'])
+            br = self._rotate_globe(target_data, self_data, bp['radius'])
             if br['z'] * br['z'] + br['y'] * br['y'] > 1.0e-06:
                 theta = atan2(br['z'], br['y']) * 180.0 / pi
                 azimuth = 90.0 - theta

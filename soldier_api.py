@@ -45,7 +45,7 @@ class SoldierApi():
                     buf, self.address = self.serversocket.recvfrom(1024)
                     if len(buf) > 0:
                         try:
-                            print 'recived message: {} ###'.format(buf)
+                            print '#### recived message: {} ####'.format(buf)
                             if buf == 'stop'.lower():
                                 print 'killing connection'
                                 self.should_run = False
@@ -142,8 +142,7 @@ class SoldierApi():
     def sync_targets(self):
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
         for target in targets_to_add:
-            print 'adding new target'
-            print target
+            print 'adding new target {}'.format(json.dumps(target))
             self.targets[target['id']] = target
             relative_target = self.soldier.get_relative_target(target)
             self.add_target(relative_target)
@@ -168,8 +167,6 @@ class SoldierApi():
 
     def update_db(self, target):
         try:
-            print 'update db... '
-            # print target
             self.db.send_target(target)
 
         except:
@@ -190,15 +187,11 @@ class SoldierApi():
     def add_target(self, msg):
         msg = 'add: id {} azimuth {} distance {} elv {}'.format(msg['id'], msg['azimut'], msg['distance'],
                                                                     msg['altitude'])
-        print 'self gps stats : '
-        print self.soldier.print_gps_data()
-        print 'new target : '
-        print msg
+        print 'new target : {}'.format(msg)
         if self.address:
             self.serversocket.sendto(msg, self.address)
 
     def remove_target_id(self, msg):
-        print 'pop target id {}'.format(msg)
         self.targets.pop(msg)
         if self.address:
             self.serversocket.sendto('remove: id {}'.format(msg), self.address)
