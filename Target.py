@@ -65,7 +65,7 @@ class Target():
             R = 6371e3
             self.sync_gps(intervals=0.01)
             alpha = float(alpha)
-            hypotenuse = 100.0  # Distance from the laser.
+            hypotenuse = 20.0  # Distance from the laser.
             distance = hypotenuse * cos(alpha)
             delta_alt = hypotenuse * sin(alpha)
             tetha = radians(float(azimut))
@@ -121,7 +121,7 @@ class Target():
             else:
                 azimuth = 0.0
 
-            bma = self._normalize_vector_diff(bp, ap)
+            bma = self._normalize_vector_diff(ap, bp)
             if bma:
                 altitude = 90.0 - (180.0 / pi) * acos(
                     bma['x'] * ap['nx'] + bma['y'] * ap['ny'] + bma['z'] * ap['nz'])

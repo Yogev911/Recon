@@ -188,6 +188,8 @@ class SoldierApi():
         msg = 'add: id {} azimuth {} distance {} elv {}'.format(msg['id'], msg['azimut'], msg['distance'],
                                                                     msg['altitude'])
         print 'new target : {}'.format(msg)
+        print 'self data :'
+        print self.soldier.print_gps_data()
         if self.address:
             self.serversocket.sendto(msg, self.address)
 
