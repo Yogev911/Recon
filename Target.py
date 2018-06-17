@@ -51,6 +51,7 @@ class Target():
         print 'All components are ready! lat: {}, lon: {}, alt: {}'.format(self.latitude, self.longitude, self.altitude)
 
     def sync_gps(self, intervals=0.1):
+        self.update_gps()
         while not (self.latitude and self.longitude and self.altitude):
             self.update_gps()
             sys.stdout.write(spinner.next())  # write the next character
