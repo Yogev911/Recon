@@ -27,10 +27,6 @@ class Target():
         self.altitude = 34.6
 
     def update_gps(self):
-        while True:
-            x = self.laser.read()
-            print x
-            sleep(1)
         # self.get_fake_gps_data()
         # return
         self.gps.read
@@ -43,13 +39,8 @@ class Target():
         print self.latitude, self.longitude, self.altitude
 
     def _init(self):
-        # TODO: get new laser!
-        print 'init laser.. skip it.'
-        # us.init()
-        distance = 20  # us.getDistance()
-        if not distance:
+        if not self.laser.read() :
             print 'Warrning laser is not working!'
-
         print 'calibrating GPS.. may take few minuets'
         print 'waiting for signal'
         self.sync_gps()
@@ -70,7 +61,6 @@ class Target():
             R = 6371e3
             self.sync_gps(intervals=0.01)
             alpha = float(alpha)
-            hypotenuse = 20.0  # Distance from the laser.
             hypotenuse = self.laser.read()
             distance = hypotenuse * cos(radians(alpha))
             delta_alt = hypotenuse * sin(radians(alpha))
