@@ -15,7 +15,7 @@ spinner = itertools.cycle(['-', '/', '|', '\\'])
 class Target():
     def __init__(self):
         print 'setting up all components'
-        self.gps = my_gps.my_gps()
+        self.gps = my_gps()
         self.laser = GLLv3()
         self.latitude = None
         self.longitude = None
