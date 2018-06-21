@@ -1,40 +1,6 @@
-#!/usr/bin/env python
-
-####################################################################################################
-####################################################################################################
-##                                                                                                ##
-## Hove's Raspberry Pi Python Quadcopter Flight Controller.  Open Source @ GitHub                 ##
-## PiStuffing/Quadcopter under GPL for non-commercial application.  Any code derived from         ##
-## this should retain this copyright comment.                                                     ##
-##                                                                                                ##
-## Copyright 2012 - 2018 Andy Baker (Hove) - andy@pistuffing.co.uk                                ##
-##                                                                                                ##
-####################################################################################################
-####################################################################################################
-
-
 from __future__ import division
 from __future__ import with_statement
 import smbus
-# import signal
-# import socket
-# import time
-# import sys
-# import getopt
-# import math
-# from array import *
-# import select
-# import os
-# import io
-# import logging
-# import csv
-# import RPi.GPIO as GPIO
-# import subprocess
-# import ctypes
-# from ctypes.util import find_library
-# import picamera
-# import struct
-# import serial
 
 
 MIN_SATS = 7
@@ -42,11 +8,6 @@ EARTH_RADIUS = 6371000 # meters
 GRAV_ACCEL = 9.80665   # meters per second per second
 
 
-RC_PASSIVE = 0
-RC_TAKEOFF = 1
-RC_FLYING = 2
-RC_LANDING = 3
-RC_POWEROFF = 4
 
 rc_status_name = ("PASSIVE", "TAKEOFF", "FLYING", "LANDING", "POWEROFF")
 

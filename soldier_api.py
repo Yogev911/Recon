@@ -1,16 +1,15 @@
+import errno
+import itertools
+import json
 import socket
 import subprocess
-import traceback
-import itertools
-from time import sleep
 import sys
-import json
-import errno
+import traceback
+from time import sleep
 
-
-from Target import Target
-from utils import conf
+# from Target import Target
 from db_utils import db
+from settings import conf
 
 spinner = itertools.cycle(['-', '/', '|', '\\'])
 
@@ -19,7 +18,7 @@ class SoldierApi():
     def __init__(self):
         try:
             self.serversocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            self.soldier = Target()
+            # self.soldier = Target()
             self.serversocket.bind(('0.0.0.0', 8081))
             self.serversocket.setblocking(False)
             self.should_run = True

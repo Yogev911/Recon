@@ -1,11 +1,14 @@
+import itertools
+import sys
 import traceback
-import itertools, sys
 from fpformat import fix
-from time import sleep
 from math import sin, cos, sqrt, atan2, radians, pi, acos, tan, atan, asin, degrees
+from time import sleep
 
-from utils import gps_handler as my_gps, conf
-from utils.lidar import GLLv3
+from lidar_handler import GLLv3
+from settings import conf
+from utils import gps_handler as my_gps
+
 # from utils import ultrasonic_handler as us
 
 spinner = itertools.cycle(['-', '/', '|', '\\'])

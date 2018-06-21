@@ -5,7 +5,7 @@ from time import sleep  # import sleep library
 import pynmea2
 import serial  # import pyserial library
 
-from utils import conf
+from settings import conf
 
 COMPASS = {'N': -1, 'E': 1, 'W': -1, 'S': -1}
 

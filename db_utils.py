@@ -1,7 +1,9 @@
-from requests import post, get, delete
 import json
 from time import sleep
-from utils import conf
+
+from requests import post, get, delete
+
+from settings import conf
 
 
 class db():
