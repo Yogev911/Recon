@@ -1,1 +1,1 @@
-from conf import  conf
+from conf import conf
