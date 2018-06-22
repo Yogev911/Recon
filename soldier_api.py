@@ -97,7 +97,6 @@ class SoldierApi():
         print 'waiting for hololence to send start msg...'
         while True:
             try:
-                self.serversocket.sendto('ip: {}'.format(myip()), self.address)
                 buf, self.address = self.serversocket.recvfrom(1024)
                 if len(buf) > 0:
                     print buf
