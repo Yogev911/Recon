@@ -101,7 +101,7 @@ class SoldierApi():
                 if len(buf) > 0:
                     print buf
                     try:
-                        if buf == 'start'.lower():
+                        if buf.lower() == 'start':
                             break
                     except Exception:
                         print traceback.format_exc()
