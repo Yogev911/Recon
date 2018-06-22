@@ -195,7 +195,7 @@ class GLLv3:
         distance = (dist1 << 8) + dist2
 
         if distance == 1:
-            raise ValueError("GLL out of range")
+            print 'laser is out of range'
 
         return distance / 100
 
