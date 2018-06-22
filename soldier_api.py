@@ -6,7 +6,7 @@ import subprocess
 import sys
 import traceback
 from time import sleep
-
+from ipgetter import myip
 from Target import Target
 from db_utils import db
 from settings import conf
@@ -92,20 +92,16 @@ class SoldierApi():
 
     def _wait_for_hololence(self):
         print 'looking for hololence on ip {} in port {}...'.format(self.address[0], self.address[1])
-        # while True:
-            # self.soldier.print_gps_data()
-            # if self._ping():
-            #     break
-            # self._spinner()
-            # sleep(1)
-        print 'wating for hololence to send start msg...'
+        self.serversocket.sendto('ip: {}'.format(myip()), self.address)
+        print 'Recon ip sent to hololnce'
+        print 'waiting for hololence to send start msg...'
         while True:
             try:
                 buf, self.address = self.serversocket.recvfrom(1024)
                 if len(buf) > 0:
                     print buf
                     try:
-                        if buf == 'hello'.lower():
+                        if buf == 'start'.lower():
                             break
                     except Exception:
                         print traceback.format_exc()
