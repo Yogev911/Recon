@@ -74,7 +74,9 @@ class SoldierApi():
                     print "keep reading"
                     sleep(5)
                     continue
-
+                sys.stdout.write(spinner.next())  # write the next character
+                sys.stdout.flush()  # flush stdout buffer (actual character display)
+                sys.stdout.write('\b')  # erase the last written char
                 sleep(1)
 
         except KeyboardInterrupt:
