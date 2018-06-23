@@ -37,7 +37,7 @@ class SoldierApi():
         print 'Running...'
         try:
             while self.should_run:
-                sleep(1)
+                self.update_recon()
                 self.sync_msg()
                 self.sync_targets()
                 try:
@@ -75,6 +75,8 @@ class SoldierApi():
                     sleep(5)
                     continue
 
+                sleep(1)
+
         except KeyboardInterrupt:
             self.serversocket.close()
             print "closed"
@@ -92,16 +94,16 @@ class SoldierApi():
 
     def _wait_for_hololence(self):
         print 'looking for hololence on ip {} in port {}...'.format(self.address[0], self.address[1])
-        self.serversocket.sendto('ip: {}'.format(myip()), self.address)
-        print 'Recon ip sent to hololnce'
         print 'waiting for hololence to send start msg...'
         while True:
             try:
-                buf, self.address = self.serversocket.recvfrom(1024)
+                self.serversocket.sendto('ip: {}'.format(myip()), self.address)
+                sleep(1)
+                buf, address = self.serversocket.recvfrom(1024)
                 if len(buf) > 0:
                     print buf
                     try:
-                        if buf.lower() == 'start':
+                        if buf.lower() == conf.START:
                             break
                     except Exception:
                         print traceback.format_exc()
@@ -134,6 +136,10 @@ class SoldierApi():
         sys.stdout.flush()  # flush stdout buffer (actual character display)
         sys.stdout.write('\b')  # erase the last written char
 
+    def update_recon(self):
+        self.soldier.sync_gps()
+        self.db.update_location(self.soldier.latitude, self.soldier.longitude)
+
     def sync_targets(self):
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
         for target in targets_to_add:
@@ -156,7 +162,6 @@ class SoldierApi():
                         msg_id = msg['id']
                         self.serversocket.sendto('warning: {}'.format(warning_msg), self.address)
                         sleep(1)
-                        # r = delete("https://reconsevice.herokuapp.com/target")
         except:
             print traceback.format_exc()
 
@@ -181,7 +186,7 @@ class SoldierApi():
 
     def add_target(self, msg):
         msg = 'add: id {} azimuth {} distance {} elv {}'.format(msg['id'], msg['azimut'], msg['distance'],
-                                                                    msg['altitude'])
+                                                                msg['altitude'])
         print 'new target : {}'.format(msg)
         print 'self data :'
         print self.soldier.print_gps_data()

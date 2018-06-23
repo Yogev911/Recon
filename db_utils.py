@@ -1,7 +1,7 @@
 import json
 from time import sleep
 
-from requests import post, get, delete, ConnectionError
+from requests import post, get, delete, ConnectionError, put
 
 from settings import conf
 
@@ -75,3 +75,10 @@ class db():
             print 'host unavailable'
             sleep(1)
             return None
+
+    def update_location(self, lat, lon):
+        target = {
+            "latitude": lat,
+            "longitude": lon
+        }
+        put(self.root + self.reconunit + str(conf.RECONUNITID),json=target)

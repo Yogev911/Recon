@@ -1,4 +1,5 @@
 MARK = 'mark'
+START = 'start'
 TARGET_TYPES = ['warrning', 'danger', 'ally', 'unknown']
 SOLDIER_SCAN_INTERVAL = 3
 
