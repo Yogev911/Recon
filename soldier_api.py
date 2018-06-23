@@ -187,9 +187,6 @@ class SoldierApi():
     def add_target(self, msg):
         msg = 'add: id {} azimuth {} distance {} elv {}'.format(msg['id'], msg['azimut'], msg['distance'],
                                                                 msg['altitude'])
-        print 'new target : {}'.format(msg)
-        print 'self data :'
-        print self.soldier.print_gps_data()
         if self.address:
             self.serversocket.sendto(msg, self.address)
 
@@ -202,7 +199,6 @@ class SoldierApi():
         try:
             payload = {'id': t_id}
             res = self.db.delete_target(t_id)
-            print 'user asked to remove target {} '.format(t_id)
             if res.status_code != 200:
                 print 'error update db'
         except:
