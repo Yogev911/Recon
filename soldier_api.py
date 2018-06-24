@@ -81,6 +81,7 @@ class SoldierApi():
 
         except KeyboardInterrupt:
             self.serversocket.close()
+            self.serversocket.sendto('disconnect', self.address)
             print "closed"
             print traceback.format_exc()
 
