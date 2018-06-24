@@ -196,7 +196,7 @@ class GLLv3:
 
         if distance == 1:
             print 'laser is out of range'
-            return 40
+            return 100
 
         return distance / 100
 
