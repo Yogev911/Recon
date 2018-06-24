@@ -37,11 +37,12 @@ class SoldierApi():
         print 'Running...'
         try:
             while self.should_run:
+                self.spin()
                 self.update_recon()
                 self.sync_msg()
                 self.sync_targets()
                 try:
-                    buf, self.address = self.serversocket.recvfrom(1024)
+                    buf, address = self.serversocket.recvfrom(1024)
                     if len(buf) > 0:
                         try:
                             print '#### recived message: {} ####'.format(buf)
@@ -68,18 +69,13 @@ class SoldierApi():
                 except IOError as e:  # and here it is handeled
                     if e.errno == errno.EWOULDBLOCK:
                         sleep(0.5)
-                        sys.stdout.write(spinner.next())  # write the next character
-                        sys.stdout.flush()  # flush stdout buffer (actual character display)
-                        sys.stdout.write('\b')  # erase the last written char
                         continue
                 except:
                     print traceback.format_exc()
                     print "keep reading"
                     sleep(5)
                     continue
-                sys.stdout.write(spinner.next())  # write the next character
-                sys.stdout.flush()  # flush stdout buffer (actual character display)
-                sys.stdout.write('\b')  # erase the last written char
+
                 sleep(1)
 
         except KeyboardInterrupt:
@@ -96,6 +92,11 @@ class SoldierApi():
             self.serversocket.close()
             print "closed"
             print traceback.format_exc()
+
+    def spin(self):
+        sys.stdout.write(spinner.next())  # write the next character
+        sys.stdout.flush()  # flush stdout buffer (actual character display)
+        sys.stdout.write('\b')  # erase the last written char
 
     def _wait_for_hololence(self):
         print 'looking for hololence on ip {} in port {}...'.format(self.address[0], self.address[1])
@@ -137,9 +138,7 @@ class SoldierApi():
             return False
 
     def _spinner(self):
-        sys.stdout.write(spinner.next())  # write the next character
-        sys.stdout.flush()  # flush stdout buffer (actual character display)
-        sys.stdout.write('\b')  # erase the last written char
+        self.spin()
 
     def update_recon(self):
         self.soldier.sync_gps()
