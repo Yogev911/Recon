@@ -37,7 +37,7 @@ class SoldierApi():
         print 'Running...'
         try:
             while self.should_run:
-                self.spin()
+                self._spin()
                 self.update_recon()
                 self.sync_msg()
                 self.sync_targets()
@@ -47,7 +47,7 @@ class SoldierApi():
                         try:
                             print '#### recived message: {} ####'.format(buf)
                             if buf == 'stop'.lower():
-                                print 'killing connection'
+                                print 'Killing connection'
                                 self.should_run = False
                                 sys.exit(0)
                             hololence_values = buf.split()
@@ -56,13 +56,14 @@ class SoldierApi():
                                 alpha = hololence_values[2]
                                 azimut = hololence_values[4]
                                 new_target = self.soldier.mark_target(alpha, azimut)
+                                print 'Adding marked target to DB ' + json.dumps(new_target)
                                 self.update_db(new_target)
-                                print 'new target marked! ' + json.dumps(new_target)
                                 self.sync_targets()
                             elif len(hololence_values) == 3:
                                 # delete target from hololence
                                 target_id = hololence_values[2]
                                 self.delete_db_target(target_id)
+                                self.sync_targets()
                         except Exception:
                             print traceback.format_exc()
                             print "keep reading"
@@ -83,29 +84,23 @@ class SoldierApi():
             self.serversocket.sendto('disconnect', self.address)
             print 'disconnected!'
             self.serversocket.close()
-            print "closed"
-            print traceback.format_exc()
+            print "App closed"
+            # print traceback.format_exc()
 
         except Exception:
             self.serversocket.close()
-            print "closed"
+            print "App crashed"
             print traceback.format_exc()
 
         finally:
             self.serversocket.close()
-            print "closed"
             print traceback.format_exc()
-
-    def spin(self):
-        sys.stdout.write(spinner.next())  # write the next character
-        sys.stdout.flush()  # flush stdout buffer (actual character display)
-        sys.stdout.write('\b')  # erase the last written char
 
     def _wait_for_hololence(self):
         print 'looking for hololence on ip {} in port {}...'.format(self.address[0], self.address[1])
-        print 'waiting for hololence to send start msg...'
         while True:
             try:
+                self._spinner()
                 self.serversocket.sendto('ip: {}'.format(myip()), self.address)
                 sleep(1)
                 buf, address = self.serversocket.recvfrom(1024)
@@ -117,7 +112,6 @@ class SoldierApi():
                     except Exception:
                         print traceback.format_exc()
                         continue
-                self._spinner()
                 sleep(0.5)
             except IOError as e:  # and here it is handeled
                 if e.errno == errno.EWOULDBLOCK:
@@ -141,7 +135,9 @@ class SoldierApi():
             return False
 
     def _spinner(self):
-        self.spin()
+        sys.stdout.write(spinner.next())  # write the next character
+        sys.stdout.flush()  # flush stdout buffer (actual character display)
+        sys.stdout.write('\b')  # erase the last written char
 
     def update_recon(self):
         self.soldier.sync_gps()
@@ -150,7 +146,7 @@ class SoldierApi():
     def sync_targets(self):
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
         for target in targets_to_add:
-            print 'adding new target {}'.format(json.dumps(target))
+            # print 'adding new target {}'.format(json.dumps(target))
             self.targets[target['id']] = target
             relative_target = self.soldier.get_relative_target(target)
             self.add_target(relative_target)
@@ -194,6 +190,7 @@ class SoldierApi():
     def add_target(self, msg):
         msg = 'add: id {} azimuth {} distance {} elv {}'.format(msg['id'], msg['azimut'], msg['distance'],
                                                                 msg['altitude'])
+        print 'Target id: {} sent to hololens'.format(msg['id'])
         if self.address:
             self.serversocket.sendto(msg, self.address)
 

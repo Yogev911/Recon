@@ -50,23 +50,27 @@ class Target():
     def sync_gps(self, intervals=0.1):
         self.update_gps()
         while not (self.latitude and self.longitude and self.altitude):
+            self._spin()
             self.update_gps()
-            sys.stdout.write(spinner.next())  # write the next character
-            sys.stdout.flush()  # flush stdout buffer (actual character display)
-            sys.stdout.write('\b')  # erase the last written char
             sleep(intervals)
+
+    def _spin(self):
+        sys.stdout.write(spinner.next())  # write the next character
+        sys.stdout.flush()  # flush stdout buffer (actual character display)
+        sys.stdout.write('\b')  # erase the last written char
 
     def mark_target(self, alpha, azimut):
         # Setting new target cord based on self coord, azimuth, distanse and elevation angle to target
         try:
-            R = 6371e3
-            self.sync_gps(intervals=0.01)
+            earth_radius = 6371e3
             alpha = float(alpha)
+            tetha = radians(float(azimut))
+            self.sync_gps(intervals=0.01)
+
             hypotenuse = self.laser.read()
             distance = hypotenuse * cos(radians(alpha))
             delta_alt = hypotenuse * sin(radians(alpha))
-            tetha = radians(float(azimut))
-            delta = distance / R
+            delta = distance / earth_radius
 
             print ''
             self.longitude = radians(self.longitude)
@@ -80,6 +84,7 @@ class Target():
             final_altitude = self.altitude + delta_alt
             final_latitude = degrees(final_latitude)
             final_longitude = degrees(final_longitude)
+            self.sync_gps()
             return self.create_target_json(final_altitude, final_latitude, final_longitude)
         except Exception:
             print traceback.format_exc()
