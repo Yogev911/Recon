@@ -67,7 +67,7 @@ class SoldierApi():
                             continue
                 except IOError as e:  # and here it is handeled
                     if e.errno == errno.EWOULDBLOCK:
-                        sleep(0.1)
+                        sleep(0.5)
                         sys.stdout.write(spinner.next())  # write the next character
                         sys.stdout.flush()  # flush stdout buffer (actual character display)
                         sys.stdout.write('\b')  # erase the last written char
