@@ -37,7 +37,7 @@ class SoldierApi():
         print 'Running...'
         try:
             while self.should_run:
-                self._spin()
+                self._spinner()
                 self.update_recon()
                 self.sync_msg()
                 self.sync_targets()
