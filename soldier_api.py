@@ -191,7 +191,7 @@ class SoldierApi():
     def add_target(self, msg):
         msg = 'add: id {} azimuth {} distance {} elv {}'.format(msg['id'], msg['azimut'], msg['distance'],
                                                                 msg['altitude'])
-        print 'Target id: {} sent to hololens'.format(msg['id'])
+        print msg
         if self.address:
             self.serversocket.sendto(msg, self.address)
 
