@@ -58,6 +58,7 @@ class SoldierApi():
                                 new_target = self.soldier.mark_target(alpha, azimut)
                                 self.update_db(new_target)
                                 print 'new target marked! ' + json.dumps(new_target)
+                                self.sync_targets()
                             elif len(hololence_values) == 3:
                                 # delete target from hololence
                                 target_id = hololence_values[2]
