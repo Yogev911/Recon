@@ -88,6 +88,7 @@ class SoldierApi():
             # print traceback.format_exc()
 
         except Exception:
+            self.serversocket.sendto('disconnect', self.address)
             self.serversocket.close()
             print "App crashed"
             print traceback.format_exc()
