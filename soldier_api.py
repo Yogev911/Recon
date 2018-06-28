@@ -33,7 +33,6 @@ class SoldierApi():
 
     def run(self):
         self._wait_for_hololence()
-
         print 'Running...'
         try:
             while self.should_run:
@@ -147,14 +146,13 @@ class SoldierApi():
     def sync_targets(self):
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
         for target in targets_to_add:
-            # print 'adding new target {}'.format(json.dumps(target))
+            print 'adding new target {}'.format(json.dumps(target))
             self.targets[target['id']] = target
             relative_target = self.soldier.get_relative_target(target)
             self.add_target(relative_target)
-            sleep(2)
         for target_id in targets_ids_to_remove:
             self.remove_target_id(target_id)
-            sleep(2)
+            sleep(0.5)
 
     def sync_msg(self):
         try:
@@ -162,10 +160,8 @@ class SoldierApi():
             if data:
                 for msg in data:
                     if self.address:
-                        warning_msg = msg['message']
-                        msg_id = msg['id']
-                        self.serversocket.sendto('warning: {}'.format(warning_msg), self.address)
-                        sleep(1)
+                        self.serversocket.sendto('warning: {}'.format(msg['message']), self.address)
+                        sleep(0.5)
         except:
             print traceback.format_exc()
 
@@ -191,14 +187,15 @@ class SoldierApi():
     def add_target(self, msg):
         msg = 'add: id {} azimuth {} distance {} elv {}'.format(msg['id'], msg['azimut'], msg['distance'],
                                                                 msg['altitude'])
-        print msg
         if self.address:
             self.serversocket.sendto(msg, self.address)
+            sleep(1)
 
-    def remove_target_id(self, msg):
-        self.targets.pop(msg)
+    def remove_target_id(self, target_id):
+        self.targets.pop(target_id)
+        print 'removed target {}'.format(target_id)
         if self.address:
-            self.serversocket.sendto('remove: id {}'.format(msg), self.address)
+            self.serversocket.sendto('remove: id {}'.format(target_id), self.address)
 
     def delete_db_target(self, t_id):
         try:

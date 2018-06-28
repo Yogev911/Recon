@@ -77,8 +77,14 @@ class db():
             return None
 
     def update_location(self, lat, lon):
-        target = {
-            "latitude": lat,
-            "longitude": lon
-        }
-        put(self.root + self.reconunit + str(conf.RECONUNITID),json=target)
+        try:
+            target = {
+                "latitude": lat,
+                "longitude": lon
+            }
+            put(self.root + self.reconunit + str(conf.RECONUNITID),json=target)
+        except ConnectionError as e:
+            print e
+            print 'host unavailable'
+            sleep(1)
+            return None
