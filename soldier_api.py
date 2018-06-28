@@ -144,9 +144,10 @@ class SoldierApi():
         self.db.update_location(self.soldier.latitude, self.soldier.longitude)
 
     def sync_targets(self):
+        self.soldier.print_gps_data()
         targets_to_add, targets_ids_to_remove = self.get_target_diff()
         for target in targets_to_add:
-            print 'adding new target {}'.format(json.dumps(target))
+            print 'adding new target {}'.format(target['id'])
             self.targets[target['id']] = target
             relative_target = self.soldier.get_relative_target(target)
             self.add_target(relative_target)

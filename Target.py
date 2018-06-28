@@ -36,7 +36,7 @@ class Target():
         self.altitude = self.gps.alt
 
     def print_gps_data(self):
-        self.update_gps()
+        self.sync_gps()
         print self.latitude, self.longitude, self.altitude
 
     def _init(self):
