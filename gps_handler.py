@@ -62,7 +62,7 @@ class my_gps:  # Create GPS class
         try:
             while self.ser.inWaiting() == 0:  # Wait for input
                 pass
-            return 80# pynmea2.parse(self.ser.readline()).altitude
+            return pynmea2.parse(self.ser.readline()).altitude
         except:
             return None
 
