@@ -23,13 +23,13 @@ class Target():
         self._init()
 
     def get_fake_gps_data(self):
-        self.latitude = 32.0895816667
-        self.longitude = 34.802405
-        self.altitude = 34.6
+        self.latitude = 32.09002201237831
+        self.longitude = 34.80290894928055
+        self.altitude = 60
 
     def update_gps(self):
-        # self.get_fake_gps_data()
-        # return
+        self.get_fake_gps_data()
+        return
         self.gps.read
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
