@@ -2,12 +2,13 @@ import itertools
 import sys
 import traceback
 from fpformat import fix
-from math import sin, cos, sqrt, atan2, radians, pi, acos, tan, atan, asin, degrees
 from time import sleep
+
+
+import coordinate as coord
 from gps_handler import my_gps
 from lidar_handler import GLLv3
 from settings import conf
-import coordinate as coord
 
 spinner = itertools.cycle(['-', '/', '|', '\\'])
 
