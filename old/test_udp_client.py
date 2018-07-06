@@ -9,8 +9,8 @@ except socket.error:
 
 port = 8081
 
-host = 'localhost'
-msg = 'mark elv -5.87 azimuth 17.26'
+host = 'recon2'
+msg = 'start'
 try:
     s.sendto(msg, (host,port))
 except socket.error, msg:

@@ -5,7 +5,7 @@ from time import sleep  # import sleep library
 import pynmea2
 import serial  # import pyserial library
 
-from utils import conf
+from settings import conf
 
 COMPASS = {'N': -1, 'E': 1, 'W': -1, 'S': -1}
 
@@ -36,22 +36,20 @@ class my_gps:  # Create GPS class
         return self.ser.readline()
 
     @property
-    def state(self):
-        return self.ser.readline()
-
-    @property
     def lat(self):
-        mult = 1.0
-
-        while self.ser.inWaiting() == 0:  # Wait for input
-            pass
-        lat = pynmea2.parse(self.ser.readline()).lat
-        if lat == '':
+        try:
+            mult = 1.0
+            while self.ser.inWaiting() == 0:  # Wait for input
+                pass
+            lat = pynmea2.parse(self.ser.readline()).lat
+            if lat == '':
+                return None
+            deg = lat[:2]
+            mins = lat[2:]
+            sec = math.fabs((float(mins) - (int(float(mins))) * 60))
+            return mult * float(fix((float(deg) + float(mins) / 60), 10))
+        except:
             return None
-        deg = lat[:2]
-        mins = lat[2:]
-        sec = math.fabs((float(mins) - (int(float(mins))) * 60))
-        return mult * float(fix((float(deg) + float(mins) / 60), 10))
 
     @property
     def lat_dir(self):
@@ -61,22 +59,28 @@ class my_gps:  # Create GPS class
 
     @property
     def alt(self):
-        while self.ser.inWaiting() == 0:  # Wait for input
-            pass
-        return pynmea2.parse(self.ser.readline()).altitude
+        try:
+            while self.ser.inWaiting() == 0:  # Wait for input
+                pass
+            return pynmea2.parse(self.ser.readline()).altitude
+        except:
+            return None
 
     @property
     def lon(self):
-        while self.ser.inWaiting() == 0:  # Wait for input
-            pass
-        lon = pynmea2.parse(self.ser.readline()).lon
-        if lon == '':
+        try:
+            while self.ser.inWaiting() == 0:  # Wait for input
+                pass
+            lon = pynmea2.parse(self.ser.readline()).lon
+            if lon == '':
+                return None
+            mult = 1.0
+            deg = int(lon[:3])
+            mins = float(lon[3:])
+            sec = math.fabs((mins - (int(mins)) * 60))
+            return mult * float(fix((deg + mins / 60), 10))
+        except:
             return None
-        mult = 1.0
-        deg = int(lon[:3])
-        mins = float(lon[3:])
-        sec = math.fabs((mins - (int(mins)) * 60))
-        return mult * float(fix((deg + mins / 60), 10))
 
     @property
     def lon_dir(self):
@@ -108,7 +112,4 @@ class my_gps:  # Create GPS class
         print sec
         print dd
         return dd
-
-    def get_longitude(self):
-        return None
 

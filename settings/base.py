@@ -1,6 +1,5 @@
-RECONUNITID = 1
-HOLOLENC_ADDR = ('192.168.43.150', 12346)
 MARK = 'mark'
+START = 'start'
 TARGET_TYPES = ['warrning', 'danger', 'ally', 'unknown']
 SOLDIER_SCAN_INTERVAL = 3
 
@@ -8,7 +7,6 @@ SOLDIER_SCAN_INTERVAL = 3
 DB_HOST = '0.0.0.0'
 DB_PORT = 3000
 DB_LANE = 'hello'
-HEADER = {"reconunitid": 2}
 MSG_LANE = 'msg'
 TARGET_LANE = 'target'
 
@@ -34,52 +32,3 @@ GPGGA_ONLY = "$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"  # Send onl
 GPRMC_GPGGA = "$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"  # Send GPRMC AND GPGGA Sentences
 SEND_ALL = "$PMTK314,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"  # Send All Sentences
 SEND_NOTHING = "$PMTK314,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"  # Send Nothing
-
-# api region
-HOST = 'localhost'
-PORT = 7080
-
-data = [
-    {
-        "id": 1,
-        "reconunitid": 1,
-        "altitude": "2222",
-        "longitude": "34.823228",
-        "latitude": "32.164760",
-        "type": "warrning"
-    },
-    {
-        "id": 2,
-        "reconunitid": 1,
-        "altitude": "32",
-        "longitude": "34.821672",
-        "latitude": "32.164242",
-        "type": "warrning"
-    },
-    {
-        "id": 3,
-        "reconunitid": 1,
-        "altitude": "2",
-        "longitude": "34.838592",
-        "latitude": "32.163070",
-        "type": "warrning"
-    },
-    {
-        "id": 4,
-        "reconunitid": 1,
-        "altitude": "45",
-        "longitude": "34.835316",
-        "latitude": "32.167386",
-        "type": "warrning"
-    },
-    {
-        "id": 5,
-        "reconunitid": 1,
-        "altitude": "76",
-        "longitude": "34.842811",
-        "latitude": "32.167717",
-        "type": "warrning"
-    },
-]
-
-
