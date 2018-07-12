@@ -65,12 +65,15 @@ class Target():
         return my_point
 
     def update_gps(self):
+        self.get_fake_gps_data()
+        return
         self.gps.read()
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
         self.altitude = self.gps.alt
 
     def sync_gps(self, intervals=0.01):
+
         self.update_gps()
         while not (self.latitude and self.longitude and self.altitude):
             _spin()
