@@ -7,7 +7,7 @@ from time import sleep
 
 import coordinate as coord
 from gps_handler import my_gps
-from lidar_handler import GLLv3
+# from lidar_handler import GLLv3
 from settings import conf
 
 spinner = itertools.cycle(['-', '/', '|', '\\'])
@@ -38,13 +38,13 @@ def relative_target_json(altitude, azimuth, distance_km, target_id):
 class Target():
     def __init__(self):
         print 'setting up all components'
-        self.laser = GLLv3()
-        self.laser.read()
+        # self.laser = GLLv3()
+        # self.laser.read()
         self.latitude = None
         self.longitude = None
         self.altitude = None
         print 'calibrating GPS.. may take few minuets'
-        self.gps = my_gps()
+        # self.gps = my_gps()
         print 'waiting for signal'
         self.sync_gps(intervals=0.1)
         print 'All components are ready! lat: {}, lon: {}, alt: {}'.format(self.latitude, self.longitude, self.altitude)
@@ -94,7 +94,7 @@ class Target():
     def get_relative_target(self, target):
         try:
             # get target distance, azimuth and elevation relative to self
-            target_coord = coord.Point(latitude=target['latitude'],longitude=target['longitude'],altitude=['altitude'])
+            target_coord = coord.Point(latitude=target['latitude'],longitude=target['longitude'],altitude=target['altitude'])
             bearing, azimuth, distance_km = coord.get_relative_point_position(coord_a=self.my_coord,coord_b=target_coord)
             return relative_target_json(bearing, azimuth, distance_km, target['id'])
         except:

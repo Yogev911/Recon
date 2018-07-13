@@ -32,7 +32,7 @@ class SoldierApi():
             sys.exit()
 
     def run(self):
-        self._wait_for_hololence()
+        self._wait_for_client()
         print 'Running...'
         try:
             while self.should_run:
@@ -96,7 +96,7 @@ class SoldierApi():
             self.serversocket.close()
             print traceback.format_exc()
 
-    def _wait_for_hololence(self):
+    def _wait_for_client(self):
         print 'looking for hololence on ip {} in port {}...'.format(self.address[0], self.address[1])
         while True:
             try:
