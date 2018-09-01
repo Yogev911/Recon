@@ -1,7 +1,9 @@
 MARK = 'mark'
 START = 'start'
+STOP_MESSAGE = 'stop'
 TARGET_TYPES = ['warrning', 'danger', 'ally', 'unknown']
 SOLDIER_SCAN_INTERVAL = 3
+SLEEP_TIME = 0.1
 
 # DB region
 DB_HOST = '0.0.0.0'

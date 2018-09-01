@@ -9,7 +9,7 @@ except socket.error:
 
 port = 8081
 
-host = 'recon2'
+host = 'localhost'
 msg = 'start'
 try:
     s.sendto(msg, (host,port))

@@ -1,3 +1,4 @@
-from soldier_api import SoldierApi
+from Recon import Recon
+
 if __name__ == '__main__':
-    s = SoldierApi()
+    rec = Recon()
