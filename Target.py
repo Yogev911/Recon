@@ -28,8 +28,8 @@ class Target():
         self.altitude = 34.6
 
     def update_gps(self):
-        # self.get_fake_gps_data()
-        # return
+        self.get_fake_gps_data()
+        return
         self.gps.read
         self.latitude = self.gps.lat
         self.longitude = self.gps.lon
